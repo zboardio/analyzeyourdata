@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/image/logo.png" alt="Analyze Your Data" height="80">
+  <img src="assets/image/zboardio-data-analysis.gif" alt="Analyze Your Data" height="80">
 </p>
 
 <h1 align="center">Analyze Your Data</h1>

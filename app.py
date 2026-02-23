@@ -30,6 +30,27 @@ app = dash.Dash(
     ]
 )
 
+# Custom favicon (Dash 4.0+ requires custom index_string for non-.ico favicons)
+app.index_string = '''
+<!DOCTYPE html>
+<html>
+    <head>
+        {%metas%}
+        <title>{%title%}</title>
+        <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+        {%css%}
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>
+'''
+
 app.title = t('app.title')
 server = app.server
 

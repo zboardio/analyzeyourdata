@@ -1,9 +1,10 @@
+> **Privacy garanteed**: No data is stored on the server. Data live in your browser session.
+
 - Upload your data >
 - Explore it interactively >
 - Create visualizations >
-- Export filtered or aggregated data to **CSV** or **Excel** and export generated charts as **PNG** or **interactive HTML**.
-
-Privacy garanteed: No data is stored on the server. Data live in your browser session.
+- Export filtered or aggregated data to **CSV** or **Excel** >
+- Export generated charts as **PNG** or **interactive HTML**
 
 > **Real-time chart updates** — filter or group data in the grid and all charts update instantly. This is the core power of the tool.
 
@@ -33,6 +34,6 @@ Privacy garanteed: No data is stored on the server. Data live in your browser se
 - **Datetime intelligence** — automatic time-based column generation from your datetime data
 - **Chart export** — download individual charts or combined dashboards as interactive HTML files
 
-> **Export data from the AG Grid Table** — right-click in the AG Grid Table to export the currently filtered and structured data directly to **CSV or Excel** file. What you see in the grid is exactly what you get in the export.
+> **Export data** from the AG Grid Table >> **right-click in the AG Grid Table** to export the currently filtered and structured data directly to **CSV** or **Excel** file.
 
 ---

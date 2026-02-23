@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 302 301" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1.5,0,0,1.5,-660.848767,-352.037106)">
+        <g id="Flat-vector-graphic--clean-design--simple-vector-style:-A-horizontal-data-flow-diagram-featuring-four-circular-icons--each-filled-with-Teal--0098A3-and-outlined-in-Slate-Gray--2E5266.-The-icons-represent-Upload--an-upward-arrow-originating-from-a-cloud-symbol---Analyze--a-magnifying-glass-with-a-gear-inside---Visualize--a-bar-chart---and-Report--a-document-with-horizontal-lines-.-Metallic-Silver--B4B7BA-arrows-connect-the-icons-in-sequence.-Labels-for-each-icon-are-positioned-directly-below--rendered-in-the-Inter-font-in-Off-White--F5F5F5.-The-background-is-a-solid-Charcoal--36454F.-The-overall-design-is-minimal-and-clean--with-consistent-spacing-maintained-between-all-elements." serif:id="Flat vector graphic, clean design, simple vector style: A horizontal data flow diagram featuring four circular icons, each filled with Teal #0098A3 and outlined in Slate Gray #2E5266. The icons represent Upload (an upward arrow originating from a cloud symbol), Analyze (a magnifying glass with a gear inside), Visualize (a bar chart), and Report (a document with horizontal lines). Metallic Silver #B4B7BA arrows connect the icons in sequence. Labels for each icon are positioned directly below, rendered in the Inter font in Off White #F5F5F5. The background is a solid Charcoal #36454F. The overall design is minimal and clean, with consistent spacing maintained between all elements." transform="matrix(1,0,0,1,-20.299693,-384.739665)">
+            <g id="Bar-Chart" serif:id="Bar Chart">
+                <g transform="matrix(1,0,0,1,-322,0)">
+                    <path d="M925.605,807.734C921.346,809.342 898.894,821.82 863.456,815.735C778.598,801.164 751.599,678.259 837.606,632.707C923.264,587.34 1024.588,688.791 962.247,777.32C951.681,792.324 928.885,805.796 925.605,807.734Z" style="fill:rgb(101,207,199);fill-opacity:0;stroke:rgb(101,207,199);stroke-width:4.17px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-322,0)">
+                    <path d="M932.909,679.503C932.863,743.453 934.9,748.827 924.502,748.883C923,748.891 907.476,748.974 905.8,747.187C902.357,743.516 902.469,676.573 905.82,672.813C905.914,672.708 932.155,663.906 932.909,679.503Z" style="fill:rgb(101,207,199);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-322,0)">
+                    <path d="M895.968,730.501C895.968,730.525 897.936,745.22 892.385,748.262C890.995,749.023 869.196,751.179 867.327,744.567C866.627,742.091 866.53,693.946 867.33,692.43C871.904,683.759 889.528,688.406 891.411,688.902C897.528,690.515 895.966,700.568 895.968,730.501Z" style="fill:rgb(101,207,199);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-322,0)">
+                    <path d="M830.371,745.581C828.492,737.133 829.065,714.02 830.919,711.866C834.068,708.207 854.018,709.933 854.628,710.122C860.567,711.959 862.173,746.387 853.551,748.744C851.745,749.238 837.351,753.173 830.371,745.581Z" style="fill:rgb(101,207,199);"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-322,0)">
+                    <path d="M924.502,760.182C907.502,760.234 907.63,760.182 862.499,760.212C824.369,760.237 822.747,760.428 822.337,759.621C819.059,753.185 833.415,754.892 859.502,754.828C937.17,754.637 941.544,751.932 941.176,758.462C941.08,760.165 925.843,760.181 924.502,760.182Z" style="fill:rgb(101,207,199);"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

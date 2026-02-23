@@ -7,7 +7,7 @@
     "URL_PLOTLY_DASH": "https://dash.plotly.com",
     "URL_DASH_AG_GRID": "https://dash.plotly.com/dash-ag-grid",
     "URL_AG_GRID": "https://www.ag-grid.com",
-    "URL_ZBOARDIO": "https://zboardio-webpage.pages.dev/en/#hero",
+    "URL_ZBOARDIO": "https://zboardio.com",
     "VALUE_CHART_TYPE_SUPPORTED": "13",
     "VALUE_MAX_FILE_SIZE_MB": "20"
 }
