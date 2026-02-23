@@ -31,6 +31,7 @@
     "footer.build": "Graditev: ",
     "footer.verify_source": "Preveri izvorno kodo",
     "footer.all_rights": ". Vse pravice pridržane.",
+    "footer.email_copied": "Kontaktni e-mail kopiran v odložišče",
 
     "feedback.title": "Pošlji povratne informacije",
     "feedback.category_label": "Kategorija",

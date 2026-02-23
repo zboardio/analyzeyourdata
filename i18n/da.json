@@ -31,6 +31,7 @@
     "footer.build": "Build: ",
     "footer.verify_source": "Verificér kildekode",
     "footer.all_rights": ". Alle rettigheder forbeholdes.",
+    "footer.email_copied": "Kontakt-e-mail kopieret til udklipsholder",
 
     "feedback.title": "Send feedback",
     "feedback.category_label": "Kategori",

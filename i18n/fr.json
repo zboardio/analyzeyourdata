@@ -31,6 +31,7 @@
     "footer.build": "Version : ",
     "footer.verify_source": "Vérifier le code source",
     "footer.all_rights": ". Tous droits réservés.",
+    "footer.email_copied": "E-mail de contact copié dans le presse-papiers",
 
     "feedback.title": "Envoyer un commentaire",
     "feedback.category_label": "Catégorie",

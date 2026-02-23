@@ -31,6 +31,7 @@
     "footer.build": "Build: ",
     "footer.verify_source": "Verifiera källkod",
     "footer.all_rights": ". Alla rättigheter förbehållna.",
+    "footer.email_copied": "Kontakt-e-post kopierad till urklipp",
 
     "feedback.title": "Skicka feedback",
     "feedback.category_label": "Kategori",

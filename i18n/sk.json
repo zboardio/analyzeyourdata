@@ -31,6 +31,7 @@
     "footer.build": "Build: ",
     "footer.verify_source": "Overiť zdrojový kód",
     "footer.all_rights": ". Všetky práva vyhradené.",
+    "footer.email_copied": "Kontaktný e-mail skopírovaný do schránky",
 
     "feedback.title": "Odoslať spätnú väzbu",
     "feedback.category_label": "Kategória",

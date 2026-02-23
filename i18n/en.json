@@ -31,6 +31,7 @@
     "footer.build": "Build: ",
     "footer.verify_source": "Verify source code",
     "footer.all_rights": ". All rights reserved.",
+    "footer.email_copied": "Contact email copied to clipboard",
 
     "feedback.title": "Send Feedback",
     "feedback.category_label": "Category",

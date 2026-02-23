@@ -222,7 +222,7 @@ def create_footer():
                             html.A([
                                 html.I(className="fas fa-envelope footer-icon"),
                                 t("footer.contact_us")
-                            ], href=f"mailto:{Config.CONTACT_EMAIL}"),
+                            ], id="contact-email-link", style={"cursor": "pointer"}),
 
                             html.A([
                                 html.I(className="fas fa-globe footer-icon"),
@@ -279,6 +279,21 @@ def create_footer():
             ], fluid=True)
         ], className="footer-content")
     ], className="modern-footer")
+
+
+def create_email_toast():
+    """Create toast notification for email copy feedback."""
+    return dbc.Toast(
+        t("footer.email_copied"),
+        id="email-copied-toast",
+        header=t("footer.contact_us"),
+        icon="success",
+        is_open=False,
+        dismissable=True,
+        duration=3000,
+        style={"position": "fixed", "bottom": 20, "right": 20, "zIndex": 9999},
+    )
+
 
 # Callback for navbar toggler (mobile menu)
 def register_navbar_callbacks(app):
@@ -360,3 +375,19 @@ def register_navbar_callbacks(app):
             return t("feedback.success"), "success", True, "", "not_specified"
 
         return t("feedback.error"), "danger", True, no_update, no_update
+
+    # Copy email to clipboard and show toast
+    app.clientside_callback(
+        f"""
+        function(n_clicks) {{
+            if (n_clicks) {{
+                navigator.clipboard.writeText("{Config.CONTACT_EMAIL}");
+                return true;
+            }}
+            return window.dash_clientside.no_update;
+        }}
+        """,
+        Output("email-copied-toast", "is_open"),
+        Input("contact-email-link", "n_clicks"),
+        prevent_initial_call=True,
+    )

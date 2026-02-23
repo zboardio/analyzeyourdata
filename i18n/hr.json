@@ -31,6 +31,7 @@
     "footer.build": "Build: ",
     "footer.verify_source": "Provjerite izvorni kod",
     "footer.all_rights": ". Sva prava pridržana.",
+    "footer.email_copied": "Kontakt e-mail kopiran u međuspremnik",
 
     "feedback.title": "Pošaljite povratne informacije",
     "feedback.category_label": "Kategorija",

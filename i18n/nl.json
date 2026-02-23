@@ -31,6 +31,7 @@
     "footer.build": "Build: ",
     "footer.verify_source": "Broncode verifiëren",
     "footer.all_rights": ". Alle rechten voorbehouden.",
+    "footer.email_copied": "Contact-e-mail gekopieerd naar klembord",
 
     "feedback.title": "Feedback versturen",
     "feedback.category_label": "Categorie",

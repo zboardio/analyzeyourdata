@@ -31,6 +31,7 @@
     "footer.build": "Kompilacja: ",
     "footer.verify_source": "Zweryfikuj kod źródłowy",
     "footer.all_rights": ". Wszelkie prawa zastrzeżone.",
+    "footer.email_copied": "Adres e-mail skopiowany do schowka",
 
     "feedback.title": "Wyślij opinię",
     "feedback.category_label": "Kategoria",

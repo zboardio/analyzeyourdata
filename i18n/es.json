@@ -31,6 +31,7 @@
     "footer.build": "Compilación: ",
     "footer.verify_source": "Verificar código fuente",
     "footer.all_rights": ". Todos los derechos reservados.",
+    "footer.email_copied": "Correo de contacto copiado al portapapeles",
 
     "feedback.title": "Enviar Comentarios",
     "feedback.category_label": "Categoría",

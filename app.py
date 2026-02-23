@@ -11,7 +11,7 @@ from utils.general import load_markdown_file
 from utils.analytics import monitor_memory
 from components.layout import (
     create_navbar, create_footer, create_feedback_modal,
-    create_how_to_use_modal, register_navbar_callbacks
+    create_how_to_use_modal, create_email_toast, register_navbar_callbacks
 )
 from components.data_source_section import create_data_source_section
 from components.chart_config_section import create_chart_config_section
@@ -61,6 +61,7 @@ app.layout = html.Div([
     navbar,
     create_feedback_modal(),
     create_how_to_use_modal(),
+    create_email_toast(),
 
     html.Div(className='custom-container', children=[
 
