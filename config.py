@@ -33,7 +33,7 @@ class Config:
     
     # UI Assets
     LOGO_PATH = os.getenv('LOGO_PATH', '/assets/logo.png')  # If empty, logo is hidden in navbar
-    # Favicon: Dash auto-discovers /assets/favicon.svg — added cofig for .svg, as Dash v4.0 supports only .ico
+    # Favicon: Dash auto-discovers /assets/favicon.svg — added cofig for SVG, as Dash v4.0 supports only ICO
 
     # External Links
     GITHUB_URL = os.getenv('GITHUB_URL', 'https://github.com/your-repo')
