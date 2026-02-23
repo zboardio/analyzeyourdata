@@ -25,7 +25,3 @@ Ladda upp din data, utforska den interaktivt och skapa visualiseringar — allt 
 - **Diagramexport** — ladda ner enskilda diagram eller kombinerade instrumentpaneler som interaktiva HTML-filer
 
 > **Exportera data från tabellen** — högerklicka i AG Grid-tabellen för att exportera den aktuellt filtrerade och strukturerade datan direkt till **CSV eller Excel**-fil. Vad du ser i tabellen är exakt vad du får i exporten.
-
-### Drivs av
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

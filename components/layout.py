@@ -281,6 +281,84 @@ def create_footer():
     ], className="modern-footer")
 
 
+def create_powered_by_section():
+    """
+    Create the 'Powered by' section with dynamic tiles.
+    Only shows tiles for URLs that are configured (non-empty).
+    """
+    tiles = []
+
+    # Technology tiles
+    tech_items = [
+        {
+            'url': Config.POWERED_BY_PLOTLY_DASH_URL,
+            'name': 'Plotly Dash',
+            'icon': 'fas fa-chart-line',
+            'description': t('powered_by.plotly_dash_desc'),
+        },
+        {
+            'url': Config.POWERED_BY_DASH_AG_GRID_URL,
+            'name': 'Dash AG Grid',
+            'icon': 'fas fa-table',
+            'description': t('powered_by.dash_ag_grid_desc'),
+        },
+        {
+            'url': Config.POWERED_BY_AG_GRID_URL,
+            'name': 'AG Grid',
+            'icon': 'fas fa-th',
+            'description': t('powered_by.ag_grid_desc'),
+        },
+        {
+            'url': Config.WEBSITE_URL,
+            'name': Config.POWERED_BY_AUTHOR_NAME,
+            'icon': 'fas fa-code',
+            'description': t('powered_by.author_desc'),
+            'is_author': True,
+        },
+    ]
+
+    for item in tech_items:
+        if not item['url']:
+            continue
+
+        card_style = {
+            'border': '1px solid rgba(0, 152, 163, 0.2)',
+            'borderRadius': '12px',
+            'transition': 'all 0.3s ease',
+            'height': '100%',
+        }
+        if item.get('is_author'):
+            card_style['border'] = '2px solid var(--primary-color)'
+            card_style['background'] = 'linear-gradient(135deg, rgba(0,152,163,0.05), rgba(0,212,170,0.05))'
+
+        tiles.append(
+            dbc.Col([
+                html.A(
+                    dbc.Card([
+                        dbc.CardBody([
+                            html.Div([
+                                html.I(className=f"{item['icon']} fa-2x", style={'color': 'var(--primary-color)'}),
+                            ], className="mb-2"),
+                            html.H6(item['name'], className="mb-1", style={'fontWeight': '600', 'color': 'var(--secondary-color)'}),
+                            html.Small(item['description'], className="text-muted"),
+                        ], className="text-center p-3")
+                    ], style=card_style, className="h-100 powered-by-card"),
+                    href=item['url'],
+                    target="_blank",
+                    style={'textDecoration': 'none'},
+                )
+            ], xs=6, sm=6, md=3, className="mb-3")
+        )
+
+    if not tiles:
+        return html.Div()
+
+    return html.Div([
+        html.H5(t('powered_by.heading'), className="text-center mb-4", style={'color': 'var(--secondary-color)'}),
+        dbc.Row(tiles, className="justify-content-center"),
+    ], className="powered-by-section")
+
+
 def create_email_toast():
     """Create toast notification for email copy feedback."""
     return dbc.Toast(

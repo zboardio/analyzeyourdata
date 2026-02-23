@@ -42,9 +42,16 @@ class Config:
     DOCUMENTATION_URL = os.getenv('DOCUMENTATION_URL', '')  # If empty, docs buttons are hidden
     DONATE_URL = os.getenv('DONATE_URL', '')
     YOUTUBE_INTRO_URL = os.getenv('YOUTUBE_INTRO_URL', '')
-    
+
+    # Powered By section URLs (empty = tile hidden)
+    POWERED_BY_PLOTLY_DASH_URL = os.getenv('POWERED_BY_PLOTLY_DASH_URL', 'https://dash.plotly.com')
+    POWERED_BY_DASH_AG_GRID_URL = os.getenv('POWERED_BY_DASH_AG_GRID_URL', 'https://dash.plotly.com/dash-ag-grid')
+    POWERED_BY_AG_GRID_URL = os.getenv('POWERED_BY_AG_GRID_URL', 'https://www.ag-grid.com')
+    POWERED_BY_AUTHOR_NAME = os.getenv('POWERED_BY_AUTHOR_NAME', 'zboardio')  # Short name for tile
+    # WEBSITE_URL is used for the author tile link
+
     # Company/Branding
-    COMPANY_NAME = os.getenv('COMPANY_NAME', 'Smart Engineering by zboardio')
+    COMPANY_NAME = os.getenv('COMPANY_NAME', 'Smart Engineering by zboardio')  # Full name for footer
     # Dynamic copyright year - always current year unless specifically overridden
     COPYRIGHT_YEAR = os.getenv('COPYRIGHT_YEAR', str(datetime.now().year))
     

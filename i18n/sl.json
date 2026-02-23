@@ -33,6 +33,12 @@
     "footer.all_rights": ". Vse pravice pridržane.",
     "footer.email_copied": "Kontaktni e-mail kopiran v odložišče",
 
+    "powered_by.heading": "Poganja",
+    "powered_by.plotly_dash_desc": "Spletno ogrodje",
+    "powered_by.dash_ag_grid_desc": "Dash integracija",
+    "powered_by.ag_grid_desc": "Enterprise tabela",
+    "powered_by.author_desc": "Razvoj",
+
     "feedback.title": "Pošlji povratne informacije",
     "feedback.category_label": "Kategorija",
     "feedback.category_not_specified": "Ni določeno",

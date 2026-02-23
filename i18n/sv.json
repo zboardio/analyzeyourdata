@@ -33,6 +33,12 @@
     "footer.all_rights": ". Alla rättigheter förbehållna.",
     "footer.email_copied": "Kontakt-e-post kopierad till urklipp",
 
+    "powered_by.heading": "Drivs av",
+    "powered_by.plotly_dash_desc": "Webb-ramverk",
+    "powered_by.dash_ag_grid_desc": "Dash-integration",
+    "powered_by.ag_grid_desc": "Enterprise-grid",
+    "powered_by.author_desc": "Utveckling",
+
     "feedback.title": "Skicka feedback",
     "feedback.category_label": "Kategori",
     "feedback.category_not_specified": "Ej specificerad",

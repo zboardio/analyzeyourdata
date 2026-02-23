@@ -33,6 +33,12 @@
     "footer.all_rights": ". Wszelkie prawa zastrzeżone.",
     "footer.email_copied": "Adres e-mail skopiowany do schowka",
 
+    "powered_by.heading": "Napędzane przez",
+    "powered_by.plotly_dash_desc": "Framework webowy",
+    "powered_by.dash_ag_grid_desc": "Integracja Dash",
+    "powered_by.ag_grid_desc": "Tabela enterprise",
+    "powered_by.author_desc": "Rozwój",
+
     "feedback.title": "Wyślij opinię",
     "feedback.category_label": "Kategoria",
     "feedback.category_not_specified": "Nie określono",

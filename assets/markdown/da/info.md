@@ -25,7 +25,3 @@ Upload dine data, udforsk dem interaktivt og opret visualiseringer — alt samme
 - **Diagrameksport** — download individuelle diagrammer eller kombinerede dashboards som interaktive HTML-filer
 
 > **Eksportér data fra gitteret** — højreklik i AG Grid-tabellen for at eksportere de aktuelt filtrerede og strukturerede data direkte til **CSV eller Excel**-fil. Det du ser i gitteret er præcis hvad du får i eksporten.
-
-### Drevet af
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

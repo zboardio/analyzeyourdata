@@ -25,7 +25,3 @@ Wgraj swoje dane, eksploruj je interaktywnie i twórz wizualizacje — wszystko 
 - **Eksport wykresów** — pobieraj pojedyncze wykresy lub połączone dashboardy jako interaktywne pliki HTML
 
 > **Eksport danych z tabeli** — kliknij prawym przyciskiem myszy w tabeli AG Grid, aby wyeksportować aktualnie przefiltrowane i ustrukturyzowane dane bezpośrednio do pliku **CSV lub Excel**. Co widzisz w tabeli, dokładnie to otrzymasz w eksporcie.
-
-### Technologie
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

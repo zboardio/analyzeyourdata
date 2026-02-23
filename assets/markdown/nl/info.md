@@ -25,7 +25,3 @@ Upload uw gegevens, verken ze interactief en maak visualisaties — allemaal in 
 - **Grafiekexport** — download individuele grafieken of gecombineerde dashboards als interactieve HTML-bestanden
 
 > **Exporteer gegevens uit het raster** — klik met de rechtermuisknop in de AG Grid-tabel om de momenteel gefilterde en gestructureerde gegevens direct naar **CSV of Excel**-bestand te exporteren. Wat u in het raster ziet, is precies wat u in de export krijgt.
-
-### Mogelijk gemaakt door
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

@@ -706,3 +706,26 @@ a:hover {
 #how-to-use-modal .markdown-content li {
     margin-bottom: 0.35rem;
 }
+
+/* ===================================================================== */
+/* POWERED BY SECTION                                                     */
+/* ===================================================================== */
+
+.powered-by-section {
+    padding: 0.75rem 0;
+}
+
+.powered-by-card {
+    cursor: pointer;
+}
+
+.powered-by-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 152, 163, 0.15);
+    border-color: var(--primary-color) !important;
+}
+
+.powered-by-card:hover i {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}

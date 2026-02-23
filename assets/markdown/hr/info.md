@@ -25,7 +25,3 @@ Učitajte svoje podatke, istražite ih interaktivno i stvorite vizualizacije —
 - **Izvoz grafikona** — preuzmite pojedine grafikone ili kombinirane nadzorne ploče kao interaktivne HTML datoteke
 
 > **Izvezite podatke iz tablice** — kliknite desnom tipkom miša u AG Grid tablici za izvoz trenutno filtriranih i strukturiranih podataka izravno u **CSV ili Excel** datoteku. Ono što vidite u tablici upravo je ono što dobivate u izvozu.
-
-### Pokretači
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

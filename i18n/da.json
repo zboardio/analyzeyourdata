@@ -33,6 +33,12 @@
     "footer.all_rights": ". Alle rettigheder forbeholdes.",
     "footer.email_copied": "Kontakt-e-mail kopieret til udklipsholder",
 
+    "powered_by.heading": "Drevet af",
+    "powered_by.plotly_dash_desc": "Web-framework",
+    "powered_by.dash_ag_grid_desc": "Dash-integration",
+    "powered_by.ag_grid_desc": "Enterprise-grid",
+    "powered_by.author_desc": "Udvikling",
+
     "feedback.title": "Send feedback",
     "feedback.category_label": "Kategori",
     "feedback.category_not_specified": "Ikke angivet",

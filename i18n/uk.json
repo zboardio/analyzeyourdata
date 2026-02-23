@@ -33,6 +33,12 @@
     "footer.all_rights": ". Усі права захищені.",
     "footer.email_copied": "Контактний email скопійовано в буфер обміну",
 
+    "powered_by.heading": "Працює на",
+    "powered_by.plotly_dash_desc": "Веб-фреймворк",
+    "powered_by.dash_ag_grid_desc": "Інтеграція Dash",
+    "powered_by.ag_grid_desc": "Enterprise таблиця",
+    "powered_by.author_desc": "Розробка",
+
     "feedback.title": "Надіслати відгук",
     "feedback.category_label": "Категорія",
     "feedback.category_not_specified": "Не вказано",

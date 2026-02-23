@@ -36,7 +36,3 @@ Privacy garanteed: No data is stored on the server. Data live in your browser se
 > **Export data from the AG Grid Table** — right-click in the AG Grid Table to export the currently filtered and structured data directly to **CSV or Excel** file. What you see in the grid is exactly what you get in the export.
 
 ---
-
-##### Powered by
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

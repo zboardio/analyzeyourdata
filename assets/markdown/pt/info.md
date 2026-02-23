@@ -25,7 +25,3 @@ Carregue seus dados, explore-os interativamente e crie visualizações — tudo 
 - **Exportação de gráficos** — baixe gráficos individuais ou dashboards combinados como arquivos HTML interativos
 
 > **Exporte dados da grade** — clique com o botão direito na tabela AG Grid para exportar os dados atualmente filtrados e estruturados diretamente para arquivo **CSV ou Excel**. O que você vê na grade é exatamente o que você obtém na exportação.
-
-### Desenvolvido com
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

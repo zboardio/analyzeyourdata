@@ -25,7 +25,3 @@ Laden Sie Ihre Daten hoch, erkunden Sie sie interaktiv und erstellen Sie Visuali
 - **Diagramm-Export** — Einzelne Diagramme oder kombinierte Dashboards als interaktive HTML-Dateien herunterladen
 
 > **Daten aus dem Grid exportieren** — Klicken Sie mit der rechten Maustaste in die AG Grid-Tabelle, um die aktuell gefilterten und strukturierten Daten direkt als **CSV- oder Excel**-Datei zu exportieren. Was Sie im Grid sehen, ist genau das, was Sie im Export erhalten.
-
-### Powered by
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

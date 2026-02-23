@@ -33,6 +33,12 @@
     "footer.all_rights": ". Alle rechten voorbehouden.",
     "footer.email_copied": "Contact-e-mail gekopieerd naar klembord",
 
+    "powered_by.heading": "Aangedreven door",
+    "powered_by.plotly_dash_desc": "Web framework",
+    "powered_by.dash_ag_grid_desc": "Dash-integratie",
+    "powered_by.ag_grid_desc": "Enterprise grid",
+    "powered_by.author_desc": "Ontwikkeling",
+
     "feedback.title": "Feedback versturen",
     "feedback.category_label": "Categorie",
     "feedback.category_not_specified": "Niet gespecificeerd",

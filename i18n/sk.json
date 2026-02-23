@@ -33,6 +33,12 @@
     "footer.all_rights": ". Všetky práva vyhradené.",
     "footer.email_copied": "Kontaktný e-mail skopírovaný do schránky",
 
+    "powered_by.heading": "Poháňané",
+    "powered_by.plotly_dash_desc": "Webový framework",
+    "powered_by.dash_ag_grid_desc": "Dash integrácia",
+    "powered_by.ag_grid_desc": "Enterprise tabuľka",
+    "powered_by.author_desc": "Vývoj",
+
     "feedback.title": "Odoslať spätnú väzbu",
     "feedback.category_label": "Kategória",
     "feedback.category_not_specified": "Nešpecifikované",

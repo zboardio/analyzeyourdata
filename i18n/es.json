@@ -33,6 +33,12 @@
     "footer.all_rights": ". Todos los derechos reservados.",
     "footer.email_copied": "Correo de contacto copiado al portapapeles",
 
+    "powered_by.heading": "Desarrollado con",
+    "powered_by.plotly_dash_desc": "Framework web",
+    "powered_by.dash_ag_grid_desc": "Integración Dash",
+    "powered_by.ag_grid_desc": "Grid empresarial",
+    "powered_by.author_desc": "Desarrollo",
+
     "feedback.title": "Enviar Comentarios",
     "feedback.category_label": "Categoría",
     "feedback.category_not_specified": "No especificado",

@@ -25,7 +25,3 @@ Téléchargez vos données, explorez-les de manière interactive et créez des v
 - **Export de graphiques** — téléchargez des graphiques individuels ou des tableaux de bord combinés sous forme de fichiers HTML interactifs
 
 > **Exportez les données depuis la grille** — faites un clic droit dans la table AG Grid pour exporter les données actuellement filtrées et structurées directement vers un fichier **CSV ou Excel**. Ce que vous voyez dans la grille est exactement ce que vous obtenez dans l'export.
-
-### Propulsé par
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

@@ -25,7 +25,3 @@ Nahrajte svoje dáta, interaktívne ich preskúmajte a vytvárajte vizualizácie
 - **Export grafov** — sťahujte jednotlivé grafy alebo kombinované dashboardy ako interaktívne HTML súbory
 
 > **Exportujte dáta z tabuľky** — kliknite pravým tlačidlom v AG Grid tabuľke na export aktuálne filtrovaných a štruktúrovaných dát priamo do **CSV alebo Excel** súboru. To, čo vidíte v tabuľke, je presne to, čo dostanete v exporte.
-
-### Poháňané
-- [Plotly Dash]({{URL_PLOTLY_DASH}}) | [Dash AG Grid]({{URL_DASH_AG_GRID}}) | [AG Grid]({{URL_AG_GRID}})
-- **[Smart Engineering by zboardio]({{URL_ZBOARDIO}})**

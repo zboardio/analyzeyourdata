@@ -33,6 +33,12 @@
     "footer.all_rights": ". Tous droits réservés.",
     "footer.email_copied": "E-mail de contact copié dans le presse-papiers",
 
+    "powered_by.heading": "Propulsé par",
+    "powered_by.plotly_dash_desc": "Framework web",
+    "powered_by.dash_ag_grid_desc": "Intégration Dash",
+    "powered_by.ag_grid_desc": "Grille entreprise",
+    "powered_by.author_desc": "Développement",
+
     "feedback.title": "Envoyer un commentaire",
     "feedback.category_label": "Catégorie",
     "feedback.category_not_specified": "Non spécifiée",
