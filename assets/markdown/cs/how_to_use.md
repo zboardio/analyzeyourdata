@@ -1,0 +1,176 @@
+# Jak používat Analyze Your Data
+
+## Stručný přehled
+
+**Analyze Your Data** vám umožňuje nahrát data, interaktivně je prozkoumat v tabulce a vytvořit až 3 nezávislé grafy — vše přímo v prohlížeči. Na serveru se neukládají žádná data; vše zůstává ve vaší relaci.
+
+---
+
+## Krok 1: Načtěte svá data
+
+Vyberte si jeden z podporovaných zdrojů dat:
+
+### Přímé nahrání souboru
+- Klikněte na oblast pro nahrání nebo přetáhněte soubor myší
+- **Podporované formáty:** Excel (`.xlsx`, `.xls`), CSV (`.csv`, `.txt`, `.log`), JSON, Parquet, HDF5, SQLite (`.db`, `.sqlite`, `.sqlite3`)
+- U souborů CSV/TXT/LOG potvrďte nebo změňte oddělovač (čárka, středník, tabulátor, svislítko nebo mezera)
+- Maximální velikost souboru: **{{VALUE_MAX_FILE_SIZE_MB}} MB**
+
+### SQLite databáze
+- Nahrajte soubor `.db`, `.sqlite` nebo `.sqlite3`
+- Procházejte dostupné tabulky s počtem řádků a sloupců
+- Vyberte tabulku, kterou chcete analyzovat, a klikněte na **Load Selected Table**
+
+### Microsoft SharePoint / OneDrive
+- Vložte sdílený odkaz s **anonymním přístupem** ("Kdokoli s odkazem může zobrazit")
+- Podporované formáty URL:
+  - `https://1drv.ms/x/s!...` (krátké odkazy OneDrive)
+  - `https://onedrive.live.com/...` (úplné odkazy OneDrive)
+  - `https://[company].sharepoint.com/...` (odkazy SharePoint)
+  - `https://[company]-my.sharepoint.com/...` (osobní SharePoint)
+- Pokud má soubor více listů, vyberte požadovaný list z rozbalovací nabídky
+
+**Jak získat sdílený odkaz:** V SharePoint/OneDrive klikněte pravým tlačítkem na soubor → Sdílet → nastavte "Kdokoli s odkazem může zobrazit" → zkopírujte odkaz.
+
+**Testovací URL** — vyzkoušejte pro ověření funkčnosti:
+```
+{{URL_TEST_DATASET_SHAREPOINT}}
+```
+
+> **Poznámka:** Firemní/podnikové tenanty Microsoft 365 mohou blokovat anonymní sdílecí odkazy z důvodu bezpečnostních politik organizace. Toto je omezení na straně SharePoint/OneDrive, nikoli aplikace. Osobní odkazy OneDrive obvykle fungují bez omezení.
+
+### Google Sheets
+- Vložte veřejnou URL adresu Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
+- Volitelně zadejte **GID** (ID záložky listu) pro načtení konkrétního listu
+- Dokument musí být sdílen jako "Kdokoli s odkazem může zobrazit"
+
+**Jak získat sdílený odkaz:** V Google Sheets klikněte na Sdílet → nastavte "Kdokoli s odkazem" → Čtenář → zkopírujte odkaz. Pro načtení konkrétní záložky listu zkopírujte URL z adresního řádku prohlížeče a použijte číslo `#gid=123456789` v poli GID.
+
+**Testovací URL** — vyzkoušejte pro ověření funkčnosti:
+```
+{{URL_TEST_DATASET_GOOGLE}}
+```
+
+### Airtable
+
+Připojení k Airtable vyžaduje **Personal Access Token** a **Base ID**.
+
+#### Jak vytvořit Personal Access Token
+
+1. Přejděte na [airtable.com/create/tokens]({{URL_DOCUMENTATION_AIRTABLE_TOKENS}}) (nebo navigujte do svého Účtu → Developer Hub → Personal Access Tokens)
+2. Klikněte na **Create new token**
+3. Pojmenujte ho (např. "Analyze Your Data")
+4. V části **Scopes** přidejte minimálně:
+   - `data.records:read` — pro čtení záznamů tabulek
+   - `schema.bases:read` — pro výpis tabulek v bázi
+5. V části **Access** vyberte konkrétní bázi/báze, ke kterým se chcete připojit
+6. Klikněte na **Create token** a okamžitě ho zkopírujte — poté ho již neuvidíte
+
+> **Odkaz:** [Vytváření Personal Access Tokenů — Airtable podpora]({{URL_DOCUMENTATION_AIRTABLE_PAT}})
+
+#### Jak najít Base ID
+
+1. Otevřete svou Airtable bázi v prohlížeči
+2. Podívejte se na URL: `https://airtable.com/appXXXXXXXXXXXXXX/...`
+3. Base ID je část začínající na `app` (např. `appXXXXXXXXXXXXXX`)
+
+#### Načtení dat
+
+1. Zadejte svůj **Personal Access Token** do pole pro token
+2. Zadejte své **Base ID**
+3. Klikněte na **Connect to Airtable** — zobrazí se seznam dostupných tabulek
+4. Vyberte tabulku a klikněte na **Load Selected Table**
+
+> **Tip:** Váš token je uložen pouze v paměti relace prohlížeče — nikdy se neukládá na server. Zavření záložky prohlížeče ho smaže.
+
+> **Tip:** Pro citlivá nebo soukromá data použijte přímé nahrání souboru — vaše data nikdy neopustí prohlížeč.
+
+---
+
+## Krok 2: Zpracování data a času (volitelné)
+
+Zpracování data a času je ve výchozím nastavení **vypnuto**. Když je vypnuto, data se načtou přímo do tabulky — nejsou potřeba žádné další kroky.
+
+Pokud vaše data obsahují sloupec s datem a časem a chcete provádět časovou analýzu:
+
+1. Přepněte zpracování data a času na **Zapnuto**
+2. Vyberte **sloupec s datem a časem** z rozbalovací nabídky
+3. Zvolte odpovídající **formát data a času** (nebo zadejte vlastní Python `strftime()` formát)
+4. Klikněte na **Load data to AgGrid Table**
+
+Vygenerované sloupce zahrnují: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinute`, `tsDayOfWeek`, `tsWeekNumber`, `tsDate` a další.
+
+---
+
+## Krok 3: Prozkoumejte svá data v tabulce
+
+Tabulka **AG Grid** poskytuje výkonné nástroje pro práci s daty:
+
+- **Řazení** — klikněte na záhlaví libovolného sloupce
+- **Filtrování** — klikněte na ikonu filtru v záhlaví sloupce pro nastavení podmínek
+- **Seskupování** — přetáhněte záhlaví sloupců do panelu "Row Group" nad tabulkou
+- **Pivotování** — aktivujte režim pivot z nabídky sloupce pro křížové tabulky
+- **Změna šířky** — přetáhněte okraje sloupců pro úpravu šířky
+- **Agregace** — při seskupování tabulka zobrazuje mezisoučty a celkové součty
+
+> **Klíčové:** Grafy níže čtou z **aktuálně filtrovaných/seskupených dat** viditelných v tabulce. Každý filtr, řazení nebo seskupení okamžitě aktualizuje všechny grafy — **to je hlavní síla tohoto nástroje.** Používejte tabulku jako interaktivní průřez daty a sledujte výsledky promítnuté v reálném čase do všech vašich vizualizací.
+
+> **Export dat z tabulky:** Klikněte pravým tlačítkem kamkoli v tabulce AG Grid a exportujte aktuálně filtrovaná a strukturovaná data přímo do souboru **CSV nebo Excel**. Export přesně odpovídá tomu, co vidíte v tabulce — včetně všech filtrů, seskupování a řazení, které jste aplikovali.
+
+---
+
+## Krok 4: Vytvořte grafy
+
+Můžete vytvořit až **3 nezávislé grafy**, každý s vlastním nastavením:
+
+1. **Zobrazit/Skrýt** — pomocí přepínače zobrazte nebo skryjte sekci každého grafu
+2. **Typ grafu** — vyberte z: Scatter, Scatter (multi y), Line, Bar (grouped), Bar (stacked), Histogram (grouped), Histogram (stacked), Pie, Bubble, Heatmap, Log, Sunburst, Icicle
+3. **Sloupec osy X** — vyberte sloupec pro vodorovnou osu
+4. **Sloupec/sloupce osy Y** — vyberte jeden nebo více sloupců pro svislou osu
+5. **Sloupec barvy** (volitelné) — obarvěte datové body podle kategoriálního sloupce
+6. **Sloupec osy Z** (volitelné) — pro typy grafů Bubble a Heatmap
+7. **Názvy** — nastavte vlastní název grafu, název osy X a název osy Y
+
+Grafy čtou z aktuálně filtrovaných/seskupených dat v tabulce. **Každý filtr, řazení nebo seskupení v tabulce okamžitě aktualizuje všechny grafy.**
+
+---
+
+## Krok 5: Export
+
+### Jednotlivé grafy
+- Klikněte na **Download Chart as HTML** pod každým grafem pro uložení jako samostatný interaktivní HTML soubor
+
+### Všechny grafy (ZIP)
+- Klikněte na **Download All Charts** v horní nebo dolní části sekce grafů
+- Každý aktivní graf se exportuje jako samostatný HTML soubor, zabalený do jednoho ZIP souboru ke stažení
+- Do ZIPu jsou zahrnuty pouze grafy s daty
+
+### Data z tabulky
+- Klikněte pravým tlačítkem v tabulce AG Grid → **Export to CSV** nebo **Export to Excel**
+- Exportuje přesně ta data, která jsou aktuálně viditelná v tabulce (respektuje filtry, seskupování, řazení)
+
+> **Tip:** Exportované HTML soubory jsou plně interaktivní — můžete přibližovat, najet myší pro zobrazení popisků a posouvat — není potřeba žádný software, stačí webový prohlížeč.
+
+---
+
+## Tipy a řešení problémů
+
+| Problém | Řešení |
+|---|---|
+| Nahrání souboru selže | Zkontrolujte, že soubor má méně než {{VALUE_MAX_FILE_SIZE_MB}} MB a je v podporovaném formátu |
+| Odkaz na SharePoint nefunguje | Ujistěte se, že odkaz umožňuje anonymní přístup (bez nutnosti přihlášení). Firemní tenanty mohou toto blokovat. |
+| Google Sheet se nenačte | Ujistěte se, že sdílení je nastaveno na "Kdokoli s odkazem může zobrazit" |
+| Airtable se nepřipojí | Ověřte, že váš Personal Access Token má oprávnění `data.records:read` a `schema.bases:read` a že Base ID začíná na `app` |
+| Chyby při zpracování data a času | Ověřte, že vybraný formát odpovídá vašim datům. V případě potřeby zkuste vlastní formát |
+| Grafy jsou prázdné | Ujistěte se, že jsou data načtena v tabulce a jsou vybrány sloupce X/Y |
+| Tabulka nezobrazuje data po filtrování | Zrušte nebo upravte filtry sloupců |
+
+---
+
+## Ochrana osobních údajů
+
+- Všechna nahraná data jsou zpracovávána **pouze v paměti** (nikdy se nezapisují na disk ani do databáze)
+- Data jsou uložena ve vaší **relaci prohlížeče** — zavření záložky vše smaže
+- Žádná nahraná data nejsou odesílána externím službám
+- Ukládají se pouze dobrovolně odeslané zpětné vazby a anonymní analytika využití
+- Podrobnosti naleznete v [PRIVACY.md]({{URL_DOCUMENTATION_AYD_PRIVACY}})

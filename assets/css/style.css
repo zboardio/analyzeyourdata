@@ -1,0 +1,700 @@
+/* assets/css/style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Custom Color Scheme */
+:root {
+    --primary-color: #0098A3;
+    --primary-hover: #007A84;
+    --secondary-color: #2D5266;
+    --secondary-hover: #3A6B81;
+    --accent-color: #00D4AA;
+    --dark-bg: #1a1a1a;
+    --light-text: #ffffff;
+    --gray-light: #f8f9fa;
+
+    /* Bootstrap primary color override */
+    --bs-primary: #0098A3;
+    --bs-primary-rgb: 0, 152, 163;
+
+    /* Dash 4.0.0 interactive color override */
+    --Dash-Fill-Interactive-Strong: #0098A3;
+}
+
+/* Global Font Settings */
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Enhanced Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700 !important;
+    color: var(--secondary-color) !important;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-weight: 600 !important;
+    color: var(--secondary-color) !important;
+    margin-bottom: 0.5rem;
+}
+
+/* Modern Navbar Styling - Similar to zboardio design */
+.modern-navbar {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--secondary-color) 100%) !important;
+    padding: 1rem 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.modern-navbar .navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--light-text) !important;
+}
+
+.modern-navbar .navbar-nav .nav-link {
+    color: var(--light-text) !important;
+    font-weight: 600;
+    padding: 0.75rem 1rem !important;
+    margin: 0 0.25rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.modern-navbar .navbar-nav .nav-link:hover {
+    background: rgba(0, 152, 163, 0.2) !important;
+    color: var(--accent-color) !important;
+    transform: translateY(-2px);
+}
+
+.modern-navbar .dropdown-menu {
+    background: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.modern-navbar .dropdown-item {
+    color: var(--light-text) !important;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.modern-navbar .dropdown-item:hover,
+.modern-navbar .dropdown-item.active {
+    background: var(--primary-color) !important;
+    color: var(--light-text) !important;
+}
+
+/* CTA Button in Navbar */
+.navbar-cta {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%) !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem !important;
+    border-radius: 25px !important;
+    transition: all 0.3s ease;
+}
+
+.navbar-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 152, 163, 0.4) !important;
+}
+
+/* Button Styling */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%) !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 152, 163, 0.2);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, #00B896 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 152, 163, 0.3) !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%) !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, #00B896 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 152, 163, 0.3) !important;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--primary-color);
+    --bs-btn-border-color: var(--primary-color);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--primary-color);
+    --bs-btn-hover-border-color: var(--primary-color);
+    --bs-btn-focus-shadow-rgb: 0, 152, 163;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--primary-hover);
+    --bs-btn-active-border-color: var(--primary-hover);
+    --bs-btn-disabled-color: var(--primary-color);
+    --bs-btn-disabled-border-color: var(--primary-color);
+}
+
+/* Form Controls */
+.form-switch .form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-switch .form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 152, 163, 0.25) !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 152, 163, 0.25) !important;
+}
+
+/* Full-width centered load buttons */
+.btn-load-full {
+    width: 98%;
+    display: block;
+    margin: 20px auto 30px;
+}
+
+/* Link Styling */
+a {
+    color: var(--primary-color) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+}
+
+a.btn {
+    color: white !important;
+}
+
+a.btn:hover {
+    color: white !important;
+}
+
+a:hover {
+    color: var(--primary-hover) !important;
+}
+
+/* Modern Footer Styling - Similar to zboardio design */
+.modern-footer {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--secondary-color) 100%);
+    color: var(--light-text);
+    padding: 3rem 0 2rem 0;
+    margin-top: 4rem;
+    position: relative;
+}
+
+.modern-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 100%);
+}
+
+.modern-footer .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.modern-footer .footer-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--accent-color) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modern-footer .footer-description {
+    color: #B0BEC5;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+.modern-footer a {
+    color: var(--light-text) !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    margin: 0.25rem;
+}
+
+.modern-footer a:hover {
+    background: rgba(0, 152, 163, 0.2) !important;
+    color: var(--accent-color) !important;
+    transform: translateY(-2px);
+}
+
+.modern-footer .footer-icon {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.modern-footer .copyright {
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: #B0BEC5;
+}
+
+.modern-footer .footer-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Upload Area Styling */
+.upload-area {
+    border: 2px dashed var(--primary-color) !important;
+    background: rgba(0, 152, 163, 0.02);
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.upload-area:hover {
+    border-color: var(--primary-hover) !important;
+    background: rgba(0, 152, 163, 0.05) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 152, 163, 0.1);
+}
+
+/* Alert Styling */
+.alert-success {
+    border: 1px solid var(--primary-color) !important;
+    background: linear-gradient(135deg, rgba(0, 152, 163, 0.1) 0%, rgba(0, 212, 170, 0.1) 100%) !important;
+    color: var(--secondary-color) !important;
+    border-radius: 8px;
+}
+
+.alert-warning {
+    border-radius: 8px;
+}
+
+.alert-danger {
+    border-radius: 8px;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Container Styling */
+.custom-container {
+    width: 95%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.markdown-content {
+    padding: 0 20px;
+    line-height: 1.7;
+}
+
+.markdown-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    background: rgba(0, 152, 163, 0.05);
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.markdown-content blockquote p {
+    margin-bottom: 0;
+}
+
+/* Chart Container */
+.chart-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 152, 163, 0.1);
+}
+
+/* AgGrid Styling */
+.ag-theme-alpine {
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 152, 163, 0.2) !important;
+}
+
+/* Scrollable Areas */
+.scrollable-y-axis {
+    overflow-y: auto;
+    max-height: 700px;
+    border-radius: 8px;
+}
+
+.graph-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.graph-container .scrollable-y-axis {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+/* Loading States */
+.loading-spinner {
+    border: 3px solid rgba(0, 152, 163, 0.1);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus Indicators */
+*:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ===================================================================== */
+/* NEW STYLES FOR EXTENDED DATA SOURCES - ADDED BELOW */
+/* ===================================================================== */
+
+/* Data Source Selection Radio Buttons */
+.data-source-radio .form-check {
+    background: linear-gradient(135deg, rgba(0, 152, 163, 0.05) 0%, rgba(0, 212, 170, 0.05) 100%);
+    border: 2px solid rgba(0, 152, 163, 0.2);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 0.5rem 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.data-source-radio .form-check:hover {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(0, 152, 163, 0.1) 0%, rgba(0, 212, 170, 0.1) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 152, 163, 0.15);
+}
+
+.data-source-radio .form-check-input:checked + .form-check-label {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.data-source-radio .form-check:has(.form-check-input:checked) {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(0, 152, 163, 0.15) 0%, rgba(0, 212, 170, 0.15) 100%);
+}
+
+/* URL Input Groups for SharePoint and Google Sheets */
+.url-input-group {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.url-input-group:focus-within {
+    box-shadow: 0 4px 20px rgba(0, 152, 163, 0.15);
+    transform: translateY(-1px);
+}
+
+.url-input-group .form-control {
+    border: none;
+    box-shadow: none;
+    padding: 0.75rem 1rem;
+}
+
+.url-input-group .form-control:focus {
+    border: none;
+    box-shadow: none;
+}
+
+/* Loading Container for External Data Sources */
+#loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(0, 152, 163, 0.05) 0%, rgba(0, 212, 170, 0.05) 100%);
+    border-radius: 12px;
+    border: 2px dashed var(--primary-color);
+}
+
+#loading-container .loading-text {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#loading-container .loading-subtext {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
+/* Sheet Selection Container */
+.sheet-selection-container {
+    background: rgba(0, 152, 163, 0.03);
+    border: 1px solid rgba(0, 152, 163, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Data Source Icons */
+.data-source-icon {
+    font-size: 1.2rem;
+    margin-right: 0.75rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.form-check:hover .data-source-icon {
+    transform: scale(1.1);
+    color: var(--accent-color);
+}
+
+/* URL Validation States */
+.url-input-valid {
+    border-left: 4px solid #28a745 !important;
+}
+
+.url-input-invalid {
+    border-left: 4px solid #dc3545 !important;
+}
+
+.url-input-processing {
+    border-left: 4px solid var(--primary-color) !important;
+    background: linear-gradient(90deg, rgba(0, 152, 163, 0.05), transparent, rgba(0, 152, 163, 0.05));
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Enhanced Loading Spinner for Dash Bootstrap Components */
+.loading-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Responsive Design for New Features */
+@media (max-width: 768px) {
+    .modern-footer .footer-links {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .modern-navbar .navbar-brand img {
+        height: 25px !important;
+    }
+    
+    .custom-container {
+        padding: 15px;
+    }
+    
+    .btn-primary, .btn-success {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .data-source-radio .form-check {
+        padding: 0.75rem 1rem;
+        margin: 0.25rem 0;
+    }
+    
+    #loading-container {
+        padding: 1.5rem;
+    }
+    
+    .sheet-selection-container {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modern-footer .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .chart-container {
+        padding: 1rem;
+    }
+
+    .data-source-icon {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+    }
+
+    .url-input-group .form-control {
+        padding: 0.6rem 0.8rem;
+    }
+}
+
+/* ===================================================================== */
+/* HOW TO USE MODAL — MARKDOWN STYLING                                   */
+/* ===================================================================== */
+
+#how-to-use-modal .markdown-content h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+#how-to-use-modal .markdown-content h2 {
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+#how-to-use-modal .markdown-content h3 {
+    font-size: 1.05rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#how-to-use-modal .markdown-content code {
+    background: rgba(0, 152, 163, 0.08);
+    color: var(--secondary-color);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+#how-to-use-modal .markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+
+#how-to-use-modal .markdown-content th {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+#how-to-use-modal .markdown-content td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+#how-to-use-modal .markdown-content tr:hover td {
+    background: rgba(0, 152, 163, 0.03);
+}
+
+#how-to-use-modal .markdown-content hr {
+    border: none;
+    border-top: 1px solid #dee2e6;
+    margin: 1.5rem 0;
+}
+
+#how-to-use-modal .markdown-content ul,
+#how-to-use-modal .markdown-content ol {
+    padding-left: 1.5rem;
+}
+
+#how-to-use-modal .markdown-content li {
+    margin-bottom: 0.35rem;
+}

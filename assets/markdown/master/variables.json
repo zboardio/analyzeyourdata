@@ -1,0 +1,13 @@
+{
+    "URL_TEST_DATASET_SHAREPOINT": "https://1drv.ms/x/s!EXAMPLE_SHAREPOINT_URL",
+    "URL_TEST_DATASET_GOOGLE": "https://docs.google.com/spreadsheets/d/EXAMPLE_SPREADSHEET_ID/edit",
+    "URL_DOCUMENTATION_AIRTABLE_TOKENS": "https://airtable.com/create/tokens",
+    "URL_DOCUMENTATION_AIRTABLE_PAT": "https://support.airtable.com/docs/creating-personal-access-tokens",
+    "URL_DOCUMENTATION_AYD_PRIVACY": "https://github.com/zboardio/analyzeyourdata/blob/main/PRIVACY.md",
+    "URL_PLOTLY_DASH": "https://dash.plotly.com",
+    "URL_DASH_AG_GRID": "https://dash.plotly.com/dash-ag-grid",
+    "URL_AG_GRID": "https://www.ag-grid.com",
+    "URL_ZBOARDIO": "https://zboardio-webpage.pages.dev/en/#hero",
+    "VALUE_CHART_TYPE_SUPPORTED": "13",
+    "VALUE_MAX_FILE_SIZE_MB": "20"
+}

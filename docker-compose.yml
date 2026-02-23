@@ -1,0 +1,166 @@
+x-common-build: &common-build
+  context: .
+  args:
+    GIT_COMMIT: ${GIT_COMMIT:-unknown}
+
+x-common-env: &common-env
+  APP_HOST: "0.0.0.0"
+  AG_GRID_LICENSE_KEY: ${AG_GRID_LICENSE_KEY}
+  MONGO_URI: ${MONGO_URI}
+  MONGODB_DATABASE: ${MONGODB_DATABASE}
+  MONGODB_COLLECTION_LOGS: ${MONGODB_COLLECTION_LOGS}
+  MONGODB_COLLECTION_FEEDBACK: ${MONGODB_COLLECTION_FEEDBACK}
+  SECRET_KEY: ${SECRET_KEY}
+  APP_URL_EN: ${APP_URL_EN}
+  APP_URL_CS: ${APP_URL_CS}
+  APP_URL_DA: ${APP_URL_DA}
+  APP_URL_DE: ${APP_URL_DE}
+  APP_URL_ES: ${APP_URL_ES}
+  APP_URL_FR: ${APP_URL_FR}
+  APP_URL_HR: ${APP_URL_HR}
+  APP_URL_IT: ${APP_URL_IT}
+  APP_URL_NL: ${APP_URL_NL}
+  APP_URL_PL: ${APP_URL_PL}
+  APP_URL_PT: ${APP_URL_PT}
+  APP_URL_SK: ${APP_URL_SK}
+  APP_URL_SL: ${APP_URL_SL}
+  APP_URL_SV: ${APP_URL_SV}
+  APP_URL_UK: ${APP_URL_UK}
+  DONATE_URL: ${DONATE_URL}
+  YOUTUBE_INTRO_URL: ${YOUTUBE_INTRO_URL}
+
+services:
+  app-en:
+    build: *common-build
+    ports:
+      - "8050:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: en
+    restart: unless-stopped
+
+  app-cs:
+    build: *common-build
+    ports:
+      - "8051:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: cs
+    restart: unless-stopped
+
+  app-da:
+    build: *common-build
+    ports:
+      - "8054:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: da
+    restart: unless-stopped
+
+  app-de:
+    build: *common-build
+    ports:
+      - "8052:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: de
+    restart: unless-stopped
+
+  app-es:
+    build: *common-build
+    ports:
+      - "8055:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: es
+    restart: unless-stopped
+
+  app-fr:
+    build: *common-build
+    ports:
+      - "8056:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: fr
+    restart: unless-stopped
+
+  app-hr:
+    build: *common-build
+    ports:
+      - "8057:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: hr
+    restart: unless-stopped
+
+  app-it:
+    build: *common-build
+    ports:
+      - "8058:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: it
+    restart: unless-stopped
+
+  app-nl:
+    build: *common-build
+    ports:
+      - "8059:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: nl
+    restart: unless-stopped
+
+  app-pl:
+    build: *common-build
+    ports:
+      - "8053:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: pl
+    restart: unless-stopped
+
+  app-pt:
+    build: *common-build
+    ports:
+      - "8060:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: pt
+    restart: unless-stopped
+
+  app-sk:
+    build: *common-build
+    ports:
+      - "8061:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: sk
+    restart: unless-stopped
+
+  app-sl:
+    build: *common-build
+    ports:
+      - "8062:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: sl
+    restart: unless-stopped
+
+  app-sv:
+    build: *common-build
+    ports:
+      - "8063:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: sv
+    restart: unless-stopped
+
+  app-uk:
+    build: *common-build
+    ports:
+      - "8064:8050"
+    environment:
+      <<: *common-env
+      APP_LANGUAGE: uk
+    restart: unless-stopped
