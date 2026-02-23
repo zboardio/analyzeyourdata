@@ -32,15 +32,14 @@ class Config:
     ASSETS_DIRECTORY = os.getenv('ASSETS_DIRECTORY', 'assets')
     
     # UI Assets
-    LOGO_PATH = os.getenv('LOGO_PATH', '/assets/image/logo.png')
-    FAVICON_PATH = os.getenv('FAVICON_PATH', '/assets/image/favicon.ico')
-    
+    LOGO_PATH = os.getenv('LOGO_PATH', '/assets/image/logo.png')  # If empty, logo is hidden in navbar
+    # Favicon: Dash auto-discovers /assets/favicon.ico — no config needed
+
     # External Links
     GITHUB_URL = os.getenv('GITHUB_URL', 'https://github.com/your-repo')
-    FEEDBACK_URL = os.getenv('FEEDBACK_URL', 'https://forms.google.com/feedback')
     WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://zboardio-webpage.pages.dev/en/')
     CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'contact@zboardio.com')
-    DOCUMENTATION_URL = os.getenv('DOCUMENTATION_URL', '')  # Will fallback to GITHUB_URL/wiki if empty
+    DOCUMENTATION_URL = os.getenv('DOCUMENTATION_URL', '')  # If empty, docs buttons are hidden
     DONATE_URL = os.getenv('DONATE_URL', '')
     YOUTUBE_INTRO_URL = os.getenv('YOUTUBE_INTRO_URL', '')
     
@@ -140,11 +139,6 @@ class Config:
     # In production, this should be a strong, unique secret
     # For this data analysis tool, it's mainly used for secure session handling
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
-    
-    @classmethod
-    def get_documentation_url(cls):
-        """Get documentation URL with fallback to GitHub wiki"""
-        return cls.DOCUMENTATION_URL or f"{cls.GITHUB_URL}/wiki"
     
     @classmethod
     def get_supported_file_extensions(cls):

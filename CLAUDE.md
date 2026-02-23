@@ -216,7 +216,6 @@ app.py
 | `APP_DESCRIPTION` | *(long string)* | Meta description |
 | `APP_LANGUAGE` | `en` | Language code (en/cs/da/de/es/fr/hr/it/nl/pl/pt/sk/sl/sv/uk) |
 | `GIT_COMMIT` | `dev` | Git short hash, injected at Docker build via `--build-arg` |
-| `DONATE_URL` | *(empty)* | Stripe donation page URL (shown in navbar if set) |
 
 ### Server
 | Variable | Default | Description |
@@ -243,6 +242,19 @@ app.py
 | `APP_URL_SL` | `http://localhost:8062` | Slovenian |
 | `APP_URL_SV` | `http://localhost:8063` | Swedish |
 | `APP_URL_UK` | `http://localhost:8064` | Ukrainian |
+
+### UI & Branding
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `LOGO_PATH` | *(empty)* | Navbar logo path (e.g., `/assets/image/logo.png`). If empty, logo is hidden. |
+| `GITHUB_URL` | `https://github.com/your-repo` | GitHub repository URL |
+| `WEBSITE_URL` | *(url)* | Company website URL |
+| `CONTACT_EMAIL` | `contact@...` | Contact email address |
+| `DOCUMENTATION_URL` | *(empty)* | Documentation URL. If empty, docs buttons are hidden in footer and modal. |
+| `DONATE_URL` | *(empty)* | Donation page URL. If empty, donation card is hidden. |
+| `YOUTUBE_INTRO_URL` | *(empty)* | YouTube embed URL. If empty, video section is hidden. |
+
+**Favicon**: Dash auto-discovers `/assets/favicon.ico` — no env var needed.
 
 ### Data & Storage
 | Variable | Default | Description |

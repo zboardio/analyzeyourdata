@@ -49,6 +49,14 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 2px solid var(--primary-color);
 }
 
+/* Increase navbar container padding on large screens */
+@media (min-width: 992px) {
+    .modern-navbar .container-fluid {
+        padding-right: calc(var(--bs-gutter-x) * 2);
+        padding-left: calc(var(--bs-gutter-x) * 2);
+    }
+}
+
 .modern-navbar .navbar-brand {
     font-weight: 700;
     font-size: 1.5rem;

@@ -93,22 +93,23 @@ def create_navbar():
     ]
 
     # Brand element
-    brand = html.Div([
-        html.Img(
+    brand_children = []
+    if Config.LOGO_PATH:
+        brand_children.append(html.Img(
             src=Config.LOGO_PATH,
-            height="35px",
-            className="me-2"
-        ),
-        html.Span(
-            t("app.brand_name"),
-            className="navbar-brand-text",
-            style={
-                'fontWeight': '700',
-                'fontSize': '1.5rem',
-                'color': 'white'
-            }
-        )
-    ], className="d-flex align-items-center")
+            height="40px",
+            className="me-3"
+        ))
+    brand_children.append(html.Span(
+        t("app.brand_name"),
+        className="navbar-brand-text",
+        style={
+            'fontWeight': '700',
+            'fontSize': '1.5rem',
+            'color': 'white'
+        }
+    ))
+    brand = html.Div(brand_children, className="d-flex align-items-center")
 
     return dbc.Navbar(
         dbc.Container([
@@ -172,6 +173,16 @@ def create_feedback_modal():
 def create_how_to_use_modal():
     """Create the How to Use modal component."""
     how_to_use_content = load_markdown_file("how_to_use.md")
+
+    footer_buttons = [
+        dbc.Button(t("how_to_use.btn_close"), id="how-to-use-close-btn", color="secondary", className="me-2"),
+    ]
+    if Config.DOCUMENTATION_URL:
+        footer_buttons.append(dbc.Button([
+            html.I(className="fas fa-book me-2"),
+            t("how_to_use.btn_docs")
+        ], href=Config.DOCUMENTATION_URL, target="_blank", color="primary"))
+
     return dbc.Modal([
         dbc.ModalHeader(dbc.ModalTitle([
             html.I(className="fas fa-question-circle me-2"),
@@ -182,13 +193,7 @@ def create_how_to_use_modal():
                          link_target="_blank"),
             id="how-to-use-modal-body",
         ),
-        dbc.ModalFooter([
-            dbc.Button(t("how_to_use.btn_close"), id="how-to-use-close-btn", color="secondary", className="me-2"),
-            dbc.Button([
-                html.I(className="fas fa-book me-2"),
-                t("how_to_use.btn_docs")
-            ], href=Config.get_documentation_url(), target="_blank", color="primary"),
-        ]),
+        dbc.ModalFooter(footer_buttons),
     ], id="how-to-use-modal", size="lg", scrollable=True, centered=True, is_open=False)
 
 
@@ -233,12 +238,12 @@ def create_footer():
                                 html.I(className="fas fa-comment-dots footer-icon"),
                                 t("footer.feedback")
                             ], id="feedback-footer-link", style={"cursor": "pointer"}),
-
+                        ] + ([
                             html.A([
                                 html.I(className="fas fa-book footer-icon"),
                                 t("footer.documentation")
-                            ], href=Config.get_documentation_url(), target="_blank"),
-                        ], className="footer-links mb-4"),
+                            ], href=Config.DOCUMENTATION_URL, target="_blank"),
+                        ] if Config.DOCUMENTATION_URL else []), className="footer-links mb-4"),
 
                         # Build transparency
                         html.Div([
