@@ -1,8 +1,16 @@
-Učitajte svoje podatke, istražite ih interaktivno i stvorite vizualizacije — sve u vašem pregledniku. Nikakvi podaci se ne pohranjuju na poslužitelju.
+> **Privatnost zajamčena**: Nikakvi podaci se ne pohranjuju na poslužitelju. Podaci ostaju u vašoj sesiji preglednika.
+
+- Učitajte svoje podatke >
+- Istražite ih interaktivno >
+- Stvorite vizualizacije >
+- Izvezite filtrirane ili agregirane podatke u **CSV** ili **Excel** >
+- Izvezite generirane grafikone kao **PNG** ili **interaktivni HTML**
 
 > **Ažuriranje grafikona u stvarnom vremenu** — filtrirajte ili grupirajte podatke u tablici i svi grafikoni se odmah ažuriraju. To je osnovna snaga ovog alata.
 
-### Podržani izvori podataka
+---
+
+#### Podržani izvori podataka
 
 **Izravno učitavanje:**
 - Excel `.xlsx`, `.xls`
@@ -17,11 +25,15 @@ Učitajte svoje podatke, istražite ih interaktivno i stvorite vizualizacije —
 - Google Sheets
 - Airtable preko Personal Access Token
 
-### Ključne značajke
+---
 
-- **Interaktivni AG Grid** — sortirajte, filtrirajte, grupirajte i okrenite svoje podatke profesionalnim alatima
+#### Ključne značajke
+
+- **Interaktivni AG Grid** — sortirajte, filtrirajte, grupirajte i pivotirajte svoje podatke profesionalnim alatima
 - **Do 3 neovisna grafikona** — odaberite između {{VALUE_CHART_TYPE_SUPPORTED}} vrsta grafikona
 - **Analiza datuma i vremena** — automatsko generiranje kolona temeljenih na vremenu iz vaših podataka
 - **Izvoz grafikona** — preuzmite pojedine grafikone ili kombinirane nadzorne ploče kao interaktivne HTML datoteke
 
-> **Izvezite podatke iz tablice** — kliknite desnom tipkom miša u AG Grid tablici za izvoz trenutno filtriranih i strukturiranih podataka izravno u **CSV ili Excel** datoteku. Ono što vidite u tablici upravo je ono što dobivate u izvozu.
+> **Izvezite podatke** iz tablice AG Grid >> **kliknite desnom tipkom miša u tablici AG Grid** za izvoz trenutno filtriranih i strukturiranih podataka izravno u **CSV** ili **Excel** datoteku.
+
+---
