@@ -40,14 +40,27 @@ dist/
 # pyenv
 .python-version
 
-# dotenv
+# dotenv and environment files
 .env
+.env.local
+.env.production
+.env.*.local
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Secrets and keys (never commit these)
+*.pem
+*.key
+secrets/
+
+# Cloudflare tunnel config (contains tunnel ID)
+# Keep config.example.yml, ignore actual config
+deploy/cloudflared/config.yml
+deploy/cloudflared/*.json
 
 # logs
 *.log
@@ -60,4 +73,7 @@ Desktop.ini
 
 # development and debug scripts
 development/
+deploy/
 README_DEVELOPER_INTERNAL.md
+README_DEPLOY_INTERNAL.md
+README_AUTOMATION_STACK_INTERNAL.md
