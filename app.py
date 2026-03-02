@@ -115,9 +115,12 @@ app.layout = html.Div([
         # html.H1(t('app.title'), style={'textAlign': 'center'}),
 
         html.Div(
-            html.Img(src='/assets/image/zboardio-data-analysis.gif',
-                     style={'maxWidth': '60%', 'height': 'auto', 'borderRadius': '8px'}),
-            style={'textAlign': 'center', 'padding': '10px 0'},
+            html.Img(
+                src='/assets/image/zboardio-data-analysis.gif',
+                className='hero-image',
+                alt='Welcome to the zboardio.com',
+            ),
+            className='hero-section',
         ),
 
         dcc.Markdown(info_md, className="markdown-content", link_target="_blank"),

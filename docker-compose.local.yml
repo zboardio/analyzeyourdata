@@ -1,0 +1,200 @@
+# Docker Swarm Stack - Local Build (Manual Deploy)
+#
+# Deploy:
+#   cd /opt/analyzeyourdata
+#   git pull origin main
+#   docker build -t analyzeyourdata:latest --build-arg GIT_COMMIT=$(git rev-parse --short HEAD) .
+#   docker stack deploy -c docker-compose.local.yml ayd
+#
+# The env_file directive loads variables directly - no shell export needed.
+
+networks:
+  default:
+    driver: overlay
+    ipam:
+      config:
+        - subnet: 10.10.0.0/24
+
+x-standard-deploy: &standard-deploy
+  replicas: 1
+  update_config:
+    parallelism: 1
+    delay: 10s
+    failure_action: rollback
+    order: start-first
+  restart_policy:
+    condition: on-failure
+    delay: 5s
+    max_attempts: 3
+  resources:
+    limits:
+      cpus: '1.0'
+      memory: 2G
+    reservations:
+      cpus: '0.1'
+      memory: 384M
+
+x-high-traffic-deploy: &high-traffic-deploy
+  replicas: 3
+  update_config:
+    parallelism: 1
+    delay: 10s
+    failure_action: rollback
+    order: start-first
+  restart_policy:
+    condition: on-failure
+    delay: 5s
+    max_attempts: 3
+  resources:
+    limits:
+      cpus: '1.5'
+      memory: 2G
+    reservations:
+      cpus: '0.25'
+      memory: 512M
+
+x-common-settings: &common-settings
+  image: analyzeyourdata:latest
+  env_file: .env
+  healthcheck:
+    test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8050/')"]
+    interval: 30s
+    timeout: 30s
+    retries: 5
+    start_period: 60s
+
+services:
+  app-en:
+    <<: *common-settings
+    ports:
+      - "8050:8050"
+    environment:
+      - APP_LANGUAGE=en
+    deploy:
+      <<: *high-traffic-deploy
+
+  app-es:
+    <<: *common-settings
+    ports:
+      - "8055:8050"
+    environment:
+      - APP_LANGUAGE=es
+    deploy:
+      <<: *high-traffic-deploy
+
+  app-cs:
+    <<: *common-settings
+    ports:
+      - "8051:8050"
+    environment:
+      - APP_LANGUAGE=cs
+    deploy:
+      <<: *standard-deploy
+
+  app-da:
+    <<: *common-settings
+    ports:
+      - "8054:8050"
+    environment:
+      - APP_LANGUAGE=da
+    deploy:
+      <<: *standard-deploy
+
+  app-de:
+    <<: *common-settings
+    ports:
+      - "8052:8050"
+    environment:
+      - APP_LANGUAGE=de
+    deploy:
+      <<: *standard-deploy
+
+  app-fr:
+    <<: *common-settings
+    ports:
+      - "8056:8050"
+    environment:
+      - APP_LANGUAGE=fr
+    deploy:
+      <<: *standard-deploy
+
+  app-hr:
+    <<: *common-settings
+    ports:
+      - "8057:8050"
+    environment:
+      - APP_LANGUAGE=hr
+    deploy:
+      <<: *standard-deploy
+
+  app-it:
+    <<: *common-settings
+    ports:
+      - "8058:8050"
+    environment:
+      - APP_LANGUAGE=it
+    deploy:
+      <<: *standard-deploy
+
+  app-nl:
+    <<: *common-settings
+    ports:
+      - "8059:8050"
+    environment:
+      - APP_LANGUAGE=nl
+    deploy:
+      <<: *standard-deploy
+
+  app-pl:
+    <<: *common-settings
+    ports:
+      - "8053:8050"
+    environment:
+      - APP_LANGUAGE=pl
+    deploy:
+      <<: *standard-deploy
+
+  app-pt:
+    <<: *common-settings
+    ports:
+      - "8060:8050"
+    environment:
+      - APP_LANGUAGE=pt
+    deploy:
+      <<: *standard-deploy
+
+  app-sk:
+    <<: *common-settings
+    ports:
+      - "8061:8050"
+    environment:
+      - APP_LANGUAGE=sk
+    deploy:
+      <<: *standard-deploy
+
+  app-sl:
+    <<: *common-settings
+    ports:
+      - "8062:8050"
+    environment:
+      - APP_LANGUAGE=sl
+    deploy:
+      <<: *standard-deploy
+
+  app-sv:
+    <<: *common-settings
+    ports:
+      - "8063:8050"
+    environment:
+      - APP_LANGUAGE=sv
+    deploy:
+      <<: *standard-deploy
+
+  app-uk:
+    <<: *common-settings
+    ports:
+      - "8064:8050"
+    environment:
+      - APP_LANGUAGE=uk
+    deploy:
+      <<: *standard-deploy

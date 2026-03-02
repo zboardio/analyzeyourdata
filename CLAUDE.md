@@ -31,9 +31,13 @@ analyzeyourdata-en/
 ├── PRIVACY.md                      # Data privacy policy
 ├── requirements.txt                # Pinned dependencies
 ├── Dockerfile                      # Production container
-├── docker-compose.yml              # Multi-language orchestration (15 services)
+├── docker-compose.yml              # Local development (15 services)
+├── docker-compose.swarm.yml        # Production Swarm deployment with replicas
 ├── .env                            # Real credentials (gitignored)
 ├── .env.example                    # Env var template
+├── .github/
+│   └── workflows/
+│       └── deploy.yml              # CI/CD: build, push to GHCR, deploy to VDS
 ├── components/
 │   ├── __init__.py
 │   ├── layout.py                   # Navbar, footer, feedback modal, navbar callbacks
@@ -278,24 +282,20 @@ app.py
 pip install -r requirements.txt
 python app.py                        # Starts on http://127.0.0.1:8050
 
-# Production (Docker)
+# Local Docker (without Swarm)
 docker build -t analyzeyourdata .
 docker compose up                    # All 15 language instances
 docker compose up app-en             # English only (:8050)
-docker compose up app-cs             # Czech only (:8051)
-docker compose up app-de             # German only (:8052)
-docker compose up app-pl             # Polish only (:8053)
-docker compose up app-da             # Danish only (:8054)
-docker compose up app-es             # Spanish only (:8055)
-docker compose up app-fr             # French only (:8056)
-docker compose up app-hr             # Croatian only (:8057)
-docker compose up app-it             # Italian only (:8058)
-docker compose up app-nl             # Dutch only (:8059)
-docker compose up app-pt             # Portuguese only (:8060)
-docker compose up app-sk             # Slovak only (:8061)
-docker compose up app-sl             # Slovenian only (:8062)
-docker compose up app-sv             # Swedish only (:8063)
-docker compose up app-uk             # Ukrainian only (:8064)
+
+# Production (Docker Swarm)
+docker swarm init                                    # One-time setup
+docker stack deploy -c docker-compose.swarm.yml ayd # Deploy stack
+docker service ls                                    # List services
+docker service ps ayd_app-en                         # View replicas
+docker service logs ayd_app-en --follow              # Stream logs
+docker service scale ayd_app-en=5                    # Scale up
+docker service update --image ghcr.io/zboardio/analyzeyourdata:latest ayd_app-en  # Update
+docker service rollback ayd_app-en                   # Rollback
 
 # Gunicorn (without Docker)
 gunicorn app:server -b 0.0.0.0:8050 --workers 2 --timeout 120
@@ -303,20 +303,45 @@ gunicorn app:server -b 0.0.0.0:8050 --workers 2 --timeout 120
 
 ## Deployment Architecture
 
-```
-                         Cloudflare Tunnel
-                               │
-    ┌──────┬──────┬──────┬─────┴┬──────┬──────┬──────┐
-    │      │      │      │      │      │      │    ...│
-  en.*   cs.*   da.*   de.*   es.*   fr.*   hr.*    uk.*
-    │      │      │      │      │      │      │      │
-  :8050  :8051  :8054  :8052  :8055  :8056  :8057  :8064
+Production runs on Docker Swarm with Cloudflare Tunnel routing:
 
-15 containers: en cs da de es fr hr it nl pl pt sk sl sv uk
-Ports: 8050-8064 (see docker-compose.yml for exact mapping)
+```
+                         Internet
+                            │
+                    Cloudflare CDN
+                            │
+                    Cloudflare Tunnel
+                            │
+          ┌─────────────────┴─────────────────┐
+          │         VDS (Docker Swarm)        │
+          │                                    │
+          │  ┌────────────────────────────┐   │
+          │  │   Portainer :9443 (UI)     │   │
+          │  └────────────────────────────┘   │
+          │                                    │
+          │  ┌────────────────────────────┐   │
+          │  │   cloudflared (tunnel)     │   │
+          │  └────────────┬───────────────┘   │
+          │               │                    │
+          │    ┌──────────┴──────────┐        │
+          │    │   Docker Swarm      │        │
+          │  ┌─┴──┬──────┬──────┬───┴─┐      │
+          │  │en×3│es×3  │cs×1  │...×1│      │
+          │  │8050│8055  │8051  │     │      │
+          │  └────┴──────┴──────┴─────┘      │
+          └────────────────────────────────────┘
+
+Domain routing (Cloudflare Tunnel ingress):
+  analyzeyourdata.zboardio.com → :8050 → app-en (3 replicas)
+  analizatusdatos.zboardio.com → :8055 → app-es (3 replicas)
+  analyzujsvojedata.zboardio.com → :8051 → app-cs (1 replica)
+  ... (15 languages total, see deploy/cloudflared/config.example.yml)
+
+Ports: 8050-8064 (see docker-compose.swarm.yml for exact mapping)
 ```
 
-Each container is identical code, differentiated only by environment variables.
+Each service is identical code, differentiated only by `APP_LANGUAGE` env var.
+Docker Swarm automatically load-balances requests across replicas.
 
 ## Known Upstream Issues
 
@@ -397,4 +422,6 @@ Similarly, Bootstrap component-level colors (e.g., `.btn-outline-primary`) use h
 ### Remaining checklist
 
 - [x] Add `GIT_COMMIT` to `docker-compose.yml` build args
-- [ ] Set up CI/CD pipeline (GitHub Actions or Coolify auto-deploy)
+- [x] Set up CI/CD pipeline (`.github/workflows/deploy.yml`)
+- [ ] Configure GitHub Actions secrets (VDS_HOST, VDS_USER, VDS_SSH_KEY)
+- [ ] Deploy to production VDS

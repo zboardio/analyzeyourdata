@@ -1,6 +1,6 @@
 Nahrajte svá data, interaktivně je prozkoumejte a vytvořte vizualizace — vše přímo v prohlížeči. Na serveru se neukládají žádná data.
 
-> **Aktualizace grafů v reálném čase** — filtrujte nebo seskupujte data v tabulce a všechny grafy se okamžitě aktualizují. To je hlavní síla tohoto nástroje.
+> **Aktualizace grafů v reálném čase** — filtrujte nebo seskupujte data v tabulce a všechny grafy se okamžitě aktualizují.
 
 ### Podporované zdroje dat
 

@@ -99,6 +99,34 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--light-text) !important;
 }
 
+/* Hero image */
+.hero-section {
+    padding: 10px 0;
+}
+
+.hero-image {
+    width: 75%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .hero-image {
+        width: 80%;
+    }
+}
+
+/* Phone */
+@media (max-width: 600px) {
+    .hero-image {
+        width: 96%;
+        border-radius: 0; /* edge-to-edge on phone looks cleaner */
+    }
+}
+
 /* CTA Button in Navbar */
 .navbar-cta {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%) !important;
