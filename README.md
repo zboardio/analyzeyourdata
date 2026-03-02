@@ -129,5 +129,5 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 <p align="center">
-  Developed by <strong><a href="https://zboardio-webpage.pages.dev/en/#hero">zboardio</a></strong>
+  Developed with care and respect to the time of others by <strong><a href="https://zboardio-webpage.pages.dev/en/#hero">zboardio</a></strong>
 </p>
