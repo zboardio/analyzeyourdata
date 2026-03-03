@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Confirmez ou ajustez le délimiteur, puis cliquez sur le bouton Confirmer.",
     "messages.fields_count": "{count} champs",
 
+    "test_dataset.try_label": "Essayez avec notre jeu de données de test :",
+    "test_dataset.try_label_plural": "Essayez avec nos jeux de données de test",
+    "test_dataset.browse_btn": "Parcourir les jeux de données",
+    "test_dataset.copy_btn": "Copier",
+    "test_dataset.copied_btn": "Copié !",
+
     "donate.heading": "Offre un café ou un shot de rhum des Caraïbes à notre équipe de développement",
     "donate.description": "Cet outil est gratuit et open source. S'il t'a fait gagner du temps, pense à soutenir notre travail !",
     "donate.btn": "Santé !"

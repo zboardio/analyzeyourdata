@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Potrdite ali prilagodite ločilo, nato kliknite gumb Potrdi.",
     "messages.fields_count": "{count} polj",
 
+    "test_dataset.try_label": "Preizkusite z našim testnim naborom podatkov:",
+    "test_dataset.try_label_plural": "Preizkusite z našimi testnimi nabori podatkov",
+    "test_dataset.browse_btn": "Prebrskaj nabore podatkov",
+    "test_dataset.copy_btn": "Kopiraj",
+    "test_dataset.copied_btn": "Kopirano!",
+
     "donate.heading": "Kupi naši razvojni ekipi kavo ali karibski rumov šot",
     "donate.description": "To orodje je brezplačno in odprtokodno. Če ti je prihranilo čas, razmisli o podpori našemu delu!",
     "donate.btn": "Na zdravje!"

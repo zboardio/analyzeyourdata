@@ -16,6 +16,52 @@ from utils.mongodb import log_usage
 
 def register_callbacks(app):
 
+    # Clientside callback: copy SharePoint test URL to clipboard
+    app.clientside_callback(
+        """
+        function(n_clicks) {
+            if (!n_clicks) return window.dash_clientside.no_update;
+            var input = document.getElementById('test-url-sharepoint');
+            if (input) {
+                navigator.clipboard.writeText(input.value);
+                var label = document.getElementById('copy-sharepoint-label');
+                if (label) {
+                    var original = label.textContent;
+                    label.textContent = '""" + t('test_dataset.copied_btn') + """';
+                    setTimeout(function() { label.textContent = original; }, 1500);
+                }
+            }
+            return window.dash_clientside.no_update;
+        }
+        """,
+        Output('copy-sharepoint-test-url', 'title'),
+        Input('copy-sharepoint-test-url', 'n_clicks'),
+        prevent_initial_call=True
+    )
+
+    # Clientside callback: copy Google Sheets test URL to clipboard
+    app.clientside_callback(
+        """
+        function(n_clicks) {
+            if (!n_clicks) return window.dash_clientside.no_update;
+            var input = document.getElementById('test-url-google');
+            if (input) {
+                navigator.clipboard.writeText(input.value);
+                var label = document.getElementById('copy-google-label');
+                if (label) {
+                    var original = label.textContent;
+                    label.textContent = '""" + t('test_dataset.copied_btn') + """';
+                    setTimeout(function() { label.textContent = original; }, 1500);
+                }
+            }
+            return window.dash_clientside.no_update;
+        }
+        """,
+        Output('copy-google-test-url', 'title'),
+        Input('copy-google-test-url', 'n_clicks'),
+        prevent_initial_call=True
+    )
+
     @app.callback(
         [Output('upload-section', 'style'),
          Output('sharepoint-section', 'style'),

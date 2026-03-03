@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Bekräfta eller justera avgränsare, klicka sedan på Bekräfta-knappen.",
     "messages.fields_count": "{count} fält",
 
+    "test_dataset.try_label": "Testa med vår testdatamängd:",
+    "test_dataset.try_label_plural": "Testa med våra testdatamängder",
+    "test_dataset.browse_btn": "Bläddra bland datamängder",
+    "test_dataset.copy_btn": "Kopiera",
+    "test_dataset.copied_btn": "Kopierat!",
+
     "donate.heading": "Bjud vårt devTeam på en kaffe eller en karibisk rom shot",
     "donate.description": "Detta verktyg är gratis och öppen källkod. Om det sparade din tid, överväg att stödja vårt arbete!",
     "donate.btn": "Skål!"

@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Confirme o ajuste el delimitador, luego haga clic en el botón Confirmar.",
     "messages.fields_count": "{count} campos",
 
+    "test_dataset.try_label": "Prueba con nuestro conjunto de datos de prueba:",
+    "test_dataset.try_label_plural": "Prueba con nuestros conjuntos de datos de prueba",
+    "test_dataset.browse_btn": "Explorar conjuntos de datos",
+    "test_dataset.copy_btn": "Copiar",
+    "test_dataset.copied_btn": "¡Copiado!",
+
     "donate.heading": "Invítale un café o un trago de ron caribeño a nuestro equipo de desarrollo",
     "donate.description": "Esta herramienta es gratuita y de código abierto. ¡Si te ahorró tiempo, considera apoyar nuestro trabajo!",
     "donate.btn": "¡Salud!"

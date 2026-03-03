@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Confirm or adjust delimiter, then click Confirm button.",
     "messages.fields_count": "{count} fields",
 
+    "test_dataset.try_label": "Try with our test dataset:",
+    "test_dataset.try_label_plural": "Try with our test datasets",
+    "test_dataset.browse_btn": "Browse Datasets",
+    "test_dataset.copy_btn": "Copy",
+    "test_dataset.copied_btn": "Copied!",
+
     "donate.heading": "Buy our devTeam a coffee or a Caribbean rum shot",
     "donate.description": "This tool is free and open source. If it saved you time, consider supporting our work!",
     "donate.btn": "Cheers!"

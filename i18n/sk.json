@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Potvrďte alebo upravte oddeľovač a potom kliknite na tlačidlo Potvrdiť.",
     "messages.fields_count": "{count} polí",
 
+    "test_dataset.try_label": "Vyskúšajte s naším testovacím súborom údajov:",
+    "test_dataset.try_label_plural": "Vyskúšajte s našimi testovacími súbormi údajov",
+    "test_dataset.browse_btn": "Prehľadávať datasety",
+    "test_dataset.copy_btn": "Kopírovať",
+    "test_dataset.copied_btn": "Skopírované!",
+
     "donate.heading": "Kúp nášmu vývojovému tímu kávu alebo karibský rumový panák",
     "donate.description": "Tento nástroj je bezplatný a open source. Ak ti ušetril čas, zváž podporu našej práce!",
     "donate.btn": "Na zdravie!"

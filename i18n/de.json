@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Bestätigen oder ändern Sie das Trennzeichen und klicken Sie dann auf Bestätigen.",
     "messages.fields_count": "{count} Felder",
 
+    "test_dataset.try_label": "Mit unserem Testdatensatz ausprobieren:",
+    "test_dataset.try_label_plural": "Mit unseren Testdatensätzen ausprobieren",
+    "test_dataset.browse_btn": "Datensätze durchsuchen",
+    "test_dataset.copy_btn": "Kopieren",
+    "test_dataset.copied_btn": "Kopiert!",
+
     "donate.heading": "Spendiere unserem devTeam einen Kaffee oder einen karibischen Rum-Shot",
     "donate.description": "Dieses Tool ist kostenlos und Open Source. Wenn es dir Zeit gespart hat, unterstütze unsere Arbeit!",
     "donate.btn": "Prost!"

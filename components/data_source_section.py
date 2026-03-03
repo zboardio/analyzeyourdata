@@ -3,6 +3,7 @@ import dash_bootstrap_components as dbc
 
 from config import Config
 from i18n import t
+from utils.general import get_variable
 
 
 def create_data_source_section():
@@ -43,6 +44,19 @@ def create_data_source_section():
                 className='upload-area',
                 multiple=False
             ),
+            # Test dataset link for Direct File Upload
+            html.Div([
+                html.I(className="fas fa-flask me-2"),
+                html.Span(t('test_dataset.try_label_plural')),
+                html.A(
+                    [t('test_dataset.browse_btn'), " ", html.I(className="fas fa-arrow-right ms-1")],
+                    href=get_variable('URL_TEST_DATASET_FOLDER'),
+                    target='_blank',
+                    className='btn btn-outline-primary ms-2',
+                ),
+            ], id='test-dataset-upload-section', className='test-dataset-section test-dataset-inline',
+               style={'display': 'none'} if not get_variable('URL_TEST_DATASET_FOLDER') else {}),
+
             html.Div(id='delimiter-selection-container', style={'display':'none', 'marginTop':'1rem'}, children=[
                 dbc.Alert(id='delimiter-preview-alert', is_open=False, color='warning', style={'marginTop':'20px'}),
                 dbc.Label(t('delimiter.label'), style={'marginTop': '1.25rem', 'marginBottom': '0.75rem'}),
@@ -102,6 +116,26 @@ def create_data_source_section():
                     ], className='mb-3'),
                     dbc.Alert(t('sharepoint.access_alert'),
                              color='info', className='mb-3'),
+                    # Test dataset for SharePoint
+                    html.Div([
+                        html.Div([
+                            html.I(className="fas fa-flask me-2"),
+                            html.Span(t('test_dataset.try_label')),
+                        ], className='mb-2'),
+                        dbc.InputGroup([
+                            dbc.Input(
+                                id='test-url-sharepoint',
+                                value=get_variable('URL_TEST_DATASET_SHAREPOINT'),
+                                readonly=True,
+                            ),
+                            dbc.Button(
+                                [html.I(className="fas fa-copy me-1"), html.Span(t('test_dataset.copy_btn'), id='copy-sharepoint-label')],
+                                id='copy-sharepoint-test-url',
+                                color='outline-primary',
+                            ),
+                        ]),
+                    ], id='test-dataset-sharepoint-section', className='test-dataset-section',
+                       style={'display': 'none'} if not get_variable('URL_TEST_DATASET_SHAREPOINT') else {}),
                 ], width=12)
             ]),
             # Sheet selection for SharePoint
@@ -132,7 +166,27 @@ def create_data_source_section():
                 dbc.Label(t('google_sheets.gid_label'), style={'fontWeight': 'bold'}),
                 dbc.Input(id='google-sheets-gid-input', placeholder=t('google_sheets.gid_placeholder'), className='mb-3'),
                 dbc.Alert(t('google_sheets.gid_help'),
-                         color='info', className='mb-3')
+                         color='info', className='mb-3'),
+                # Test dataset for Google Sheets
+                html.Div([
+                    html.Div([
+                        html.I(className="fas fa-flask me-2"),
+                        html.Span(t('test_dataset.try_label')),
+                    ], className='mb-2'),
+                    dbc.InputGroup([
+                        dbc.Input(
+                            id='test-url-google',
+                            value=get_variable('URL_TEST_DATASET_GOOGLE'),
+                            readonly=True,
+                        ),
+                        dbc.Button(
+                            [html.I(className="fas fa-copy me-1"), html.Span(t('test_dataset.copy_btn'), id='copy-google-label')],
+                            id='copy-google-test-url',
+                            color='outline-primary',
+                        ),
+                    ]),
+                ], id='test-dataset-google-section', className='test-dataset-section',
+                   style={'display': 'none'} if not get_variable('URL_TEST_DATASET_GOOGLE') else {}),
             ])
         ], id='google-sheets-section', style={'display': 'none'}),
 

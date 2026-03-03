@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Potwierdź lub dostosuj separator, a następnie kliknij przycisk Potwierdź.",
     "messages.fields_count": "{count} pól",
 
+    "test_dataset.try_label": "Wypróbuj z naszym zestawem danych testowych:",
+    "test_dataset.try_label_plural": "Wypróbuj z naszymi zestawami danych testowych",
+    "test_dataset.browse_btn": "Przeglądaj zestawy danych",
+    "test_dataset.copy_btn": "Kopiuj",
+    "test_dataset.copied_btn": "Skopiowano!",
+
     "donate.heading": "Postaw naszemu devTeamowi kawę lub shot karaibskiego rumu",
     "donate.description": "To narzędzie jest darmowe i open source. Jeśli zaoszczędziło Ci czas, rozważ wsparcie naszej pracy!",
     "donate.btn": "Na zdrowie!"

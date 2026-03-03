@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Bekræft eller juster separator, klik derefter på Bekræft-knappen.",
     "messages.fields_count": "{count} felter",
 
+    "test_dataset.try_label": "Prøv med vores testdatasæt:",
+    "test_dataset.try_label_plural": "Prøv med vores testdatasæt",
+    "test_dataset.browse_btn": "Gennemse datasæt",
+    "test_dataset.copy_btn": "Kopiér",
+    "test_dataset.copied_btn": "Kopieret!",
+
     "donate.heading": "Køb en kaffe eller et caribisk rom-shot til vores devTeam",
     "donate.description": "Dette værktøj er gratis og open source. Hvis det sparede dig tid, overvej at støtte vores arbejde!",
     "donate.btn": "Skål!"

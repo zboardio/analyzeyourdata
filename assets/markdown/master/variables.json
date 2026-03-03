@@ -1,4 +1,5 @@
 {
+    "URL_TEST_DATASET_FOLDER": "https://drive.google.com/drive/folders/EXAMPLE_FOLDER_ID",
     "URL_TEST_DATASET_SHAREPOINT": "https://1drv.ms/x/s!EXAMPLE_SHAREPOINT_URL",
     "URL_TEST_DATASET_GOOGLE": "https://docs.google.com/spreadsheets/d/EXAMPLE_SPREADSHEET_ID/edit",
     "URL_DOCUMENTATION_AIRTABLE_TOKENS": "https://airtable.com/create/tokens",

@@ -204,6 +204,12 @@
     "messages.confirm_delimiter": "Potvrdite ili prilagodite rastavni znak, zatim kliknite gumb Potvrdi.",
     "messages.fields_count": "{count} polja",
 
+    "test_dataset.try_label": "Isprobajte s našim testnim skupom podataka:",
+    "test_dataset.try_label_plural": "Isprobajte s našim testnim skupovima podataka",
+    "test_dataset.browse_btn": "Pregledaj skupove podataka",
+    "test_dataset.copy_btn": "Kopiraj",
+    "test_dataset.copied_btn": "Kopirano!",
+
     "donate.heading": "Kupi našem razvojnom timu kavu ili čašicu karipskog ruma",
     "donate.description": "Ovaj alat je besplatan i otvorenog koda. Ako ti je uštedio vrijeme, razmisli o podršci našem radu!",
     "donate.btn": "Živjeli!"

@@ -221,7 +221,7 @@ a {
     transition: all 0.3s ease;
 }
 
-a.btn {
+a.btn:not(.btn-outline-primary):not(.btn-outline-secondary):not(.btn-outline-success):not(.btn-outline-danger):not(.btn-outline-warning):not(.btn-outline-info) {
     color: white !important;
 }
 
@@ -756,4 +756,32 @@ a:hover {
 .powered-by-card:hover i {
     transform: scale(1.1);
     transition: transform 0.3s ease;
+}
+
+/* Test Dataset Sections */
+.test-dataset-section {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--secondary-color);
+    background: rgba(0, 152, 163, 0.03);
+    border: 1px solid rgba(0, 152, 163, 0.12);
+    border-radius: 8px;
+}
+
+.test-dataset-section .fa-flask {
+    color: var(--primary-color);
+    opacity: 0.7;
+}
+
+.test-dataset-section .form-control[readonly] {
+    background: rgba(0, 152, 163, 0.04);
+    cursor: text;
+}
+
+.test-dataset-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }

@@ -12,6 +12,11 @@ if _variables_path.exists():
         _markdown_variables = json.load(_f)
 
 
+def get_variable(key, default=''):
+    """Get a value from the markdown variables dict (assets/markdown/master/variables.json)."""
+    return _markdown_variables.get(key, default)
+
+
 def _resolve_variables(content):
     """Replace {{VARIABLE}} placeholders with values from masters/variables.json."""
     for key, value in _markdown_variables.items():
