@@ -688,6 +688,18 @@ a:hover {
     margin-bottom: 0.5rem;
 }
 
+#how-to-use-modal .markdown-content h4 {
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#how-to-use-modal .markdown-content h5 {
+    font-size: 0.875rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
 #how-to-use-modal .markdown-content code {
     background: rgba(0, 152, 163, 0.08);
     color: var(--secondary-color);
@@ -722,7 +734,7 @@ a:hover {
 
 #how-to-use-modal .markdown-content hr {
     border: none;
-    border-top: 1px solid #dee2e6;
+    border-top: 2px solid rgba(0, 152, 163, 0.3);
     margin: 1.5rem 0;
 }
 
