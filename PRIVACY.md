@@ -15,7 +15,7 @@
 
 ## External Data Sources
 
-- SharePoint/Google Sheets/Airtable data is fetched server-side, processed in-memory, then sent to your browser
+- Google Sheets/Airtable data is fetched server-side, processed in-memory, then sent to your browser
 - No external source data is cached or stored on the server
 - Credentials (Airtable API keys) are held in browser session memory only
 

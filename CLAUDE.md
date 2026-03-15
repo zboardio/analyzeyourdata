@@ -3,10 +3,11 @@
 ## Security
 
 - NEVER read `.env`, `.env.*` files except `.env.example` — they contain secrets
+- NEVER reference `docs/internal/`, its contents, or its file structure in any committed file — this is a public repository
 
 ## Overview
 
-Interactive data analysis and visualization tool built with Dash. Users upload data (CSV, Excel, JSON, Parquet, SQLite, SharePoint, Google Sheets, Airtable), apply optional datetime processing, view/filter in AG Grid, and create up to 3 independent charts with export.
+Interactive data analysis and visualization tool built with Dash. Users upload data (CSV, Excel, JSON, Parquet, SQLite, Google Sheets, Airtable), apply optional datetime processing, view/filter in AG Grid, and create up to 3 independent charts with export.
 
 Deployed as one Docker container per language (15 languages), routed via Cloudflare Tunnel subdomains.
 
@@ -39,6 +40,9 @@ analyzeyourdata-en/
 ├── docker-compose.swarm.yml        # Production Swarm deployment with replicas
 ├── .env                            # Real credentials (gitignored)
 ├── .env.example                    # Env var template
+├── docs/
+│   ├── README.md                   # Public docs index
+│   └── DEVELOPER.md                # Public developer guide
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml              # CI/CD: build, push to GHCR, deploy to VDS
@@ -49,14 +53,14 @@ analyzeyourdata-en/
 │   └── chart_config_section.py     # Chart config panels (type, axes, titles)
 ├── callbacks/
 │   ├── __init__.py
-│   ├── data_loading.py             # Upload/SharePoint/Google/Airtable/SQLite callbacks
+│   ├── data_loading.py             # Upload/Google/Airtable/SQLite callbacks
 │   ├── data_processing.py          # Datetime toggle, grid population, dropdown options
 │   └── chart_callbacks.py          # Chart render/visibility/download + dashboard export
 ├── utils/
 │   ├── __init__.py
 │   ├── chart_factory.py            # ChartFactory class (chart type → plotly figure)
 │   ├── data_processing.py          # File parsing, datetime conversion, SQLite helpers
-│   ├── data_sources.py             # DataSourceHandler (SharePoint, Google, Airtable)
+│   ├── data_sources.py             # DataSourceHandler (Google, Airtable)
 │   ├── general.py                  # load_markdown_file() with language fallback
 │   ├── mongodb.py                  # MongoDB: log_usage(), save_feedback()
 │   └── analytics.py                # RAM monitoring (monitor_memory)
@@ -114,7 +118,7 @@ from callbacks.data_processing import register_callbacks as register_data_proces
 from callbacks.chart_callbacks import register_callbacks as register_chart_callbacks
 
 register_navbar_callbacks(app)   # from components.layout
-register_data_loading(app)       # 8 callbacks: upload, SharePoint, Google, Airtable, SQLite
+register_data_loading(app)       # 8 callbacks: upload, Google, Airtable, SQLite
 register_data_processing(app)    # 4 callbacks: datetime toggle, grid, dropdowns
 register_chart_callbacks(app)    # 10 callbacks: 3×render, 3×visibility, 3×download, dashboard
 ```
@@ -207,7 +211,7 @@ app.py
 
 ### Data Flow
 
-1. **Data Source** -> Upload / SharePoint / Google Sheets / Airtable / SQLite
+1. **Data Source** -> Upload / Google Sheets / Airtable / SQLite
 2. **Store** -> `dcc.Store(id='stored-data')` holds data as list of dicts
 3. **Datetime Processing** -> Optional enrichment (ts, tsDate, tsHour, etc.) — disabled by default
 4. **AG Grid** -> Interactive table with filtering, grouping, pivoting
@@ -339,7 +343,7 @@ Domain routing (Cloudflare Tunnel ingress):
   analyzeyourdata.zboardio.com → :8050 → app-en (3 replicas)
   analizatusdatos.zboardio.com → :8055 → app-es (3 replicas)
   analyzujsvojedata.zboardio.com → :8051 → app-cs (1 replica)
-  ... (15 languages total, see deploy/cloudflared/config.example.yml)
+  ... (15 languages total)
 
 Ports: 8050-8064 (see docker-compose.swarm.yml for exact mapping)
 ```
@@ -360,7 +364,7 @@ Both are cosmetic (no functional impact). Tracked upstream:
 - [plotly/dash#3199](https://github.com/plotly/dash/issues/3199) — dcc.Markdown React 18 compatibility
 - [plotly/dash#3231](https://github.com/plotly/dash/issues/3231) — React 19 support
 
-**Action:** Remove this section once resolved upstream. See `Dash_feedback.md` for full details.
+**Action:** Remove this section once resolved upstream.
 
 ### Inline styles must use camelCase
 

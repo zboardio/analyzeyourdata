@@ -27,7 +27,7 @@ Whether you're a data analyst exploring a dataset, a manager reviewing monthly r
 
 | Step | What you do |
 |------|------------|
-| **1. Load** | Drag & drop a file, paste a SharePoint/Google Sheets link, or connect to Airtable |
+| **1. Load** | Drag & drop a file, paste a Google Sheets link, or connect to Airtable |
 | **2. Explore** | Sort, filter, group, and pivot your data in an enterprise-grade AG Grid table |
 | **3. Visualize** | Pick from 13 chart types, configure up to 3 independent charts |
 | **4. Connect** | Filter data in the grid — **all charts update in real-time** |
@@ -41,10 +41,6 @@ Whether you're a data analyst exploring a dataset, a manager reviewing monthly r
   <tr>
     <td><strong>📤 Direct Upload</strong></td>
     <td>Excel <code>.xlsx</code> <code>.xls</code> · CSV <code>.csv</code> <code>.txt</code> <code>.log</code> · JSON · Parquet · HDF5 · SQLite <code>.db</code> <code>.sqlite</code></td>
-  </tr>
-  <tr>
-    <td><strong>☁️ SharePoint / OneDrive</strong></td>
-    <td>Paste an anonymous sharing link</td>
   </tr>
   <tr>
     <td><strong>📊 Google Sheets</strong></td>
@@ -119,7 +115,7 @@ See `CLAUDE.md` for the full developer reference — project structure, callback
 
 ## ⚠️ Known Limitations
 
-- **Microsoft SharePoint** — Corporate/enterprise tenants may block anonymous sharing links due to organization security policies. Personal OneDrive links work reliably.
+- **Microsoft SharePoint / OneDrive** — Microsoft has disabled unauthenticated access to the OneDrive sharing API. Direct loading from SharePoint/OneDrive links is no longer supported. Download the file and use Direct File Upload instead.
 - **Airtable** — Requires a Personal Access Token with `data.records:read` and `schema.bases:read` scopes.
 
 ## 📄 License

@@ -77,6 +77,3 @@ development_guide/
 docs/internal/
 deploy/
 .github/
-README_DEVELOPER_INTERNAL.md
-README_DEPLOY_INTERNAL.md
-README_AUTOMATION_STACK_INTERNAL.md
