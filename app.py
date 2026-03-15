@@ -140,7 +140,7 @@ app.layout = html.Div([
             ),
         ]) if Config.YOUTUBE_INTRO_URL else html.Div(),
 
-        # Enhanced Upload Section with Airtable
+        # Data Source Section
         html.Hr(),
         create_data_source_section(),
         html.Hr(),

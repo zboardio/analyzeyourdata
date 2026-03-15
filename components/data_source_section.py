@@ -19,7 +19,6 @@ def create_data_source_section():
                 id='data-source-type',
                 options=[
                     {'label': [html.I(className="fas fa-upload me-2"), t('data_source.upload')], 'value': 'upload'},
-                    {'label': [html.I(className="fab fa-microsoft me-2"), t('data_source.sharepoint')], 'value': 'sharepoint'},
                     {'label': [html.I(className="fab fa-google me-2"), t('data_source.google_sheets')], 'value': 'google_sheets'},
                     {'label': [html.I(className="fas fa-table me-2"), t('data_source.airtable')], 'value': 'airtable'},
                 ],
