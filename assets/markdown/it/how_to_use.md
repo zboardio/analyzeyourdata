@@ -21,23 +21,13 @@ Scegli una delle sorgenti dati supportate:
 - Sfoglia le tabelle disponibili con conteggi di righe e colonne
 - Seleziona la tabella che vuoi analizzare e clicca **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Incolla un URL di condivisione con **accesso anonimo** ("Chiunque con il link può visualizzare")
-- Formati URL supportati:
-  - `https://1drv.ms/x/s!...` (link brevi OneDrive)
-  - `https://onedrive.live.com/...` (link completi OneDrive)
-  - `https://[azienda].sharepoint.com/...` (link SharePoint)
-  - `https://[azienda]-my.sharepoint.com/...` (SharePoint personale)
-- Se il file ha più fogli, seleziona il foglio desiderato dal menu a discesa
+### Microsoft SharePoint / OneDrive — Interrotto
 
-**Come ottenere un URL di condivisione:** In SharePoint/OneDrive, fai clic destro sul file → Condividi → imposta su "Chiunque con il link può visualizzare" → copia il link.
-
-**URL di Test** — prova questo per verificare la tua configurazione:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Nota:** I tenant Microsoft 365 aziendali/enterprise potrebbero bloccare i link di condivisione anonimi a causa delle politiche di sicurezza dell'organizzazione. Questa è una limitazione dal lato SharePoint/OneDrive, non dell'applicazione. I link OneDrive personali in genere funzionano senza restrizioni.
+> **Microsoft ha disabilitato l'accesso non autenticato all'API di condivisione di OneDrive.** L'endpoint API che in precedenza consentiva il caricamento di file da link pubblici SharePoint/OneDrive ora restituisce errori di autenticazione. Questa è una modifica apportata da Microsoft — non da questa applicazione.
+>
+> La soluzione sostitutiva di Microsoft richiede l'autenticazione Azure AD OAuth 2.0, che aggiunge notevole complessità (accesso con account Microsoft, approvazione dell'amministratore dell'organizzazione) con garanzie limitate di stabilità a lungo termine.
+>
+> **Alternativa consigliata:** Scarica il tuo file da SharePoint/OneDrive sul computer, quindi usa il **Caricamento diretto file** sopra. È più veloce, più affidabile e i tuoi dati restano completamente sotto il tuo controllo.
 
 ### Google Sheets
 - Incolla un URL pubblico di Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ I grafici leggono dai dati della griglia attualmente filtrati/raggruppati. **Ogn
 | Problema | Soluzione |
 |---|---|
 | Caricamento file fallisce | Verifica che il file sia sotto i {{VALUE_MAX_FILE_SIZE_MB}} MB e in un formato supportato |
-| Link SharePoint non funziona | Assicurati che il link consenta l'accesso anonimo (nessun accesso richiesto). I tenant aziendali potrebbero bloccarlo. |
+| Il link SharePoint non funziona | Microsoft ha disabilitato l'accesso non autenticato all'API. Scarica il file e usa il Caricamento diretto file. |
 | Google Sheet non si carica | Assicurati che la condivisione sia impostata su "Chiunque con il link può visualizzare" |
 | Airtable non si connette | Verifica che il tuo Personal Access Token abbia gli scope `data.records:read` e `schema.bases:read`, e che il Base ID inizi con `app` |
 | Errori di parsing datetime | Verifica che il formato selezionato corrisponda ai tuoi dati. Prova un formato personalizzato se necessario |

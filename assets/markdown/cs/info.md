@@ -21,7 +21,6 @@
 - SQLite `.db`, `.sqlite`, `.sqlite3`
 
 **Externí zdroje:**
-- Microsoft SharePoint / OneDrive
 - Google Sheets
 - Airtable přes Personal Access Token
 

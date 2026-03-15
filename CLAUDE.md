@@ -1,5 +1,9 @@
 # CLAUDE.md - Analyze Your Data
 
+## Security
+
+- NEVER read `.env`, `.env.*` files except `.env.example` — they contain secrets
+
 ## Overview
 
 Interactive data analysis and visualization tool built with Dash. Users upload data (CSV, Excel, JSON, Parquet, SQLite, SharePoint, Google Sheets, Airtable), apply optional datetime processing, view/filter in AG Grid, and create up to 3 independent charts with export.

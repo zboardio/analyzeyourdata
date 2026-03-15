@@ -21,23 +21,13 @@ Choose one of the supported data sources:
 - Browse available tables with row and column counts
 - Select the table you want to analyze and click **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Paste a sharing URL with **anonymous access** ("Anyone with the link can view")
-- Supported URL formats:
-  - `https://1drv.ms/x/s!...` (OneDrive short links)
-  - `https://onedrive.live.com/...` (OneDrive full links)
-  - `https://[company].sharepoint.com/...` (SharePoint links)
-  - `https://[company]-my.sharepoint.com/...` (SharePoint personal)
-- If the file has multiple sheets, select the desired sheet from the dropdown
+### Microsoft SharePoint / OneDrive — Discontinued
 
-**How to get a sharing URL:** In SharePoint/OneDrive, right-click the file → Share → set to "Anyone with the link can view" → copy the link.
-
-**Test URL** — try this to verify your setup:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Note:** Corporate/enterprise Microsoft 365 tenants may block anonymous sharing links due to organization security policies. This is a limitation on the SharePoint/OneDrive side, not the application. Personal OneDrive links typically work without restrictions.
+> **Microsoft has disabled unauthenticated access to the OneDrive sharing API.** The API endpoint that previously allowed loading files from public SharePoint/OneDrive links now returns authentication errors. This is a change made by Microsoft — not by this application.
+>
+> Microsoft's replacement requires Azure AD OAuth 2.0 authentication, which adds significant friction (Microsoft account sign-in, organization admin approval) with limited guarantees of long-term stability.
+>
+> **Recommended alternative:** Download your file from SharePoint/OneDrive to your computer, then use **Direct File Upload** above. This is faster, more reliable, and keeps your data fully in your control.
 
 ### Google Sheets
 - Paste a public Google Sheets URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ Charts read from the currently filtered/grouped grid data. **Every filter, sort,
 | Issue | Solution |
 |---|---|
 | File upload fails | Check that the file is under {{VALUE_MAX_FILE_SIZE_MB}} MB and in a supported format |
-| SharePoint link doesn't work | Ensure the link allows anonymous access (no sign-in required). Corporate tenants may block this. |
+| SharePoint link doesn't work | Microsoft has disabled unauthenticated API access. Download the file and use Direct File Upload instead. |
 | Google Sheet won't load | Make sure sharing is set to "Anyone with the link can view" |
 | Airtable won't connect | Verify your Personal Access Token has `data.records:read` and `schema.bases:read` scopes, and the Base ID starts with `app` |
 | Datetime parsing errors | Verify the selected format matches your data. Try a custom format if needed |

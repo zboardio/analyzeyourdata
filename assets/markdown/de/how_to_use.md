@@ -21,23 +21,13 @@ Wählen Sie eine der unterstützten Datenquellen:
 - Durchsuchen Sie die verfügbaren Tabellen mit Zeilen- und Spaltenanzahl
 - Wählen Sie die gewünschte Tabelle aus und klicken Sie auf **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Fügen Sie eine Freigabe-URL mit **anonymem Zugriff** ein ("Jeder mit dem Link kann anzeigen")
-- Unterstützte URL-Formate:
-  - `https://1drv.ms/x/s!...` (OneDrive-Kurzlinks)
-  - `https://onedrive.live.com/...` (OneDrive-Volllinks)
-  - `https://[company].sharepoint.com/...` (SharePoint-Links)
-  - `https://[company]-my.sharepoint.com/...` (SharePoint persönlich)
-- Wenn die Datei mehrere Blätter enthält, wählen Sie das gewünschte Blatt aus dem Dropdown-Menü
+### Microsoft SharePoint / OneDrive — Eingestellt
 
-**So erhalten Sie eine Freigabe-URL:** Klicken Sie in SharePoint/OneDrive mit der rechten Maustaste auf die Datei → Teilen → auf "Jeder mit dem Link kann anzeigen" setzen → Link kopieren.
-
-**Test URL** — probieren Sie diese aus, um Ihre Einrichtung zu überprüfen:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Hinweis:** Unternehmens-/Enterprise-Microsoft-365-Mandanten können anonyme Freigabelinks aufgrund von Sicherheitsrichtlinien der Organisation blockieren. Dies ist eine Einschränkung auf der SharePoint/OneDrive-Seite, nicht der Anwendung. Persönliche OneDrive-Links funktionieren in der Regel ohne Einschränkungen.
+> **Microsoft hat den unauthentifizierten Zugriff auf die OneDrive-Freigabe-API deaktiviert.** Der API-Endpunkt, der zuvor das Laden von Dateien über öffentliche SharePoint/OneDrive-Links ermöglichte, gibt jetzt Authentifizierungsfehler zurück. Dies ist eine Änderung von Microsoft — nicht von dieser Anwendung.
+>
+> Microsofts Ersatzlösung erfordert Azure AD OAuth 2.0-Authentifizierung, die erheblichen Aufwand verursacht (Microsoft-Kontoanmeldung, Genehmigung durch Organisationsadministrator) bei begrenzten Garantien für langfristige Stabilität.
+>
+> **Empfohlene Alternative:** Laden Sie Ihre Datei von SharePoint/OneDrive auf Ihren Computer herunter und verwenden Sie dann den **Direkten Datei-Upload** oben. Das ist schneller, zuverlässiger und Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
 
 ### Google Sheets
 - Fügen Sie eine öffentliche Google Sheets URL ein (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -158,7 +148,7 @@ Die Diagramme lesen die aktuell gefilterten/gruppierten Grid-Daten. **Jede Filte
 | Problem | Lösung |
 |---|---|
 | Datei-Upload schlägt fehl | Überprüfen Sie, ob die Datei unter {{VALUE_MAX_FILE_SIZE_MB}} MB groß ist und ein unterstütztes Format hat |
-| SharePoint-Link funktioniert nicht | Stellen Sie sicher, dass der Link anonymen Zugriff erlaubt (keine Anmeldung erforderlich). Unternehmens-Mandanten können dies blockieren. |
+| SharePoint-Link funktioniert nicht | Microsoft hat den unauthentifizierten API-Zugriff deaktiviert. Laden Sie die Datei herunter und verwenden Sie stattdessen den Direkten Datei-Upload. |
 | Google Sheet lässt sich nicht laden | Stellen Sie sicher, dass die Freigabe auf "Jeder mit dem Link kann anzeigen" eingestellt ist |
 | Airtable lässt sich nicht verbinden | Überprüfen Sie, ob Ihr Personal Access Token die Berechtigungen `data.records:read` und `schema.bases:read` hat und die Base ID mit `app` beginnt |
 | Datetime-Analysefehler | Überprüfen Sie, ob das ausgewählte Format mit Ihren Daten übereinstimmt. Probieren Sie bei Bedarf ein benutzerdefiniertes Format |

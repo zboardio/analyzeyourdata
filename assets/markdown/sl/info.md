@@ -21,7 +21,6 @@
 - SQLite `.db`, `.sqlite`, `.sqlite3`
 
 **Zunanji viri:**
-- Microsoft SharePoint / OneDrive
 - Google Sheets
 - Airtable prek Personal Access Token
 

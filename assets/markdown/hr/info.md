@@ -21,7 +21,6 @@
 - SQLite `.db`, `.sqlite`, `.sqlite3`
 
 **Vanjski izvori:**
-- Microsoft SharePoint / OneDrive
 - Google Sheets
 - Airtable preko Personal Access Token
 

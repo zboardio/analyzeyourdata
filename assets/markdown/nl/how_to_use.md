@@ -21,23 +21,13 @@ Kies een van de ondersteunde gegevensbronnen:
 - Blader door beschikbare tabellen met rij- en kolomaantallen
 - Selecteer de tabel die u wilt analyseren en klik op **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Plak een deel-URL met **anonieme toegang** ("Iedereen met de link kan bekijken")
-- Ondersteunde URL-formaten:
-  - `https://1drv.ms/x/s!...` (OneDrive korte links)
-  - `https://onedrive.live.com/...` (OneDrive volledige links)
-  - `https://[bedrijf].sharepoint.com/...` (SharePoint links)
-  - `https://[bedrijf]-my.sharepoint.com/...` (SharePoint persoonlijk)
-- Als het bestand meerdere bladen heeft, selecteer het gewenste blad uit de dropdown
+### Microsoft SharePoint / OneDrive — Stopgezet
 
-**Hoe krijgt u een deel-URL:** In SharePoint/OneDrive, klik met de rechtermuisknop op het bestand → Delen → stel in op "Iedereen met de link kan bekijken" → kopieer de link.
-
-**Test-URL** — probeer dit om uw configuratie te verifiëren:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Let op:** Corporate/enterprise Microsoft 365-tenants kunnen anonieme deel-links blokkeren vanwege organisatiebeveiligingsbeleid. Dit is een beperking aan de SharePoint/OneDrive-kant, niet van de applicatie. Persoonlijke OneDrive-links werken doorgaans zonder beperkingen.
+> **Microsoft heeft niet-geauthenticeerde toegang tot de OneDrive delings-API uitgeschakeld.** Het API-eindpunt dat eerder het laden van bestanden via openbare SharePoint/OneDrive-links mogelijk maakte, geeft nu authenticatiefouten terug. Dit is een wijziging van Microsoft — niet van deze applicatie.
+>
+> De vervangende oplossing van Microsoft vereist Azure AD OAuth 2.0-authenticatie, wat aanzienlijke wrijving toevoegt (inloggen met Microsoft-account, goedkeuring van organisatiebeheerder) met beperkte garanties voor langdurige stabiliteit.
+>
+> **Aanbevolen alternatief:** Download uw bestand van SharePoint/OneDrive naar uw computer en gebruik vervolgens de **Directe bestandsupload** hierboven. Dit is sneller, betrouwbaarder en uw gegevens blijven volledig onder uw controle.
 
 ### Google Sheets
 - Plak een openbare Google Sheets-URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ Grafieken lezen van de momenteel gefilterde/gegroepeerde rastergegevens. **Elke 
 | Probleem | Oplossing |
 |---|---|
 | Bestandsupload mislukt | Controleer of het bestand kleiner is dan {{VALUE_MAX_FILE_SIZE_MB}} MB en in een ondersteund formaat |
-| SharePoint-link werkt niet | Zorg ervoor dat de link anonieme toegang toestaat (geen aanmelding vereist). Corporate tenants kunnen dit blokkeren. |
+| SharePoint-link werkt niet | Microsoft heeft niet-geauthenticeerde API-toegang uitgeschakeld. Download het bestand en gebruik in plaats daarvan Directe bestandsupload. |
 | Google Sheet wordt niet geladen | Zorg ervoor dat delen is ingesteld op "Iedereen met de link kan bekijken" |
 | Airtable maakt geen verbinding | Verifieer dat uw Personal Access Token `data.records:read` en `schema.bases:read` scopes heeft, en de Base ID begint met `app` |
 | Datetime-parsefouten | Verifieer dat het geselecteerde formaat overeenkomt met uw gegevens. Probeer zo nodig een aangepast formaat |

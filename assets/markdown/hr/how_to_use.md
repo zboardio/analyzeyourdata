@@ -21,23 +21,13 @@ Odaberite jedan od podržanih izvora podataka:
 - Pregledajte dostupne tablice s brojem redaka i stupaca
 - Odaberite tablicu koju želite analizirati i kliknite **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Zalijepite URL za dijeljenje s **anonimnim pristupom** ("Svatko s vezom može vidjeti")
-- Podržani formati URL-a:
-  - `https://1drv.ms/x/s!...` (OneDrive kratke veze)
-  - `https://onedrive.live.com/...` (OneDrive pune veze)
-  - `https://[tvrtka].sharepoint.com/...` (SharePoint veze)
-  - `https://[tvrtka]-my.sharepoint.com/...` (SharePoint osobne)
-- Ako datoteka ima više listova, odaberite željeni list iz padajućeg izbornika
+### Microsoft SharePoint / OneDrive — Ukinuto
 
-**Kako dobiti URL za dijeljenje:** U SharePoint/OneDrive, desni klik na datoteku → Dijeli → postavite na "Svatko s vezom može vidjeti" → kopirajte vezu.
-
-**Testni URL** — pokušajte ovo za provjeru postavke:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Napomena:** Korporativni/poslovni Microsoft 365 najmovi mogu blokirati anonimne veze za dijeljenje zbog sigurnosnih pravila organizacije. Ovo je ograničenje na strani SharePoint/OneDrive, a ne aplikacije. Osobne OneDrive veze obično rade bez ograničenja.
+> **Microsoft je onemogućio neautenticirani pristup OneDrive API-ju za dijeljenje.** API krajnja točka koja je ranije omogućavala učitavanje datoteka s javnih SharePoint/OneDrive poveznica sada vraća pogreške autentikacije. Ovo je promjena koju je napravio Microsoft — ne ova aplikacija.
+>
+> Microsoftova zamjena zahtijeva Azure AD OAuth 2.0 autentikaciju, koja dodaje značajne prepreke (prijava Microsoft računom, odobrenje administratora organizacije) s ograničenim jamstvima dugoročne stabilnosti.
+>
+> **Preporučena alternativa:** Preuzmite svoju datoteku sa SharePoint/OneDrive na računalo, a zatim koristite **Izravno učitavanje datoteke** iznad. To je brže, pouzdanije i vaši podaci ostaju u potpunosti pod vašom kontrolom.
 
 ### Google Sheets
 - Zalijepite javni Google Sheets URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ Grafikoni čitaju iz trenutno filtriranih/grupiranih podataka tablice. **Svaka a
 | Problem | Rješenje |
 |---|---|
 | Učitavanje datoteke ne uspijeva | Provjerite je li datoteka manja od {{VALUE_MAX_FILE_SIZE_MB}} MB i u podržanom formatu |
-| SharePoint veza ne radi | Provjerite omogućuje li veza anonimni pristup (bez prijave). Korporativni najmovi mogu to blokirati. |
+| SharePoint poveznica ne radi | Microsoft je onemogućio neautenticirani pristup API-ju. Preuzmite datoteku i koristite Izravno učitavanje datoteke. |
 | Google Sheet se ne učitava | Provjerite je li dijeljenje postavljeno na "Svatko s vezom može vidjeti" |
 | Airtable se ne povezuje | Provjerite ima li vaš Personal Access Token `data.records:read` i `schema.bases:read` dozvole, i počinje li Base ID s `app` |
 | Greške u parsiranju datuma i vremena | Provjerite odgovara li odabrani format vašim podacima. Pokušajte prilagođeni format ako je potrebno |

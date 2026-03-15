@@ -21,23 +21,13 @@ Elija una de las fuentes de datos compatibles:
 - Navegue por las tablas disponibles con conteos de filas y columnas
 - Seleccione la tabla que desea analizar y haga clic en **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Pegue una URL de compartir con **acceso anónimo** ("Cualquiera con el enlace puede ver")
-- Formatos de URL compatibles:
-  - `https://1drv.ms/x/s!...` (enlaces cortos de OneDrive)
-  - `https://onedrive.live.com/...` (enlaces completos de OneDrive)
-  - `https://[empresa].sharepoint.com/...` (enlaces de SharePoint)
-  - `https://[empresa]-my.sharepoint.com/...` (SharePoint personal)
-- Si el archivo tiene múltiples hojas, seleccione la hoja deseada del menú desplegable
+### Microsoft SharePoint / OneDrive — Descontinuado
 
-**Cómo obtener una URL de compartir:** En SharePoint/OneDrive, haga clic derecho en el archivo → Compartir → establezca en "Cualquiera con el enlace puede ver" → copie el enlace.
-
-**URL de prueba** — pruebe esto para verificar su configuración:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Nota:** Los tenants corporativos/empresariales de Microsoft 365 pueden bloquear enlaces de compartir anónimos debido a políticas de seguridad de la organización. Esta es una limitación del lado de SharePoint/OneDrive, no de la aplicación. Los enlaces de OneDrive personal típicamente funcionan sin restricciones.
+> **Microsoft ha desactivado el acceso no autenticado a la API de uso compartido de OneDrive.** El endpoint de la API que anteriormente permitía cargar archivos desde enlaces públicos de SharePoint/OneDrive ahora devuelve errores de autenticación. Este es un cambio realizado por Microsoft — no por esta aplicación.
+>
+> La solución de reemplazo de Microsoft requiere autenticación Azure AD OAuth 2.0, que añade una fricción significativa (inicio de sesión con cuenta Microsoft, aprobación del administrador de la organización) con garantías limitadas de estabilidad a largo plazo.
+>
+> **Alternativa recomendada:** Descargue su archivo de SharePoint/OneDrive a su computadora y luego use la **Carga directa de archivos** de arriba. Es más rápido, más fiable y sus datos permanecen completamente bajo su control.
 
 ### Google Sheets
 - Pegue una URL pública de Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ Los gráficos leen de los datos de la tabla actualmente filtrados/agrupados. **C
 | Problema | Solución |
 |---|---|
 | Falla la carga del archivo | Verifique que el archivo sea menor de {{VALUE_MAX_FILE_SIZE_MB}} MB y esté en un formato compatible |
-| El enlace de SharePoint no funciona | Asegúrese de que el enlace permita acceso anónimo (no se requiere inicio de sesión). Los tenants corporativos pueden bloquearlo. |
+| El enlace de SharePoint no funciona | Microsoft ha desactivado el acceso no autenticado a la API. Descargue el archivo y use la Carga directa de archivos en su lugar. |
 | Google Sheet no se carga | Asegúrese de que el compartir esté establecido en "Cualquiera con el enlace puede ver" |
 | Airtable no se conecta | Verifique que su Personal Access Token tenga los scopes `data.records:read` y `schema.bases:read`, y que el Base ID comience con `app` |
 | Errores de análisis de fecha y hora | Verifique que el formato seleccionado coincida con sus datos. Pruebe un formato personalizado si es necesario |

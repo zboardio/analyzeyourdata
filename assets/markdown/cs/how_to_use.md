@@ -21,23 +21,13 @@ Vyberte si jeden z podporovaných zdrojů dat:
 - Procházejte dostupné tabulky s počtem řádků a sloupců
 - Vyberte tabulku, kterou chcete analyzovat, a klikněte na **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Vložte sdílený odkaz s **anonymním přístupem** ("Kdokoli s odkazem může zobrazit")
-- Podporované formáty URL:
-  - `https://1drv.ms/x/s!...` (krátké odkazy OneDrive)
-  - `https://onedrive.live.com/...` (úplné odkazy OneDrive)
-  - `https://[company].sharepoint.com/...` (odkazy SharePoint)
-  - `https://[company]-my.sharepoint.com/...` (osobní SharePoint)
-- Pokud má soubor více listů, vyberte požadovaný list z rozbalovací nabídky
+### Microsoft SharePoint / OneDrive — Ukončeno
 
-**Jak získat sdílený odkaz:** V SharePoint/OneDrive klikněte pravým tlačítkem na soubor → Sdílet → nastavte "Kdokoli s odkazem může zobrazit" → zkopírujte odkaz.
-
-**Testovací URL** — vyzkoušejte pro ověření funkčnosti:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Poznámka:** Firemní/podnikové tenanty Microsoft 365 mohou blokovat anonymní sdílecí odkazy z důvodu bezpečnostních politik organizace. Toto je omezení na straně SharePoint/OneDrive, nikoli aplikace. Osobní odkazy OneDrive obvykle fungují bez omezení.
+> **Microsoft zablokoval neautentizovaný přístup k API pro sdílení OneDrive.** Koncový bod API, který dříve umožňoval načítání souborů z veřejných odkazů SharePoint/OneDrive, nyní vrací chyby autentizace. Toto je změna provedená společností Microsoft — nikoli touto aplikací.
+>
+> Náhradní řešení od Microsoftu vyžaduje autentizaci Azure AD OAuth 2.0, která přidává značné překážky (přihlášení účtem Microsoft, schválení administrátorem organizace) s omezenými zárukami dlouhodobé stability.
+>
+> **Doporučená alternativa:** Stáhněte si soubor ze SharePoint/OneDrive do počítače a poté použijte **Přímé nahrání souboru** výše. Je to rychlejší, spolehlivější a vaše data zůstávají plně pod vaší kontrolou.
 
 ### Google Sheets
 - Vložte veřejnou URL adresu Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -158,7 +148,7 @@ Grafy čtou z aktuálně filtrovaných/seskupených dat v tabulce. **Každý fil
 | Problém | Řešení |
 |---|---|
 | Nahrání souboru selže | Zkontrolujte, že soubor má méně než {{VALUE_MAX_FILE_SIZE_MB}} MB a je v podporovaném formátu |
-| Odkaz na SharePoint nefunguje | Ujistěte se, že odkaz umožňuje anonymní přístup (bez nutnosti přihlášení). Firemní tenanty mohou toto blokovat. |
+| Odkaz na SharePoint nefunguje | Microsoft zablokoval neautentizovaný přístup k API. Stáhněte soubor a použijte Přímé nahrání souboru. |
 | Google Sheet se nenačte | Ujistěte se, že sdílení je nastaveno na "Kdokoli s odkazem může zobrazit" |
 | Airtable se nepřipojí | Ověřte, že váš Personal Access Token má oprávnění `data.records:read` a `schema.bases:read` a že Base ID začíná na `app` |
 | Chyby při zpracování data a času | Ověřte, že vybraný formát odpovídá vašim datům. V případě potřeby zkuste vlastní formát |

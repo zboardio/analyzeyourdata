@@ -21,23 +21,13 @@ Wybierz jedno z obsługiwanych źródeł danych:
 - Przeglądaj dostępne tabele z liczbą wierszy i kolumn
 - Wybierz tabelę do analizy i kliknij **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Wklej adres URL udostępniania z **anonimowym dostępem** ("Każdy z linkiem może wyświetlać")
-- Obsługiwane formaty adresów URL:
-  - `https://1drv.ms/x/s!...` (krótkie linki OneDrive)
-  - `https://onedrive.live.com/...` (pełne linki OneDrive)
-  - `https://[company].sharepoint.com/...` (linki SharePoint)
-  - `https://[company]-my.sharepoint.com/...` (SharePoint osobisty)
-- Jeśli plik zawiera wiele arkuszy, wybierz odpowiedni arkusz z listy rozwijanej
+### Microsoft SharePoint / OneDrive — Wycofane
 
-**Jak uzyskać adres URL udostępniania:** W SharePoint/OneDrive kliknij prawym przyciskiem myszy na plik → Udostępnij → ustaw na "Każdy z linkiem może wyświetlać" → skopiuj link.
-
-**Testowy URL** — wypróbuj, aby zweryfikować konfigurację:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Uwaga:** Korporacyjne dzierżawy Microsoft 365 mogą blokować anonimowe linki udostępniania ze względu na polityki bezpieczeństwa organizacji. Jest to ograniczenie po stronie SharePoint/OneDrive, nie aplikacji. Osobiste linki OneDrive zazwyczaj działają bez ograniczeń.
+> **Microsoft wyłączył nieuwierzytelniony dostęp do API udostępniania OneDrive.** Punkt końcowy API, który wcześniej umożliwiał ładowanie plików z publicznych linków SharePoint/OneDrive, teraz zwraca błędy uwierzytelniania. Jest to zmiana wprowadzona przez Microsoft — nie przez tę aplikację.
+>
+> Rozwiązanie zastępcze Microsoftu wymaga uwierzytelniania Azure AD OAuth 2.0, które dodaje znaczące utrudnienia (logowanie kontem Microsoft, zatwierdzenie przez administratora organizacji) z ograniczonymi gwarancjami długoterminowej stabilności.
+>
+> **Zalecana alternatywa:** Pobierz plik z SharePoint/OneDrive na komputer, a następnie użyj **Bezpośredniego przesyłania pliku** powyżej. Jest to szybsze, bardziej niezawodne, a Twoje dane pozostają w pełni pod Twoją kontrolą.
 
 ### Google Sheets
 - Wklej publiczny adres URL Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -158,7 +148,7 @@ Wykresy odczytują dane z aktualnie przefiltrowanych/zgrupowanych danych w tabel
 | Problem | Rozwiązanie |
 |---|---|
 | Przesyłanie pliku nie powiodło się | Sprawdź, czy plik ma mniej niż {{VALUE_MAX_FILE_SIZE_MB}} MB i jest w obsługiwanym formacie |
-| Link SharePoint nie działa | Upewnij się, że link umożliwia anonimowy dostęp (bez konieczności logowania). Dzierżawy korporacyjne mogą to blokować. |
+| Link SharePoint nie działa | Microsoft wyłączył nieuwierzytelniony dostęp do API. Pobierz plik i użyj Bezpośredniego przesyłania pliku. |
 | Google Sheet się nie wczytuje | Upewnij się, że udostępnianie jest ustawione na "Każdy z linkiem może wyświetlać" |
 | Airtable nie łączy się | Sprawdź, czy Twój Personal Access Token ma uprawnienia `data.records:read` i `schema.bases:read` oraz czy Base ID zaczyna się od `app` |
 | Błędy parsowania daty i czasu | Sprawdź, czy wybrany format odpowiada Twoim danym. W razie potrzeby wypróbuj niestandardowy format |

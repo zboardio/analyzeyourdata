@@ -21,7 +21,6 @@
 - SQLite `.db`, `.sqlite`, `.sqlite3`
 
 **Fontes Externas:**
-- Microsoft SharePoint / OneDrive
 - Google Sheets
 - Airtable através de Personal Access Token
 

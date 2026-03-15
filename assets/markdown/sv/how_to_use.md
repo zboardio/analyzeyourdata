@@ -21,23 +21,13 @@ Välj en av de datakällor som stöds:
 - Bläddra bland tillgängliga tabeller med rad- och kolumnantal
 - Välj den tabell du vill analysera och klicka **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Klistra in en delnings-URL med **anonym åtkomst** ("Anyone with the link can view")
-- URL-format som stöds:
-  - `https://1drv.ms/x/s!...` (OneDrive kortlänkar)
-  - `https://onedrive.live.com/...` (OneDrive fullständiga länkar)
-  - `https://[företag].sharepoint.com/...` (SharePoint-länkar)
-  - `https://[företag]-my.sharepoint.com/...` (SharePoint personlig)
-- Om filen har flera ark, välj önskat ark från rullgardinsmenyn
+### Microsoft SharePoint / OneDrive — Avvecklat
 
-**Hur du får en delnings-URL:** I SharePoint/OneDrive, högerklicka på filen → Dela → ställ in på "Anyone with the link can view" → kopiera länken.
-
-**Test-URL** — prova detta för att verifiera din konfiguration:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **OBS:** Företags-/organisationers Microsoft 365-hyresgäster kan blockera anonyma delningslänkar på grund av organisationens säkerhetspolicyer. Detta är en begränsning på SharePoint/OneDrive-sidan, inte applikationen. Personliga OneDrive-länkar fungerar vanligtvis utan begränsningar.
+> **Microsoft har inaktiverat oautentiserad åtkomst till OneDrive delnings-API:et.** API-ändpunkten som tidigare tillät laddning av filer från offentliga SharePoint/OneDrive-länkar returnerar nu autentiseringsfel. Detta är en ändring gjord av Microsoft — inte av denna applikation.
+>
+> Microsofts ersättning kräver Azure AD OAuth 2.0-autentisering, vilket lägger till betydande friktion (inloggning med Microsoft-konto, godkännande av organisationsadministratör) med begränsade garantier för långsiktig stabilitet.
+>
+> **Rekommenderat alternativ:** Ladda ner din fil från SharePoint/OneDrive till din dator och använd sedan **Direkt filuppladdning** ovan. Det är snabbare, mer tillförlitligt och dina data förblir helt under din kontroll.
 
 ### Google Sheets
 - Klistra in en offentlig Google Sheets-URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ Diagram läser från den aktuellt filtrerade/grupperade tabelldatan. **Varje fil
 | Problem | Lösning |
 |---|---|
 | Filuppladdning misslyckas | Kontrollera att filen är under {{VALUE_MAX_FILE_SIZE_MB}} MB och i ett format som stöds |
-| SharePoint-länk fungerar inte | Säkerställ att länken tillåter anonym åtkomst (ingen inloggning krävs). Företagshyresgäster kan blockera detta. |
+| SharePoint-länk fungerar inte | Microsoft har inaktiverat oautentiserad API-åtkomst. Ladda ner filen och använd Direkt filuppladdning istället. |
 | Google Sheet laddar inte | Se till att delning är inställd på "Anyone with the link can view" |
 | Airtable ansluter inte | Verifiera att din Personal Access Token har `data.records:read`- och `schema.bases:read`-behörigheter, och att Base ID börjar med `app` |
 | Datetime-tolkningsfel | Verifiera att det valda formatet matchar din data. Prova ett anpassat format om det behövs |

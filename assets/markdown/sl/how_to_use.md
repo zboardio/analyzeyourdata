@@ -21,23 +21,13 @@ Izberite enega od podprtih virov podatkov:
 - Preglejte razpoložljive tabele s številom vrstic in stolpcev
 - Izberite tabelo, ki jo želite analizirati, in kliknite **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Prilepite URL za deljenje z **anonimnim dostopom** ("Kdorkoli s povezavo lahko pogleda")
-- Podprte oblike URL:
-  - `https://1drv.ms/x/s!...` (OneDrive kratke povezave)
-  - `https://onedrive.live.com/...` (OneDrive polne povezave)
-  - `https://[company].sharepoint.com/...` (SharePoint povezave)
-  - `https://[company]-my.sharepoint.com/...` (SharePoint osebne)
-- Če ima datoteka več listov, izberite želeni list iz spustnega menija
+### Microsoft SharePoint / OneDrive — Ukinjeno
 
-**Kako dobiti URL za deljenje:** V SharePoint/OneDrive desno kliknite na datoteko → Deli → nastavite na "Kdorkoli s povezavo lahko pogleda" → kopirajte povezavo.
-
-**Testni URL** — poskusite to za preverjanje vaše nastavitve:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Opomba:** Korporativni/poslovni Microsoft 365 najemniki lahko blokirajo anonimne povezave za deljenje zaradi varnostnih politik organizacije. To je omejitev na strani SharePoint/OneDrive, ne aplikacije. Osebne OneDrive povezave običajno delujejo brez omejitev.
+> **Microsoft je onemogočil neavtenticiran dostop do API-ja za skupno rabo OneDrive.** Končna točka API-ja, ki je prej omogočala nalaganje datotek prek javnih povezav SharePoint/OneDrive, zdaj vrača napake pri avtentikaciji. To je sprememba, ki jo je izvedel Microsoft — ne ta aplikacija.
+>
+> Microsoftova nadomestna rešitev zahteva avtentikacijo Azure AD OAuth 2.0, ki dodaja znatne ovire (prijava z Microsoftovim računom, odobritev skrbnika organizacije) z omejenimi jamstvi dolgoročne stabilnosti.
+>
+> **Priporočena alternativa:** Prenesite svojo datoteko iz SharePoint/OneDrive na računalnik in nato uporabite **Neposreden prenos datoteke** zgoraj. To je hitrejše, zanesljivejše in vaši podatki ostanejo v celoti pod vašim nadzorom.
 
 ### Google Sheets
 - Prilepite javni Google Sheets URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ Grafi berejo iz trenutno filtriranih/grupiranih podatkov tabele. **Vsaka akcija 
 | Težava | Rešitev |
 |---|---|
 | Nalaganje datoteke ne uspe | Preverite, da je datoteka pod {{VALUE_MAX_FILE_SIZE_MB}} MB in v podprti obliki |
-| SharePoint povezava ne deluje | Poskrbite, da povezava omogoča anonimni dostop (brez potrebne prijave). Korporativni najemniki lahko to blokirajo. |
+| Povezava SharePoint ne deluje | Microsoft je onemogočil neavtenticiran dostop do API-ja. Prenesite datoteko in uporabite Neposreden prenos datoteke. |
 | Google Sheet se ne naloži | Prepričajte se, da je deljenje nastavljeno na "Kdorkoli s povezavo lahko pogleda" |
 | Airtable se ne poveže | Preverite, da ima vaš Personal Access Token obsege `data.records:read` in `schema.bases:read`, in da se Base ID začne z `app` |
 | Napake pri razčlenjevanju datetime | Preverite, da se izbrana oblika ujema z vašimi podatki. Po potrebi poskusite obliko po meri |

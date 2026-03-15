@@ -21,7 +21,6 @@
 - SQLite `.db`, `.sqlite`, `.sqlite3`
 
 **Externa källor:**
-- Microsoft SharePoint / OneDrive
 - Google Sheets
 - Airtable över Personal Access Token
 

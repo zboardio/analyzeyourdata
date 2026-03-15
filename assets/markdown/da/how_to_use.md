@@ -21,23 +21,13 @@ Vælg en af de understøttede datakilder:
 - Gennemse tilgængelige tabeller med række- og kolonneantal
 - Vælg den tabel du vil analysere og klik **Load Selected Table**
 
-### Microsoft SharePoint / OneDrive
-- Indsæt en deling-URL med **anonym adgang** ("Enhver med linket kan se")
-- Understøttede URL-formater:
-  - `https://1drv.ms/x/s!...` (OneDrive korte links)
-  - `https://onedrive.live.com/...` (OneDrive fulde links)
-  - `https://[virksomhed].sharepoint.com/...` (SharePoint links)
-  - `https://[virksomhed]-my.sharepoint.com/...` (SharePoint personlig)
-- Hvis filen har flere ark, vælg det ønskede ark fra rullemenuen
+### Microsoft SharePoint / OneDrive — Udgået
 
-**Sådan får du en deling-URL:** I SharePoint/OneDrive, højreklik på filen → Del → indstil til "Enhver med linket kan se" → kopiér linket.
-
-**Test-URL** — prøv dette for at verificere din opsætning:
-```
-{{URL_TEST_DATASET_SHAREPOINT}}
-```
-
-> **Bemærk:** Virksomheds-/enterprise Microsoft 365-lejere kan blokere anonyme delinglinks på grund af organisationens sikkerhedspolitikker. Dette er en begrænsning på SharePoint/OneDrive-siden, ikke applikationen. Personlige OneDrive-links fungerer typisk uden begrænsninger.
+> **Microsoft har deaktiveret uautentificeret adgang til OneDrive delings-API'et.** Det API-endpoint, der tidligere tillod indlæsning af filer fra offentlige SharePoint/OneDrive-links, returnerer nu autentificeringsfejl. Dette er en ændring foretaget af Microsoft — ikke af denne applikation.
+>
+> Microsofts erstatning kræver Azure AD OAuth 2.0-godkendelse, som tilføjer betydelig friktion (Microsoft-kontologin, organisationsadministratorgodkendelse) med begrænsede garantier for langsigtet stabilitet.
+>
+> **Anbefalet alternativ:** Download din fil fra SharePoint/OneDrive til din computer, og brug derefter **Direkte filupload** ovenfor. Det er hurtigere, mere pålideligt, og dine data forbliver fuldt under din kontrol.
 
 ### Google Sheets
 - Indsæt en offentlig Google Sheets-URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
@@ -160,7 +150,7 @@ Diagrammer læser fra de aktuelt filtrerede/grupperede gitterdata. **Hver filtre
 | Problem | Løsning |
 |---|---|
 | Filupload mislykkes | Kontrollér at filen er under {{VALUE_MAX_FILE_SIZE_MB}} MB og i et understøttet format |
-| SharePoint-link virker ikke | Sørg for at linket tillader anonym adgang (ingen log-in påkrævet). Virksomhedslejere kan blokere dette. |
+| SharePoint-link virker ikke | Microsoft har deaktiveret uautentificeret API-adgang. Download filen og brug Direkte filupload i stedet. |
 | Google Sheet indlæses ikke | Sørg for at deling er indstillet til "Enhver med linket kan se" |
 | Airtable vil ikke forbinde | Verificér at dit Personal Access Token har `data.records:read` og `schema.bases:read` scopes, og at Base ID'et starter med `app` |
 | Datetime-parsing-fejl | Verificér at det valgte format matcher dine data. Prøv et brugerdefineret format hvis nødvendigt |

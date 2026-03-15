@@ -257,7 +257,7 @@ def create_data_source_section():
         # Loading indicator
         html.Div([
             dbc.Spinner([html.Div(id='loading-content')], id='data-loading-spinner', size='lg', color='primary')
-        ], id='loading-container', style={'display': 'none', 'textAlign': 'center', 'margin': '20px 0'}),
+        ], id='loading-container', className='loading-container', style={'display': 'none', 'textAlign': 'center', 'margin': '20px 0'}),
 
         # Storage and alerts
         dcc.Store(id='stored-data', storage_type='memory'),
