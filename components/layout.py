@@ -70,7 +70,7 @@ def create_navbar():
                     t("navbar.language")
                 ],
                 direction="down",
-                className="me-3"
+                className="me-3 language-dropdown"
             ),
         ]),
 
