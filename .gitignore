@@ -74,6 +74,7 @@ Desktop.ini
 # development and debug scripts
 development/
 development_guide/
+docs/internal/
 deploy/
 .github/
 README_DEVELOPER_INTERNAL.md
