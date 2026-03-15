@@ -23,10 +23,10 @@ Wybierz jedno z obsługiwanych źródeł danych:
 
 ### Microsoft SharePoint / OneDrive — Wycofane
 
-> **Microsoft wyłączył nieuwierzytelniony dostęp do API udostępniania OneDrive.** Punkt końcowy API, który wcześniej umożliwiał ładowanie plików z publicznych linków SharePoint/OneDrive, teraz zwraca błędy uwierzytelniania. Jest to zmiana wprowadzona przez Microsoft — nie przez tę aplikację.
->
-> Rozwiązanie zastępcze Microsoftu wymaga uwierzytelniania Azure AD OAuth 2.0, które dodaje znaczące utrudnienia (logowanie kontem Microsoft, zatwierdzenie przez administratora organizacji) z ograniczonymi gwarancjami długoterminowej stabilności.
->
+**Microsoft wyłączył nieuwierzytelniony dostęp do API udostępniania OneDrive.** Punkt końcowy API, który wcześniej umożliwiał ładowanie plików z publicznych linków SharePoint/OneDrive, teraz zwraca błędy uwierzytelniania. Jest to zmiana wprowadzona przez Microsoft — nie przez tę aplikację.
+
+Rozwiązanie zastępcze Microsoftu wymaga uwierzytelniania Azure AD OAuth 2.0, które dodaje znaczące utrudnienia (logowanie kontem Microsoft, zatwierdzenie przez administratora organizacji) z ograniczonymi gwarancjami długoterminowej stabilności.
+
 > **Zalecana alternatywa:** Pobierz plik z SharePoint/OneDrive na komputer, a następnie użyj **Bezpośredniego przesyłania pliku** powyżej. Jest to szybsze, bardziej niezawodne, a Twoje dane pozostają w pełni pod Twoją kontrolą.
 
 ### Google Sheets

@@ -23,10 +23,10 @@ Odaberite jedan od podržanih izvora podataka:
 
 ### Microsoft SharePoint / OneDrive — Ukinuto
 
-> **Microsoft je onemogućio neautenticirani pristup OneDrive API-ju za dijeljenje.** API krajnja točka koja je ranije omogućavala učitavanje datoteka s javnih SharePoint/OneDrive poveznica sada vraća pogreške autentikacije. Ovo je promjena koju je napravio Microsoft — ne ova aplikacija.
->
-> Microsoftova zamjena zahtijeva Azure AD OAuth 2.0 autentikaciju, koja dodaje značajne prepreke (prijava Microsoft računom, odobrenje administratora organizacije) s ograničenim jamstvima dugoročne stabilnosti.
->
+**Microsoft je onemogućio neautenticirani pristup OneDrive API-ju za dijeljenje.** API krajnja točka koja je ranije omogućavala učitavanje datoteka s javnih SharePoint/OneDrive poveznica sada vraća pogreške autentikacije. Ovo je promjena koju je napravio Microsoft — ne ova aplikacija.
+
+Microsoftova zamjena zahtijeva Azure AD OAuth 2.0 autentikaciju, koja dodaje značajne prepreke (prijava Microsoft računom, odobrenje administratora organizacije) s ograničenim jamstvima dugoročne stabilnosti.
+
 > **Preporučena alternativa:** Preuzmite svoju datoteku sa SharePoint/OneDrive na računalo, a zatim koristite **Izravno učitavanje datoteke** iznad. To je brže, pouzdanije i vaši podaci ostaju u potpunosti pod vašom kontrolom.
 
 ### Google Sheets

@@ -23,10 +23,10 @@ Escolha uma das fontes de dados suportadas:
 
 ### Microsoft SharePoint / OneDrive — Descontinuado
 
-> **A Microsoft desativou o acesso não autenticado à API de partilha do OneDrive.** O endpoint da API que anteriormente permitia carregar ficheiros a partir de links públicos do SharePoint/OneDrive agora retorna erros de autenticação. Esta é uma alteração feita pela Microsoft — não por esta aplicação.
->
-> A solução de substituição da Microsoft requer autenticação Azure AD OAuth 2.0, que adiciona fricção significativa (início de sessão com conta Microsoft, aprovação do administrador da organização) com garantias limitadas de estabilidade a longo prazo.
->
+**A Microsoft desativou o acesso não autenticado à API de partilha do OneDrive.** O endpoint da API que anteriormente permitia carregar ficheiros a partir de links públicos do SharePoint/OneDrive agora retorna erros de autenticação. Esta é uma alteração feita pela Microsoft — não por esta aplicação.
+
+A solução de substituição da Microsoft requer autenticação Azure AD OAuth 2.0, que adiciona fricção significativa (início de sessão com conta Microsoft, aprovação do administrador da organização) com garantias limitadas de estabilidade a longo prazo.
+
 > **Alternativa recomendada:** Transfira o seu ficheiro do SharePoint/OneDrive para o computador e depois utilize o **Carregamento direto de ficheiro** acima. É mais rápido, mais fiável e os seus dados ficam totalmente sob o seu controlo.
 
 ### Google Sheets

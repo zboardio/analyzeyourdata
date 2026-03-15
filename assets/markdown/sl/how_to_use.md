@@ -23,10 +23,10 @@ Izberite enega od podprtih virov podatkov:
 
 ### Microsoft SharePoint / OneDrive — Ukinjeno
 
-> **Microsoft je onemogočil neavtenticiran dostop do API-ja za skupno rabo OneDrive.** Končna točka API-ja, ki je prej omogočala nalaganje datotek prek javnih povezav SharePoint/OneDrive, zdaj vrača napake pri avtentikaciji. To je sprememba, ki jo je izvedel Microsoft — ne ta aplikacija.
->
-> Microsoftova nadomestna rešitev zahteva avtentikacijo Azure AD OAuth 2.0, ki dodaja znatne ovire (prijava z Microsoftovim računom, odobritev skrbnika organizacije) z omejenimi jamstvi dolgoročne stabilnosti.
->
+**Microsoft je onemogočil neavtenticiran dostop do API-ja za skupno rabo OneDrive.** Končna točka API-ja, ki je prej omogočala nalaganje datotek prek javnih povezav SharePoint/OneDrive, zdaj vrača napake pri avtentikaciji. To je sprememba, ki jo je izvedel Microsoft — ne ta aplikacija.
+
+Microsoftova nadomestna rešitev zahteva avtentikacijo Azure AD OAuth 2.0, ki dodaja znatne ovire (prijava z Microsoftovim računom, odobritev skrbnika organizacije) z omejenimi jamstvi dolgoročne stabilnosti.
+
 > **Priporočena alternativa:** Prenesite svojo datoteko iz SharePoint/OneDrive na računalnik in nato uporabite **Neposreden prenos datoteke** zgoraj. To je hitrejše, zanesljivejše in vaši podatki ostanejo v celoti pod vašim nadzorom.
 
 ### Google Sheets

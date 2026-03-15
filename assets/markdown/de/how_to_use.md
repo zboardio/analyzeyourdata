@@ -23,10 +23,10 @@ Wählen Sie eine der unterstützten Datenquellen:
 
 ### Microsoft SharePoint / OneDrive — Eingestellt
 
-> **Microsoft hat den unauthentifizierten Zugriff auf die OneDrive-Freigabe-API deaktiviert.** Der API-Endpunkt, der zuvor das Laden von Dateien über öffentliche SharePoint/OneDrive-Links ermöglichte, gibt jetzt Authentifizierungsfehler zurück. Dies ist eine Änderung von Microsoft — nicht von dieser Anwendung.
->
-> Microsofts Ersatzlösung erfordert Azure AD OAuth 2.0-Authentifizierung, die erheblichen Aufwand verursacht (Microsoft-Kontoanmeldung, Genehmigung durch Organisationsadministrator) bei begrenzten Garantien für langfristige Stabilität.
->
+**Microsoft hat den unauthentifizierten Zugriff auf die OneDrive-Freigabe-API deaktiviert.** Der API-Endpunkt, der zuvor das Laden von Dateien über öffentliche SharePoint/OneDrive-Links ermöglichte, gibt jetzt Authentifizierungsfehler zurück. Dies ist eine Änderung von Microsoft — nicht von dieser Anwendung.
+
+Microsofts Ersatzlösung erfordert Azure AD OAuth 2.0-Authentifizierung, die erheblichen Aufwand verursacht (Microsoft-Kontoanmeldung, Genehmigung durch Organisationsadministrator) bei begrenzten Garantien für langfristige Stabilität.
+
 > **Empfohlene Alternative:** Laden Sie Ihre Datei von SharePoint/OneDrive auf Ihren Computer herunter und verwenden Sie dann den **Direkten Datei-Upload** oben. Das ist schneller, zuverlässiger und Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
 
 ### Google Sheets

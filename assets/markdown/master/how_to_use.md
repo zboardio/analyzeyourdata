@@ -23,10 +23,10 @@ Choose one of the supported data sources:
 
 ### Microsoft SharePoint / OneDrive — Discontinued
 
-> **Microsoft has disabled unauthenticated access to the OneDrive sharing API.** The API endpoint that previously allowed loading files from public SharePoint/OneDrive links now returns authentication errors. This is a change made by Microsoft — not by this application.
->
-> Microsoft's replacement requires Azure AD OAuth 2.0 authentication, which adds significant friction (Microsoft account sign-in, organization admin approval) with limited guarantees of long-term stability.
->
+**Microsoft has disabled unauthenticated access to the OneDrive sharing API.** The API endpoint that previously allowed loading files from public SharePoint/OneDrive links now returns authentication errors. This is a change made by Microsoft — not by this application.
+
+Microsoft's replacement requires Azure AD OAuth 2.0 authentication, which adds significant friction (Microsoft account sign-in, organization admin approval) with limited guarantees of long-term stability.
+
 > **Recommended alternative:** Download your file from SharePoint/OneDrive to your computer, then use **Direct File Upload** above. This is faster, more reliable, and keeps your data fully in your control.
 
 ### Google Sheets

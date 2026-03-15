@@ -23,10 +23,10 @@ Scegli una delle sorgenti dati supportate:
 
 ### Microsoft SharePoint / OneDrive — Interrotto
 
-> **Microsoft ha disabilitato l'accesso non autenticato all'API di condivisione di OneDrive.** L'endpoint API che in precedenza consentiva il caricamento di file da link pubblici SharePoint/OneDrive ora restituisce errori di autenticazione. Questa è una modifica apportata da Microsoft — non da questa applicazione.
->
-> La soluzione sostitutiva di Microsoft richiede l'autenticazione Azure AD OAuth 2.0, che aggiunge notevole complessità (accesso con account Microsoft, approvazione dell'amministratore dell'organizzazione) con garanzie limitate di stabilità a lungo termine.
->
+**Microsoft ha disabilitato l'accesso non autenticato all'API di condivisione di OneDrive.** L'endpoint API che in precedenza consentiva il caricamento di file da link pubblici SharePoint/OneDrive ora restituisce errori di autenticazione. Questa è una modifica apportata da Microsoft — non da questa applicazione.
+
+La soluzione sostitutiva di Microsoft richiede l'autenticazione Azure AD OAuth 2.0, che aggiunge notevole complessità (accesso con account Microsoft, approvazione dell'amministratore dell'organizzazione) con garanzie limitate di stabilità a lungo termine.
+
 > **Alternativa consigliata:** Scarica il tuo file da SharePoint/OneDrive sul computer, quindi usa il **Caricamento diretto file** sopra. È più veloce, più affidabile e i tuoi dati restano completamente sotto il tuo controllo.
 
 ### Google Sheets

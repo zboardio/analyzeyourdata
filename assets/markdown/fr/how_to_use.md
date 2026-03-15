@@ -23,10 +23,10 @@ Choisissez l'une des sources de données prises en charge :
 
 ### Microsoft SharePoint / OneDrive — Abandonné
 
-> **Microsoft a désactivé l'accès non authentifié à l'API de partage OneDrive.** Le point d'accès API qui permettait auparavant de charger des fichiers à partir de liens publics SharePoint/OneDrive renvoie désormais des erreurs d'authentification. Il s'agit d'un changement effectué par Microsoft — pas par cette application.
->
-> La solution de remplacement de Microsoft nécessite l'authentification Azure AD OAuth 2.0, qui ajoute une friction importante (connexion avec un compte Microsoft, approbation de l'administrateur de l'organisation) avec des garanties limitées de stabilité à long terme.
->
+**Microsoft a désactivé l'accès non authentifié à l'API de partage OneDrive.** Le point d'accès API qui permettait auparavant de charger des fichiers à partir de liens publics SharePoint/OneDrive renvoie désormais des erreurs d'authentification. Il s'agit d'un changement effectué par Microsoft — pas par cette application.
+
+La solution de remplacement de Microsoft nécessite l'authentification Azure AD OAuth 2.0, qui ajoute une friction importante (connexion avec un compte Microsoft, approbation de l'administrateur de l'organisation) avec des garanties limitées de stabilité à long terme.
+
 > **Alternative recommandée :** Téléchargez votre fichier depuis SharePoint/OneDrive sur votre ordinateur, puis utilisez le **Téléversement direct de fichier** ci-dessus. C'est plus rapide, plus fiable et vos données restent entièrement sous votre contrôle.
 
 ### Google Sheets

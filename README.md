@@ -108,10 +108,11 @@ Contributions are welcome! The project uses Python 3.12+, Dash 4.0.0, and follow
 
 ```bash
 pip install -r requirements.txt
+pip install pre-commit && pre-commit install  # enables gitleaks secret scanning on commits
 python app.py  # starts on http://127.0.0.1:8050
 ```
 
-See `CLAUDE.md` for the full developer reference — project structure, callback patterns, environment variables, and i18n system.
+See [`docs/`](docs/) for the full developer reference — project structure, callback patterns, environment variables, and i18n system.
 
 ## ⚠️ Known Limitations
 

@@ -23,10 +23,10 @@ Välj en av de datakällor som stöds:
 
 ### Microsoft SharePoint / OneDrive — Avvecklat
 
-> **Microsoft har inaktiverat oautentiserad åtkomst till OneDrive delnings-API:et.** API-ändpunkten som tidigare tillät laddning av filer från offentliga SharePoint/OneDrive-länkar returnerar nu autentiseringsfel. Detta är en ändring gjord av Microsoft — inte av denna applikation.
->
-> Microsofts ersättning kräver Azure AD OAuth 2.0-autentisering, vilket lägger till betydande friktion (inloggning med Microsoft-konto, godkännande av organisationsadministratör) med begränsade garantier för långsiktig stabilitet.
->
+**Microsoft har inaktiverat oautentiserad åtkomst till OneDrive delnings-API:et.** API-ändpunkten som tidigare tillät laddning av filer från offentliga SharePoint/OneDrive-länkar returnerar nu autentiseringsfel. Detta är en ändring gjord av Microsoft — inte av denna applikation.
+
+Microsofts ersättning kräver Azure AD OAuth 2.0-autentisering, vilket lägger till betydande friktion (inloggning med Microsoft-konto, godkännande av organisationsadministratör) med begränsade garantier för långsiktig stabilitet.
+
 > **Rekommenderat alternativ:** Ladda ner din fil från SharePoint/OneDrive till din dator och använd sedan **Direkt filuppladdning** ovan. Det är snabbare, mer tillförlitligt och dina data förblir helt under din kontroll.
 
 ### Google Sheets

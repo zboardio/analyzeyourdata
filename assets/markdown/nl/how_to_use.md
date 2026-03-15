@@ -23,10 +23,10 @@ Kies een van de ondersteunde gegevensbronnen:
 
 ### Microsoft SharePoint / OneDrive — Stopgezet
 
-> **Microsoft heeft niet-geauthenticeerde toegang tot de OneDrive delings-API uitgeschakeld.** Het API-eindpunt dat eerder het laden van bestanden via openbare SharePoint/OneDrive-links mogelijk maakte, geeft nu authenticatiefouten terug. Dit is een wijziging van Microsoft — niet van deze applicatie.
->
-> De vervangende oplossing van Microsoft vereist Azure AD OAuth 2.0-authenticatie, wat aanzienlijke wrijving toevoegt (inloggen met Microsoft-account, goedkeuring van organisatiebeheerder) met beperkte garanties voor langdurige stabiliteit.
->
+**Microsoft heeft niet-geauthenticeerde toegang tot de OneDrive delings-API uitgeschakeld.** Het API-eindpunt dat eerder het laden van bestanden via openbare SharePoint/OneDrive-links mogelijk maakte, geeft nu authenticatiefouten terug. Dit is een wijziging van Microsoft — niet van deze applicatie.
+
+De vervangende oplossing van Microsoft vereist Azure AD OAuth 2.0-authenticatie, wat aanzienlijke wrijving toevoegt (inloggen met Microsoft-account, goedkeuring van organisatiebeheerder) met beperkte garanties voor langdurige stabiliteit.
+
 > **Aanbevolen alternatief:** Download uw bestand van SharePoint/OneDrive naar uw computer en gebruik vervolgens de **Directe bestandsupload** hierboven. Dit is sneller, betrouwbaarder en uw gegevens blijven volledig onder uw controle.
 
 ### Google Sheets

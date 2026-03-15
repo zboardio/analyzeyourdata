@@ -23,10 +23,10 @@ Vyberte si jeden z podporovaných zdrojů dat:
 
 ### Microsoft SharePoint / OneDrive — Ukončeno
 
-> **Microsoft zablokoval neautentizovaný přístup k API pro sdílení OneDrive.** Koncový bod API, který dříve umožňoval načítání souborů z veřejných odkazů SharePoint/OneDrive, nyní vrací chyby autentizace. Toto je změna provedená společností Microsoft — nikoli touto aplikací.
->
-> Náhradní řešení od Microsoftu vyžaduje autentizaci Azure AD OAuth 2.0, která přidává značné překážky (přihlášení účtem Microsoft, schválení administrátorem organizace) s omezenými zárukami dlouhodobé stability.
->
+**Microsoft zablokoval neautentizovaný přístup k API pro sdílení OneDrive.** Koncový bod API, který dříve umožňoval načítání souborů z veřejných odkazů SharePoint/OneDrive, nyní vrací chyby autentizace. Toto je změna provedená společností Microsoft — nikoli touto aplikací.
+
+Náhradní řešení od Microsoftu vyžaduje autentizaci Azure AD OAuth 2.0, která přidává značné překážky (přihlášení účtem Microsoft, schválení administrátorem organizace) s omezenými zárukami dlouhodobé stability.
+
 > **Doporučená alternativa:** Stáhněte si soubor ze SharePoint/OneDrive do počítače a poté použijte **Přímé nahrání souboru** výše. Je to rychlejší, spolehlivější a vaše data zůstávají plně pod vaší kontrolou.
 
 ### Google Sheets

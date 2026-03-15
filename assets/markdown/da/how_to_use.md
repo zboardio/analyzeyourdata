@@ -23,10 +23,10 @@ Vælg en af de understøttede datakilder:
 
 ### Microsoft SharePoint / OneDrive — Udgået
 
-> **Microsoft har deaktiveret uautentificeret adgang til OneDrive delings-API'et.** Det API-endpoint, der tidligere tillod indlæsning af filer fra offentlige SharePoint/OneDrive-links, returnerer nu autentificeringsfejl. Dette er en ændring foretaget af Microsoft — ikke af denne applikation.
->
-> Microsofts erstatning kræver Azure AD OAuth 2.0-godkendelse, som tilføjer betydelig friktion (Microsoft-kontologin, organisationsadministratorgodkendelse) med begrænsede garantier for langsigtet stabilitet.
->
+**Microsoft har deaktiveret uautentificeret adgang til OneDrive delings-API'et.** Det API-endpoint, der tidligere tillod indlæsning af filer fra offentlige SharePoint/OneDrive-links, returnerer nu autentificeringsfejl. Dette er en ændring foretaget af Microsoft — ikke af denne applikation.
+
+Microsofts erstatning kræver Azure AD OAuth 2.0-godkendelse, som tilføjer betydelig friktion (Microsoft-kontologin, organisationsadministratorgodkendelse) med begrænsede garantier for langsigtet stabilitet.
+
 > **Anbefalet alternativ:** Download din fil fra SharePoint/OneDrive til din computer, og brug derefter **Direkte filupload** ovenfor. Det er hurtigere, mere pålideligt, og dine data forbliver fuldt under din kontrol.
 
 ### Google Sheets
