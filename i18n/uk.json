@@ -107,7 +107,7 @@
 
     "google_sheets.url_label": "URL для спільного доступу Google Sheets:",
     "google_sheets.url_placeholder": "Вставте ваше посилання Google Sheets тут...",
-    "google_sheets.load_btn": "Завантажити з Google Sheets",
+    "google_sheets.load_btn": "Завантажити",
     "google_sheets.access_alert": "Переконайтеся, що посилання Google Sheets дозволяє анонімний доступ (Будь-хто з посиланням може переглядати).",
     "google_sheets.gid_label": "ID аркуша (GID) - За бажанням:",
     "google_sheets.gid_placeholder": "Введіть конкретний GID аркуша (залишіть порожнім для першого аркуша)",
@@ -122,7 +122,7 @@
     "airtable.api_key_placeholder": "Вставте ваш ключ Airtable API тут...",
     "airtable.base_id_label": "Base ID:",
     "airtable.base_id_placeholder": "Введіть ваш Airtable base ID (наприклад, appXXXXXXXXXXXXXX)",
-    "airtable.connect_btn": "Connect to Airtable",
+    "airtable.connect_btn": "Підключити",
     "airtable.help_heading": "Як отримати ваші облікові дані Airtable:",
     "airtable.help_step1_prefix": "1. Перейдіть на ",
     "airtable.help_step1_link": "airtable.com/create/tokens",
@@ -158,6 +158,8 @@
     "datetime.load_btn": "Load data to AgGrid Table",
 
     "grid.step3_heading": "Крок 3 - Переглядайте, фільтруйте, агрегуйте, групуйте ваші дані",
+    "grid.export_excel": "Експорт в Excel",
+    "grid.export_csv": "Експорт у CSV",
 
     "chart.step4_heading": "Крок 4 - Візуалізуйте ваші дані (3 незалежні графіки)",
     "chart.config_heading": "Конфігурація графіка {num}",

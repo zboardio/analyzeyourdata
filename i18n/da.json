@@ -107,7 +107,7 @@
 
     "google_sheets.url_label": "Google Sheets deling-URL:",
     "google_sheets.url_placeholder": "Indsæt dit Google Sheets-delingslink her...",
-    "google_sheets.load_btn": "Load from Google Sheets",
+    "google_sheets.load_btn": "Load",
     "google_sheets.access_alert": "Sørg for at Google Sheets-linket tillader anonym adgang (Enhver med linket kan se).",
     "google_sheets.gid_label": "Ark-ID (GID) - Valgfrit:",
     "google_sheets.gid_placeholder": "Indtast specifikt ark-GID (lad stå tomt for første ark)",
@@ -122,7 +122,7 @@
     "airtable.api_key_placeholder": "Indsæt din Airtable API-nøgle her...",
     "airtable.base_id_label": "Base ID:",
     "airtable.base_id_placeholder": "Indtast dit Airtable base-ID (f.eks. appXXXXXXXXXXXXXX)",
-    "airtable.connect_btn": "Connect to Airtable",
+    "airtable.connect_btn": "Connect",
     "airtable.help_heading": "Sådan får du dine Airtable-legitimationsoplysninger:",
     "airtable.help_step1_prefix": "1. Gå til ",
     "airtable.help_step1_link": "airtable.com/create/tokens",
@@ -158,6 +158,8 @@
     "datetime.load_btn": "Load data to AgGrid Table",
 
     "grid.step3_heading": "Trin 3 - Se, filtrér, aggregér, gruppér dine data",
+    "grid.export_excel": "Eksportér til Excel",
+    "grid.export_csv": "Eksportér til CSV",
 
     "chart.step4_heading": "Trin 4 - Visualisér dine data (3 uafhængige diagrammer)",
     "chart.config_heading": "Diagram {num} konfiguration",

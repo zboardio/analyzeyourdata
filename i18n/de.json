@@ -107,7 +107,7 @@
 
     "google_sheets.url_label": "Google Sheets Freigabe-URL:",
     "google_sheets.url_placeholder": "Google Sheets-Freigabelink hier einfügen...",
-    "google_sheets.load_btn": "Von Google Sheets laden",
+    "google_sheets.load_btn": "Laden",
     "google_sheets.access_alert": "Stellen Sie sicher, dass der Google Sheets-Link anonymen Zugriff erlaubt (Jeder mit dem Link kann anzeigen).",
     "google_sheets.gid_label": "Blatt-ID (GID) - Optional:",
     "google_sheets.gid_placeholder": "Spezifische Blatt-GID eingeben (leer lassen für erstes Blatt)",
@@ -122,7 +122,7 @@
     "airtable.api_key_placeholder": "Airtable API-Schlüssel hier einfügen...",
     "airtable.base_id_label": "Base-ID:",
     "airtable.base_id_placeholder": "Airtable Base-ID eingeben (z.B. appXXXXXXXXXXXXXX)",
-    "airtable.connect_btn": "Mit Airtable verbinden",
+    "airtable.connect_btn": "Verbinden",
     "airtable.help_heading": "So erhalten Sie Ihre Airtable-Zugangsdaten:",
     "airtable.help_step1_prefix": "1. Gehen Sie zu ",
     "airtable.help_step1_link": "airtable.com/create/tokens",
@@ -158,6 +158,8 @@
     "datetime.load_btn": "Daten in AgGrid-Tabelle laden",
 
     "grid.step3_heading": "Schritt 3 - Daten anzeigen, filtern, aggregieren, gruppieren",
+    "grid.export_excel": "Als Excel exportieren",
+    "grid.export_csv": "Als CSV exportieren",
 
     "chart.step4_heading": "Schritt 4 - Daten visualisieren (3 unabhängige Diagramme)",
     "chart.config_heading": "Diagramm {num} Konfiguration",

@@ -1,5 +1,5 @@
 import dash
-from dash import dcc, html
+from dash import dcc, html, clientside_callback, Input, Output
 import dash_bootstrap_components as dbc
 import dash_ag_grid as dag
 import tracemalloc
@@ -213,8 +213,10 @@ app.layout = html.Div([
 
         # AgGrid Section
         html.H4(t('grid.step3_heading'), style={'marginTop': '30px', 'marginBottom': '15px'}),
+
         dcc.Loading([
             html.Div([
+                # AgGrid Table
                 dbc.Row([
                     dbc.Col([
                         dag.AgGrid(
@@ -232,9 +234,10 @@ app.layout = html.Div([
                                 'sortable': True,
                             },
                             dashGridOptions={
-                                'groupTotalRow': 'bottom',
+                                'groupTotalRow': 'top',
                                 'rowGroupPanelShow': 'always',
-                                'groupDefaultExpanded': -1
+                                'groupDefaultExpanded': -1,
+                                "sideBar": {"toolPanels": ["columns", "filters"]}, # After dash-ag-grid v34.x stable release whitch to "filters-new"
                             },
                             enableEnterpriseModules=True,
                             licenseKey=Config.AG_GRID_LICENSE_KEY,
@@ -242,7 +245,22 @@ app.layout = html.Div([
                             style={'height': f'{Config.AG_GRID_HEIGHT}px', 'marginBottom': '10px'}
                         )
                     ])
-                ])
+                ]),
+                # AgGrid Export Buttons
+                dbc.Row([
+                    dbc.Col([
+                        dbc.Button(
+                            [html.I(className="fas fa-file-excel me-2"), t('grid.export_excel')],
+                            id='grid-export-excel-btn', color='primary', className='mx-2', style={'width': '48%'}
+                        ),
+                        dbc.Button(
+                            [html.I(className="fas fa-file-csv me-2"), t('grid.export_csv')],
+                            id='grid-export-csv-btn', color='primary', className='mx-2', style={'width': '48%'}
+                        ),
+                    ], style={'display': 'flex', 'justifyContent': 'center'}),
+                ], className="mt-3"),
+                html.Div(id='grid-export-excel-dummy', style={'display': 'none'}),
+                html.Div(id='grid-export-csv-dummy', style={'display': 'none'}),
             ], className='chart-container'),
         ], type='default', color='var(--primary-color)'),
         html.Hr(),
@@ -315,6 +333,33 @@ register_navbar_callbacks(app)
 register_data_loading(app)
 register_data_processing(app)
 register_chart_callbacks(app)
+
+# Grid export clientside callbacks (Excel via AG Grid Enterprise API, CSV via built-in)
+clientside_callback(
+    """async function(n_clicks) {
+        if (n_clicks) {
+            const api = await dash_ag_grid.getApiAsync("data-grid");
+            api.exportDataAsExcel({exportAsExcelTable: true});
+        }
+        return dash_clientside.no_update;
+    }""",
+    Output('grid-export-excel-dummy', 'children'),
+    Input('grid-export-excel-btn', 'n_clicks'),
+    prevent_initial_call=True,
+)
+
+clientside_callback(
+    """async function(n_clicks) {
+        if (n_clicks) {
+            const api = await dash_ag_grid.getApiAsync("data-grid");
+            api.exportDataAsCsv();
+        }
+        return dash_clientside.no_update;
+    }""",
+    Output('grid-export-csv-dummy', 'children'),
+    Input('grid-export-csv-btn', 'n_clicks'),
+    prevent_initial_call=True,
+)
 
 # Memory monitoring
 if Config.MEMORY_MONITORING_ENABLED:

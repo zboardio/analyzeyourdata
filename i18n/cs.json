@@ -107,7 +107,7 @@
 
     "google_sheets.url_label": "Google Sheets sdílená URL:",
     "google_sheets.url_placeholder": "Vložte sdílený odkaz Google Sheets...",
-    "google_sheets.load_btn": "Načíst z Google Sheets",
+    "google_sheets.load_btn": "Načíst",
     "google_sheets.access_alert": "Ujistěte se, že odkaz Google Sheets umožňuje anonymní přístup (Kdokoli s odkazem může zobrazit).",
     "google_sheets.gid_label": "ID listu (GID) - Volitelné:",
     "google_sheets.gid_placeholder": "Zadejte konkrétní GID listu (ponechte prázdné pro první list)",
@@ -122,7 +122,7 @@
     "airtable.api_key_placeholder": "Vložte svůj Airtable API klíč...",
     "airtable.base_id_label": "Base ID:",
     "airtable.base_id_placeholder": "Zadejte ID vaší Airtable base (např. appXXXXXXXXXXXXXX)",
-    "airtable.connect_btn": "Připojit k Airtable",
+    "airtable.connect_btn": "Připojit",
     "airtable.help_heading": "Jak získat přístupové údaje Airtable:",
     "airtable.help_step1_prefix": "1. Přejděte na ",
     "airtable.help_step1_link": "airtable.com/create/tokens",
@@ -158,6 +158,8 @@
     "datetime.load_btn": "Načíst data do AgGrid tabulky",
 
     "grid.step3_heading": "Krok 3 - Zobrazit, filtrovat, agregovat, seskupit data",
+    "grid.export_excel": "Export do Excelu",
+    "grid.export_csv": "Export do CSV",
 
     "chart.step4_heading": "Krok 4 - Vizualizujte svá data (3 nezávislé grafy)",
     "chart.config_heading": "Konfigurace grafu {num}",
