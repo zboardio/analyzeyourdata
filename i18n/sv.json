@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "Ett kraftfullt, enkelt verktyg för dataanalys och visualisering. Ladda upp, analysera och skapa fantastiska diagram på några minuter.",
-
     "navbar.language": "Språk",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "Hur man använder",
     "navbar.feedback": "Feedback",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Kontakta oss",
     "footer.our_website": "Vår webbplats",
     "footer.open_source": "Öppen källkod",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Verifiera källkod",
     "footer.all_rights": ". Alla rättigheter förbehållna.",
     "footer.email_copied": "Kontakt-e-post kopierad till urklipp",
-
     "powered_by.heading": "Drivs av",
     "powered_by.plotly_dash_desc": "Webb-ramverk",
     "powered_by.dash_ag_grid_desc": "Dash-integration",
     "powered_by.ag_grid_desc": "Enterprise-grid",
     "powered_by.author_desc": "Utveckling",
-
     "feedback.title": "Skicka feedback",
     "feedback.category_label": "Kategori",
     "feedback.category_not_specified": "Ej specificerad",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Vänligen ange ditt feedbackmeddelande.",
     "feedback.success": "Tack för din feedback!",
     "feedback.error": "Feedback kunde inte sparas. Vänligen försök igen senare.",
-
     "how_to_use.title": "Hur man använder",
     "how_to_use.btn_close": "Stäng",
     "how_to_use.btn_docs": "Visa dokumentation",
-
     "video.intro_heading": "Introduktionsvideo - utan ljud",
     "video.updated_date": "(Uppdaterad 13.08.2024)",
-
     "data_source.step1_heading": "Steg 1 - Välj datakälla | Maximal filstorlek: {max_size}MB",
     "data_source.choose_source": "Välj din datakälla:",
     "data_source.upload": "Direkt filuppladdning",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Dra och släpp eller ",
     "data_source.select_files": "Välj filer",
-
     "delimiter.label": "Välj avgränsare för CSV / TXT / LOG-fil:",
     "delimiter.comma": "Komma (,)",
     "delimiter.semicolon": "Semikolon (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Anpassad",
     "delimiter.custom_placeholder": "Ange anpassad avgränsare",
     "delimiter.confirm_btn": "Bekräfta avgränsare",
-
     "sqlite.select_table_label": "Välj tabell från SQLite-databas:",
     "sqlite.table_placeholder": "Välj en tabell att ladda...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Fel vid laddning av SQLite-databas",
     "sqlite.table_loaded": "SQLite-tabell '{table}' laddades framgångsrikt!",
     "sqlite.error_loading_table": "Fel vid laddning av SQLite-tabell",
-
     "sharepoint.url_label": "SharePoint / OneDrive delnings-URL:",
     "sharepoint.url_placeholder": "Klistra in din SharePoint/OneDrive-delningslänk här...",
     "sharepoint.load_btn": "Ladda från SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "SharePoint-data laddades framgångsrikt!",
     "sharepoint.sheet_loaded": "Ark '{sheet}' laddades framgångsrikt!",
     "sharepoint.error_loading": "Fel vid laddning av SharePoint-data",
-
     "google_sheets.url_label": "Google Sheets delnings-URL:",
     "google_sheets.url_placeholder": "Klistra in din Google Sheets-delningslänk här...",
     "google_sheets.load_btn": "Ladda",
     "google_sheets.access_alert": "Se till att Google Sheets-länken tillåter anonym åtkomst (Anyone with the link can view).",
-    "google_sheets.gid_label": "Ark-ID (GID) - Valfritt:",
-    "google_sheets.gid_placeholder": "Ange specifikt ark-GID (lämna tomt för första arket)",
-    "google_sheets.gid_help": "Du kan hitta GID:t i Google Sheets-URL:en efter '#gid=' när du visar ett specifikt ark.",
     "google_sheets.invalid_url": "Ogiltig Google Sheets-URL",
     "google_sheets.invalid_url_detail": "Vänligen säkerställ att URL:en är en giltig Google Sheets-delningslänk.",
     "google_sheets.data_loaded": "Google Sheets-data laddades framgångsrikt!",
     "google_sheets.error_loading": "Fel vid laddning av Google Sheets-data",
-
     "airtable.config_label": "Airtable API-konfiguration:",
     "airtable.api_key_label": "API-nyckel:",
     "airtable.api_key_placeholder": "Klistra in din Airtable API-nyckel här...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Fel vid anslutning till Airtable",
     "airtable.table_loaded": "Airtable-tabell '{table}' laddades framgångsrikt!",
     "airtable.error_loading_table": "Fel vid laddning av Airtable-tabell",
-
     "datetime.step2_heading": "Steg 2 - Valfri datetime-bearbetning",
     "datetime.enable_label": "Aktivera datetime-tolkning",
     "datetime.toggle_tooltip": "Slå PÅ för att definiera en datetime-kolumn och format. Detta kommer att berika din data med användbara tidsrelaterade funktioner som år, månad, veckodag, kalendervecka, etc.\n\nSlå AV för att hoppa över datetime-konvertering och ladda rådata direkt till tabellen.",
@@ -156,11 +140,9 @@
     "datetime.custom_placeholder": "Ange anpassad strftime(), t.ex. %Y-%m-%d",
     "datetime.custom_tooltip": "Detta måste följa Pythons strftime-syntax.\n\nExempel: %Y-%m-%d %H:%M:%S.%f\n\nAnvänd 🔗-ikonen för att öppna den fullständiga dokumentationen.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Steg 3 - Visa, filtrera, aggregera, gruppera din data",
     "grid.export_excel": "Exportera till Excel",
     "grid.export_csv": "Exportera till CSV",
-
     "chart.step4_heading": "Steg 4 - Visualisera din data (3 oberoende diagram)",
     "chart.config_heading": "Diagram {num} konfiguration",
     "chart.select_type": "Välj diagramtyp:",
@@ -187,13 +169,11 @@
     "chart.y_axis_title_placeholder": "Ange y-axeltitel",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Diagram {num} - Ingen data",
-
     "dashboard.heading": "Kombinerad instrumentpanelexport",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Dataanalysinstrumentpanel",
     "dashboard.generated_on": "Genererad {timestamp}",
     "dashboard.chart_heading": "Diagram {num}",
-
     "messages.error": "Fel",
     "messages.file_uploaded": "Fil uppladdad: {filename}",
     "messages.file_too_large": "Filen för stor: {size}MB | Maximal storlek som stöds är {max_size}MB.",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Föreslagen avgränsare: '{delimiter}' ",
     "messages.confirm_delimiter": "Bekräfta eller justera avgränsare, klicka sedan på Bekräfta-knappen.",
     "messages.fields_count": "{count} fält",
-
     "test_dataset.try_label": "Testa med vår testdatamängd:",
     "test_dataset.try_label_plural": "Testa med våra testdatamängder",
     "test_dataset.browse_btn": "Bläddra bland datamängder",
     "test_dataset.copy_btn": "Kopiera",
     "test_dataset.copied_btn": "Kopierat!",
-
     "donate.heading": "Bjud vårt devTeam på en kaffe eller en karibisk rom shot",
     "donate.description": "Detta verktyg är gratis och öppen källkod. Om det sparade din tid, överväg att stödja vårt arbete!",
     "donate.btn": "Skål!"

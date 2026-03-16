@@ -30,11 +30,11 @@ La soluzione sostitutiva di Microsoft richiede l'autenticazione Azure AD OAuth 2
 > **Alternativa consigliata:** Scarica il tuo file da SharePoint/OneDrive sul computer, quindi usa il **Caricamento diretto file** sopra. È più veloce, più affidabile e i tuoi dati restano completamente sotto il tuo controllo.
 
 ### Google Sheets
-- Incolla un URL pubblico di Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Opzionalmente inserisci un **GID** (ID scheda foglio) per caricare un foglio specifico
+- Copia l'URL dalla barra del browser mentre visualizzi la scheda foglio desiderata e incollalo
+- La scheda foglio (GID) viene rilevata automaticamente dall'URL
 - Il documento deve essere condiviso come "Chiunque con il link può visualizzare"
 
-**Come ottenere un URL di condivisione:** In Google Sheets, clicca Condividi → imposta su "Chiunque con il link" → Visualizzatore → copia il link. Per caricare una scheda foglio specifica, copia l'URL dalla barra del browser e usa il numero `#gid=123456789` nel campo GID.
+**Come ottenere l'URL:** In Google Sheets, clicca Condividi → imposta su "Chiunque con il link" → Visualizzatore. Poi naviga alla scheda foglio che desideri caricare e copia l'URL dalla barra degli indirizzi del browser (contiene l'ID del foglio automaticamente).
 
 **URL di Test** — prova questo per verificare la tua configurazione:
 ```
@@ -93,21 +93,31 @@ Le colonne generate includono: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinute
 
 ---
 
-## Passo 3: Esplora i Tuoi Dati nella Griglia
+## Passo 3: Esplora i Tuoi Dati in AG Grid
 
-La tabella **AG Grid** fornisce potenti strumenti di esplorazione dati:
+**AG Grid** fornisce una potente esplorazione interattiva dei dati con pannelli laterali integrati:
 
 - **Ordina** — clicca su qualsiasi intestazione di colonna
-- **Filtra** — clicca sull'icona del filtro su qualsiasi intestazione di colonna per impostare condizioni
+- **Filtra** — clicca sull'icona del filtro su qualsiasi intestazione di colonna per impostare condizioni, oppure usa il **Pannello filtri** sul lato destro per gestire tutti i filtri delle colonne in un unico posto
 - **Raggruppa** — trascina le intestazioni di colonna nel pannello "Row Group" sopra la tabella
-- **Pivot** — abilita la modalità pivot dal menu colonna per tabulazioni incrociate
+- **Pivot** — abilita la modalità pivot dal **Pannello colonne** sul lato destro per tabulazioni incrociate
 - **Ridimensiona** — trascina i bordi delle colonne per regolare le larghezze
-- **Aggrega** — durante il raggruppamento, la griglia mostra subtotali e totali generali
+- **Aggrega** — durante il raggruppamento, AG Grid mostra subtotali e totali generali
+- **Pannello colonne** — attiva/disattiva la visibilità delle colonne, riordina le colonne e configura le impostazioni di pivot/valori dal pannello laterale
+- **Pannello filtri** — visualizza e gestisci tutti i filtri attivi su tutte le colonne da un unico pannello comodo
 
-> **Chiave:** I grafici sottostanti leggono dai **dati attualmente filtrati/raggruppati** visibili nella griglia. Ogni azione di filtro, ordinamento o raggruppamento aggiorna istantaneamente tutti i grafici — **questo è il potere centrale dello strumento.** Usa la griglia come il tuo slicer di dati interattivo e vedi i risultati riflessi in tempo reale in tutte le tue visualizzazioni.
+> **Chiave:** I grafici sottostanti leggono dai **dati attualmente filtrati/raggruppati** visibili in AG Grid. Ogni azione di filtro, ordinamento o raggruppamento aggiorna istantaneamente tutti i grafici — **questo è il potere centrale dello strumento.** Usa AG Grid come il tuo slicer di dati interattivo e vedi i risultati riflessi in tempo reale in tutte le tue visualizzazioni.
 
+### Esportazione da AG Grid
 
-> **Esporta dati dalla griglia:** Fai clic destro ovunque nella tabella AG Grid per esportare i dati attualmente filtrati e strutturati direttamente in file **CSV o Excel**. L'esportazione riflette esattamente ciò che vedi nella griglia — inclusi eventuali filtri, raggruppamenti o ordinamenti che hai applicato.
+Usa i pulsanti **Export to Excel** e **Export to CSV** sotto AG Grid per scaricare i dati attualmente visibili:
+
+- L'esportazione riflette sempre la **vista corrente** di AG Grid — filtri, raggruppamenti e ordinamenti sono rispettati
+- **L'esportazione Excel** include la formattazione della tabella con i filtri attivi, così puoi continuare a filtrare direttamente in Excel
+- **L'esportazione CSV** fornisce un file piatto pulito dei dati filtrati
+- Questo significa che puoi applicare diversi criteri di filtro in AG Grid ed esportare più volte per creare **file separati per diversi sottoinsiemi** dei tuoi dati — un flusso di lavoro potente per l'analisi dei dati e il reporting
+
+> **Suggerimento:** Puoi anche fare clic destro ovunque nella tabella AG Grid per opzioni di esportazione aggiuntive tramite il menu contestuale.
 
 ---
 
@@ -123,7 +133,7 @@ Puoi creare fino a **3 grafici indipendenti**, ciascuno con la propria configura
 6. **Colonna Asse Z** (opzionale) — per i tipi di grafici Bubble e Heatmap
 7. **Titoli** — imposta titolo grafico personalizzato, titolo asse X e titolo asse Y
 
-I grafici leggono dai dati della griglia attualmente filtrati/raggruppati. **Ogni azione di filtro, ordinamento o raggruppamento nella griglia aggiorna istantaneamente tutti i grafici.**
+I grafici leggono dai dati di AG Grid attualmente filtrati/raggruppati. **Ogni azione di filtro, ordinamento o raggruppamento in AG Grid aggiorna istantaneamente tutti i grafici.**
 
 ---
 
@@ -137,11 +147,11 @@ I grafici leggono dai dati della griglia attualmente filtrati/raggruppati. **Ogn
 - Ogni grafico attivo viene esportato come file HTML autonomo, raggruppati in un unico download ZIP
 - Nel file ZIP sono inclusi solo i grafici con dati
 
-### Dati Griglia
-- Fai clic destro nella tabella AG Grid → **Export to CSV** o **Export to Excel**
-- Esporta esattamente i dati attualmente visibili nella griglia (rispetta filtri, raggruppamenti, ordinamenti)
+### Dati AG Grid
+- Usa i pulsanti **Export to Excel** o **Export to CSV** sotto AG Grid (vedi Passo 3 sopra)
+- Esporta esattamente i dati attualmente visibili in AG Grid (rispetta filtri, raggruppamenti, ordinamenti)
 
-> **Suggerimento:** I file HTML esportati sono completamente interattivi — puoi ingrandire, passare il mouse per i tooltip e fare pan — nessun software necessario, solo un browser web.
+> **Suggerimento:** I file HTML dei grafici esportati sono completamente interattivi — puoi ingrandire, passare il mouse per i tooltip e fare pan — nessun software necessario, solo un browser web.
 
 ---
 
@@ -154,8 +164,8 @@ I grafici leggono dai dati della griglia attualmente filtrati/raggruppati. **Ogn
 | Google Sheet non si carica | Assicurati che la condivisione sia impostata su "Chiunque con il link può visualizzare" |
 | Airtable non si connette | Verifica che il tuo Personal Access Token abbia gli scope `data.records:read` e `schema.bases:read`, e che il Base ID inizi con `app` |
 | Errori di parsing datetime | Verifica che il formato selezionato corrisponda ai tuoi dati. Prova un formato personalizzato se necessario |
-| I grafici sono vuoti | Assicurati che i dati siano caricati nella griglia e che le colonne X/Y siano selezionate |
-| La griglia non mostra dati dopo il filtro | Cancella o regola i filtri delle colonne |
+| I grafici sono vuoti | Assicurati che i dati siano caricati in AG Grid e che le colonne X/Y siano selezionate |
+| AG Grid non mostra dati dopo il filtro | Cancella o regola i filtri delle colonne nel Pannello filtri |
 
 ---
 

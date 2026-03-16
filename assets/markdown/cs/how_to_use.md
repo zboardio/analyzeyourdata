@@ -30,11 +30,11 @@ Náhradní řešení od Microsoftu vyžaduje autentizaci Azure AD OAuth 2.0, kte
 > **Doporučená alternativa:** Stáhněte si soubor ze SharePoint/OneDrive do počítače a poté použijte **Přímé nahrání souboru** výše. Je to rychlejší, spolehlivější a vaše data zůstávají plně pod vaší kontrolou.
 
 ### Google Sheets
-- Vložte veřejnou URL adresu Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Volitelně zadejte **GID** (ID záložky listu) pro načtení konkrétního listu
+- Zkopírujte URL z adresního řádku prohlížeče při zobrazení požadované záložky listu a vložte ji
+- Záložka listu (GID) je automaticky rozpoznána z URL
 - Dokument musí být sdílen jako "Kdokoli s odkazem může zobrazit"
 
-**Jak získat sdílený odkaz:** V Google Sheets klikněte na Sdílet → nastavte "Kdokoli s odkazem" → Čtenář → zkopírujte odkaz. Pro načtení konkrétní záložky listu zkopírujte URL z adresního řádku prohlížeče a použijte číslo `#gid=123456789` v poli GID.
+**Jak získat URL:** V Google Sheets klikněte na Sdílet → nastavte "Kdokoli s odkazem" → Čtenář. Poté přejděte na záložku listu, kterou chcete načíst, a zkopírujte URL z adresního řádku prohlížeče (automaticky obsahuje ID listu).
 
 **Testovací URL** — vyzkoušejte pro ověření funkčnosti:
 ```
@@ -92,20 +92,31 @@ Vygenerované sloupce zahrnují: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinu
 
 ---
 
-## Krok 3: Prozkoumejte svá data v tabulce
+## Krok 3: Prozkoumejte svá data v AG Grid
 
-Tabulka **AG Grid** poskytuje výkonné nástroje pro práci s daty:
+**AG Grid** poskytuje výkonné interaktivní nástroje pro práci s daty s vestavěnými bočními panely:
 
 - **Řazení** — klikněte na záhlaví libovolného sloupce
-- **Filtrování** — klikněte na ikonu filtru v záhlaví sloupce pro nastavení podmínek
+- **Filtrování** — klikněte na ikonu filtru v záhlaví sloupce pro nastavení podmínek, nebo použijte **Panel filtrů** na pravé straně pro správu všech filtrů sloupců na jednom místě
 - **Seskupování** — přetáhněte záhlaví sloupců do panelu "Row Group" nad tabulkou
-- **Pivotování** — aktivujte režim pivot z nabídky sloupce pro křížové tabulky
+- **Pivotování** — aktivujte režim pivot z **Panelu sloupců** na pravé straně pro křížové tabulky
 - **Změna šířky** — přetáhněte okraje sloupců pro úpravu šířky
-- **Agregace** — při seskupování tabulka zobrazuje mezisoučty a celkové součty
+- **Agregace** — při seskupování AG Grid zobrazuje mezisoučty a celkové součty
+- **Panel sloupců** — přepínejte viditelnost sloupců, měňte pořadí sloupců a konfigurujte nastavení pivotu/hodnot z bočního panelu
+- **Panel filtrů** — zobrazujte a spravujte všechny aktivní filtry napříč sloupci z jednoho přehledného panelu
 
-> **Klíčové:** Grafy níže čtou z **aktuálně filtrovaných/seskupených dat** viditelných v tabulce. Každý filtr, řazení nebo seskupení okamžitě aktualizuje všechny grafy — **to je hlavní síla tohoto nástroje.** Používejte tabulku jako interaktivní průřez daty a sledujte výsledky promítnuté v reálném čase do všech vašich vizualizací.
+> **Klíčové:** Grafy níže čtou z **aktuálně filtrovaných/seskupených dat** viditelných v AG Grid. Každý filtr, řazení nebo seskupení okamžitě aktualizuje všechny grafy — **to je hlavní síla tohoto nástroje.** Používejte AG Grid jako interaktivní průřez daty a sledujte výsledky promítnuté v reálném čase do všech vašich vizualizací.
 
-> **Export dat z tabulky:** Klikněte pravým tlačítkem kamkoli v tabulce AG Grid a exportujte aktuálně filtrovaná a strukturovaná data přímo do souboru **CSV nebo Excel**. Export přesně odpovídá tomu, co vidíte v tabulce — včetně všech filtrů, seskupování a řazení, které jste aplikovali.
+### Export z AG Grid
+
+Použijte tlačítka **Export to Excel** a **Export to CSV** pod AG Grid pro stažení aktuálně viditelných dat:
+
+- Export vždy odpovídá **aktuálnímu zobrazení** AG Grid — filtry, seskupování a řazení jsou respektovány
+- **Export do Excelu** zahrnuje formátování tabulky s aktivními filtry, takže můžete pokračovat ve filtrování přímo v Excelu
+- **Export do CSV** poskytuje čistý plochý soubor filtrovaných dat
+- To znamená, že můžete aplikovat různá kritéria filtrů v AG Grid a exportovat vícekrát pro vytvoření **samostatných souborů pro různé podmnožiny** vašich dat — výkonný pracovní postup pro analýzu dat a reporting
+
+> **Tip:** Můžete také kliknout pravým tlačítkem kamkoli v tabulce AG Grid pro další možnosti exportu prostřednictvím kontextového menu.
 
 ---
 
@@ -121,7 +132,7 @@ Můžete vytvořit až **3 nezávislé grafy**, každý s vlastním nastavením:
 6. **Sloupec osy Z** (volitelné) — pro typy grafů Bubble a Heatmap
 7. **Názvy** — nastavte vlastní název grafu, název osy X a název osy Y
 
-Grafy čtou z aktuálně filtrovaných/seskupených dat v tabulce. **Každý filtr, řazení nebo seskupení v tabulce okamžitě aktualizuje všechny grafy.**
+Grafy čtou z aktuálně filtrovaných/seskupených dat v AG Grid. **Každý filtr, řazení nebo seskupení v AG Grid okamžitě aktualizuje všechny grafy.**
 
 ---
 
@@ -135,11 +146,11 @@ Grafy čtou z aktuálně filtrovaných/seskupených dat v tabulce. **Každý fil
 - Každý aktivní graf se exportuje jako samostatný HTML soubor, zabalený do jednoho ZIP souboru ke stažení
 - Do ZIPu jsou zahrnuty pouze grafy s daty
 
-### Data z tabulky
-- Klikněte pravým tlačítkem v tabulce AG Grid → **Export to CSV** nebo **Export to Excel**
-- Exportuje přesně ta data, která jsou aktuálně viditelná v tabulce (respektuje filtry, seskupování, řazení)
+### Data z AG Grid
+- Použijte tlačítka **Export to Excel** nebo **Export to CSV** pod AG Grid (viz Krok 3 výše)
+- Exportuje přesně ta data, která jsou aktuálně viditelná v AG Grid (respektuje filtry, seskupování, řazení)
 
-> **Tip:** Exportované HTML soubory jsou plně interaktivní — můžete přibližovat, najet myší pro zobrazení popisků a posouvat — není potřeba žádný software, stačí webový prohlížeč.
+> **Tip:** Exportované HTML soubory grafů jsou plně interaktivní — můžete přibližovat, najet myší pro zobrazení popisků a posouvat — není potřeba žádný software, stačí webový prohlížeč.
 
 ---
 
@@ -152,8 +163,8 @@ Grafy čtou z aktuálně filtrovaných/seskupených dat v tabulce. **Každý fil
 | Google Sheet se nenačte | Ujistěte se, že sdílení je nastaveno na "Kdokoli s odkazem může zobrazit" |
 | Airtable se nepřipojí | Ověřte, že váš Personal Access Token má oprávnění `data.records:read` a `schema.bases:read` a že Base ID začíná na `app` |
 | Chyby při zpracování data a času | Ověřte, že vybraný formát odpovídá vašim datům. V případě potřeby zkuste vlastní formát |
-| Grafy jsou prázdné | Ujistěte se, že jsou data načtena v tabulce a jsou vybrány sloupce X/Y |
-| Tabulka nezobrazuje data po filtrování | Zrušte nebo upravte filtry sloupců |
+| Grafy jsou prázdné | Ujistěte se, že jsou data načtena v AG Grid a jsou vybrány sloupce X/Y |
+| AG Grid nezobrazuje data po filtrování | Zrušte nebo upravte filtry sloupců v Panelu filtrů |
 
 ---
 

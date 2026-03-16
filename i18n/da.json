@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "Et kraftfuldt, simpelt værktøj til dataanalyse og visualisering. Upload, analysér og opret imponerende diagrammer på minutter.",
-
     "navbar.language": "Sprog",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "Sådan bruges",
     "navbar.feedback": "Feedback",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Kontakt os",
     "footer.our_website": "Vores hjemmeside",
     "footer.open_source": "Open Source",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Verificér kildekode",
     "footer.all_rights": ". Alle rettigheder forbeholdes.",
     "footer.email_copied": "Kontakt-e-mail kopieret til udklipsholder",
-
     "powered_by.heading": "Drevet af",
     "powered_by.plotly_dash_desc": "Web-framework",
     "powered_by.dash_ag_grid_desc": "Dash-integration",
     "powered_by.ag_grid_desc": "Enterprise-grid",
     "powered_by.author_desc": "Udvikling",
-
     "feedback.title": "Send feedback",
     "feedback.category_label": "Kategori",
     "feedback.category_not_specified": "Ikke angivet",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Indtast venligst din feedback-besked.",
     "feedback.success": "Tak for din feedback!",
     "feedback.error": "Feedback kunne ikke gemmes. Prøv venligst igen senere.",
-
     "how_to_use.title": "Sådan bruges",
     "how_to_use.btn_close": "Luk",
     "how_to_use.btn_docs": "Vis dokumentation",
-
     "video.intro_heading": "Introvideo - uden lyd",
     "video.updated_date": "(Opdateret den 13.08.2024)",
-
     "data_source.step1_heading": "Trin 1 - Vælg datakilde | Maksimal filstørrelse: {max_size}MB",
     "data_source.choose_source": "Vælg din datakilde:",
     "data_source.upload": "Direkte filupload",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Træk og slip eller ",
     "data_source.select_files": "Vælg filer",
-
     "delimiter.label": "Vælg separator til CSV / TXT / LOG-fil:",
     "delimiter.comma": "Komma (,)",
     "delimiter.semicolon": "Semikolon (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Brugerdefineret",
     "delimiter.custom_placeholder": "Indtast brugerdefineret separator",
     "delimiter.confirm_btn": "Bekræft separator",
-
     "sqlite.select_table_label": "Vælg tabel fra SQLite-database:",
     "sqlite.table_placeholder": "Vælg en tabel at indlæse...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Fejl ved indlæsning af SQLite-database",
     "sqlite.table_loaded": "SQLite-tabel '{table}' indlæst succesfuldt!",
     "sqlite.error_loading_table": "Fejl ved indlæsning af SQLite-tabel",
-
     "sharepoint.url_label": "SharePoint / OneDrive deling-URL:",
     "sharepoint.url_placeholder": "Indsæt dit SharePoint/OneDrive-delingslink her...",
     "sharepoint.load_btn": "Load from SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "SharePoint-data indlæst succesfuldt!",
     "sharepoint.sheet_loaded": "Ark '{sheet}' indlæst succesfuldt!",
     "sharepoint.error_loading": "Fejl ved indlæsning af SharePoint-data",
-
     "google_sheets.url_label": "Google Sheets deling-URL:",
     "google_sheets.url_placeholder": "Indsæt dit Google Sheets-delingslink her...",
     "google_sheets.load_btn": "Load",
     "google_sheets.access_alert": "Sørg for at Google Sheets-linket tillader anonym adgang (Enhver med linket kan se).",
-    "google_sheets.gid_label": "Ark-ID (GID) - Valgfrit:",
-    "google_sheets.gid_placeholder": "Indtast specifikt ark-GID (lad stå tomt for første ark)",
-    "google_sheets.gid_help": "Du kan finde GID'et i Google Sheets-URL'en efter '#gid=' når du ser et specifikt ark.",
     "google_sheets.invalid_url": "Ugyldig Google Sheets-URL",
     "google_sheets.invalid_url_detail": "Sørg venligst for at URL'en er et gyldigt Google Sheets-delingslink.",
     "google_sheets.data_loaded": "Google Sheets-data indlæst succesfuldt!",
     "google_sheets.error_loading": "Fejl ved indlæsning af Google Sheets-data",
-
     "airtable.config_label": "Airtable API-konfiguration:",
     "airtable.api_key_label": "API-nøgle:",
     "airtable.api_key_placeholder": "Indsæt din Airtable API-nøgle her...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Fejl ved forbindelse til Airtable",
     "airtable.table_loaded": "Airtable-tabel '{table}' indlæst succesfuldt!",
     "airtable.error_loading_table": "Fejl ved indlæsning af Airtable-tabel",
-
     "datetime.step2_heading": "Trin 2 - Valgfri datetime-behandling",
     "datetime.enable_label": "Aktivér datetime-parsing",
     "datetime.toggle_tooltip": "Slå TIL for at definere en datetime-kolonne og -format. Dette beriger dine data med nyttige tidsrelaterede funktioner som år, måned, ugedag, kalenderuge osv.\n\nSlå FRA for at springe datetime-konvertering over og indlæse rådata direkte i tabellen.",
@@ -156,11 +140,9 @@
     "datetime.custom_placeholder": "Indtast brugerdefineret strftime(), f.eks. %Y-%m-%d",
     "datetime.custom_tooltip": "Dette skal følge Pythons strftime-syntaks.\n\nEksempel: %Y-%m-%d %H:%M:%S.%f\n\nBrug 🔗-ikonet for at åbne den fulde dokumentation.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Trin 3 - Se, filtrér, aggregér, gruppér dine data",
     "grid.export_excel": "Eksportér til Excel",
     "grid.export_csv": "Eksportér til CSV",
-
     "chart.step4_heading": "Trin 4 - Visualisér dine data (3 uafhængige diagrammer)",
     "chart.config_heading": "Diagram {num} konfiguration",
     "chart.select_type": "Vælg diagramtype:",
@@ -187,13 +169,11 @@
     "chart.y_axis_title_placeholder": "Indtast y-aksetitel",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Diagram {num} - Ingen data",
-
     "dashboard.heading": "Kombineret dashboard-eksport",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Dataanalyse-dashboard",
     "dashboard.generated_on": "Genereret den {timestamp}",
     "dashboard.chart_heading": "Diagram {num}",
-
     "messages.error": "Fejl",
     "messages.file_uploaded": "Fil uploadet: {filename}",
     "messages.file_too_large": "Fil for stor: {size}MB | Maksimal understøttet størrelse er {max_size}MB.",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Foreslået separator: '{delimiter}' ",
     "messages.confirm_delimiter": "Bekræft eller juster separator, klik derefter på Bekræft-knappen.",
     "messages.fields_count": "{count} felter",
-
     "test_dataset.try_label": "Prøv med vores testdatasæt:",
     "test_dataset.try_label_plural": "Prøv med vores testdatasæt",
     "test_dataset.browse_btn": "Gennemse datasæt",
     "test_dataset.copy_btn": "Kopiér",
     "test_dataset.copied_btn": "Kopieret!",
-
     "donate.heading": "Køb en kaffe eller et caribisk rom-shot til vores devTeam",
     "donate.description": "Dette værktøj er gratis og open source. Hvis det sparede dig tid, overvej at støtte vores arbejde!",
     "donate.btn": "Skål!"

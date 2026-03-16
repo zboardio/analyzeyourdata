@@ -30,11 +30,11 @@ Microsoft's replacement requires Azure AD OAuth 2.0 authentication, which adds s
 > **Recommended alternative:** Download your file from SharePoint/OneDrive to your computer, then use **Direct File Upload** above. This is faster, more reliable, and keeps your data fully in your control.
 
 ### Google Sheets
-- Paste a public Google Sheets URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Optionally enter a **GID** (sheet tab ID) to load a specific sheet
+- Copy the URL from the browser bar while viewing the desired sheet tab and paste it
+- The sheet tab (GID) is automatically detected from the URL
 - The document must be shared as "Anyone with the link can view"
 
-**How to get a sharing URL:** In Google Sheets, click Share → set to "Anyone with the link" → Viewer → copy the link. To load a specific sheet tab, copy the URL from the browser bar and use the `#gid=123456789` number in the GID field.
+**How to get the URL:** In Google Sheets, click Share → set to "Anyone with the link" → Viewer. Then navigate to the sheet tab you want to load and copy the URL from your browser's address bar (it contains the sheet ID automatically).
 
 **Test URL** — try this to verify your setup:
 ```
@@ -93,21 +93,31 @@ Generated columns include: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinute`, `
 
 ---
 
-## Step 3: Explore Your Data in the Grid
+## Step 3: Explore Your Data in AG Grid
 
-The **AG Grid** table provides powerful data exploration:
+**AG Grid** provides powerful interactive data exploration with built-in side panels:
 
 - **Sort** — click any column header
-- **Filter** — click the filter icon on any column header to set conditions
+- **Filter** — click the filter icon on any column header to set conditions, or use the **Filters panel** on the right side to manage all column filters in one place
 - **Group** — drag column headers into the "Row Group" panel above the table
-- **Pivot** — enable pivot mode from the column menu for cross-tabulations
+- **Pivot** — enable pivot mode from the **Columns panel** on the right side for cross-tabulations
 - **Resize** — drag column borders to adjust widths
-- **Aggregate** — when grouping, the grid shows subtotals and grand totals
+- **Aggregate** — when grouping, AG Grid shows subtotals and grand totals
+- **Columns panel** — toggle column visibility, reorder columns, and configure pivot/value settings from the side panel
+- **Filters panel** — view and manage all active filters across columns from one convenient panel
 
-> **Key:** The charts below read from the **currently filtered/grouped data** visible in the grid. Every filter, sort, or group action updates all charts instantly — **this is the core power of the tool.** Use the grid as your interactive data slicer and see the results reflected in real-time across all your visualizations.
+> **Key:** The charts below read from the **currently filtered/grouped data** visible in AG Grid. Every filter, sort, or group action updates all charts instantly — **this is the core power of the tool.** Use AG Grid as your interactive data slicer and see the results reflected in real-time across all your visualizations.
 
+### AG Grid Export
 
-> **Export data from the grid:** Right-click anywhere in the AG Grid table to export the currently filtered and structured data directly to **CSV or Excel** file. The export reflects exactly what you see in the grid — including any filters, grouping, or sorting you have applied.
+Use the **Export to Excel** and **Export to CSV** buttons below AG Grid to download the currently visible data:
+
+- The export always reflects the **current view** of AG Grid — filters, grouping, and sorting are all respected
+- **Excel export** includes table formatting with active filters, so you can continue filtering directly in Excel
+- **CSV export** provides a clean flat file of the filtered data
+- This means you can apply different filter criteria in AG Grid and export multiple times to create **separate files for different subsets** of your data — a powerful workflow for data analysis and reporting
+
+> **Tip:** You can also right-click anywhere in the AG Grid table for additional export options via the context menu.
 
 ---
 
@@ -123,7 +133,7 @@ You can create up to **3 independent charts**, each with its own configuration:
 6. **Z-Axis Column** (optional) — for Bubble and Heatmap chart types
 7. **Titles** — set custom chart title, X-axis title, and Y-axis title
 
-Charts read from the currently filtered/grouped grid data. **Every filter, sort, or group action in the grid updates all charts instantly.**
+Charts read from the currently filtered/grouped AG Grid data. **Every filter, sort, or group action in AG Grid updates all charts instantly.**
 
 ---
 
@@ -137,11 +147,11 @@ Charts read from the currently filtered/grouped grid data. **Every filter, sort,
 - Each active chart is exported as a separate standalone HTML file, bundled into a single ZIP download
 - Only charts with data are included in the ZIP
 
-### Grid Data
-- Right-click in the AG Grid table → **Export to CSV** or **Export to Excel**
-- Exports exactly the data currently visible in the grid (respects filters, grouping, sorting)
+### AG Grid Data
+- Use the **Export to Excel** or **Export to CSV** buttons below AG Grid (see Step 3 above)
+- Exports exactly the data currently visible in AG Grid (respects filters, grouping, sorting)
 
-> **Tip:** Exported HTML files are fully interactive — you can zoom, hover for tooltips, and pan — no software needed, just a web browser.
+> **Tip:** Exported HTML chart files are fully interactive — you can zoom, hover for tooltips, and pan — no software needed, just a web browser.
 
 ---
 
@@ -154,8 +164,8 @@ Charts read from the currently filtered/grouped grid data. **Every filter, sort,
 | Google Sheet won't load | Make sure sharing is set to "Anyone with the link can view" |
 | Airtable won't connect | Verify your Personal Access Token has `data.records:read` and `schema.bases:read` scopes, and the Base ID starts with `app` |
 | Datetime parsing errors | Verify the selected format matches your data. Try a custom format if needed |
-| Charts are empty | Make sure data is loaded in the grid and X/Y columns are selected |
-| Grid shows no data after filter | Clear or adjust your column filters |
+| Charts are empty | Make sure data is loaded in AG Grid and X/Y columns are selected |
+| AG Grid shows no data after filter | Clear or adjust your column filters in the Filters panel |
 
 ---
 

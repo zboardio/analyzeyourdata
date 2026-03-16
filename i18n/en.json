@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "A powerful, simple tool for data analysis and visualization. Upload, analyze, and create stunning charts in minutes.",
-
     "navbar.language": "Language",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "How to use",
     "navbar.feedback": "Feedback",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Contact Us",
     "footer.our_website": "Our Website",
     "footer.open_source": "Open Source",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Verify source code",
     "footer.all_rights": ". All rights reserved.",
     "footer.email_copied": "Contact email copied to clipboard",
-
     "powered_by.heading": "Powered by",
     "powered_by.plotly_dash_desc": "Web framework",
     "powered_by.dash_ag_grid_desc": "Dash integration",
     "powered_by.ag_grid_desc": "Enterprise grid",
     "powered_by.author_desc": "Development",
-
     "feedback.title": "Send Feedback",
     "feedback.category_label": "Category",
     "feedback.category_not_specified": "Not specified",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Please enter your feedback message.",
     "feedback.success": "Thank you for your feedback!",
     "feedback.error": "Feedback could not be saved. Please try again later.",
-
     "how_to_use.title": "How to Use",
     "how_to_use.btn_close": "Close",
     "how_to_use.btn_docs": "View Documentation",
-
     "video.intro_heading": "Intro video - without sound",
     "video.updated_date": "(Updated on 13.08.2024)",
-
     "data_source.step1_heading": "Step 1 - Select Data Source | File maximum size: {max_size}MB",
     "data_source.choose_source": "Choose your data source:",
     "data_source.upload": "Direct File Upload",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Drag and Drop or ",
     "data_source.select_files": "Select Files",
-
     "delimiter.label": "Select delimiter for CSV / TXT / LOG file:",
     "delimiter.comma": "Comma (,)",
     "delimiter.semicolon": "Semicolon (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Custom",
     "delimiter.custom_placeholder": "Enter custom delimiter",
     "delimiter.confirm_btn": "Confirm Delimiter",
-
     "sqlite.select_table_label": "Select table from SQLite database:",
     "sqlite.table_placeholder": "Select a table to load...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Error loading SQLite database",
     "sqlite.table_loaded": "SQLite table '{table}' loaded successfully!",
     "sqlite.error_loading_table": "Error loading SQLite table",
-
     "sharepoint.url_label": "SharePoint / OneDrive Sharing URL:",
     "sharepoint.url_placeholder": "Paste your SharePoint/OneDrive sharing link here...",
     "sharepoint.load_btn": "Load from SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "SharePoint data loaded successfully!",
     "sharepoint.sheet_loaded": "Sheet '{sheet}' loaded successfully!",
     "sharepoint.error_loading": "Error loading SharePoint data",
-
     "google_sheets.url_label": "Google Sheets Sharing URL:",
     "google_sheets.url_placeholder": "Paste your Google Sheets sharing link here...",
     "google_sheets.load_btn": "Load",
     "google_sheets.access_alert": "Make sure the Google Sheets link allows anonymous access (Anyone with the link can view).",
-    "google_sheets.gid_label": "Sheet ID (GID) - Optional:",
-    "google_sheets.gid_placeholder": "Enter specific sheet GID (leave empty for first sheet)",
-    "google_sheets.gid_help": "You can find the GID in the Google Sheets URL after '#gid=' when viewing a specific sheet.",
     "google_sheets.invalid_url": "Invalid Google Sheets URL",
     "google_sheets.invalid_url_detail": "Please ensure the URL is a valid Google Sheets sharing link.",
     "google_sheets.data_loaded": "Google Sheets data loaded successfully!",
     "google_sheets.error_loading": "Error loading Google Sheets data",
-
     "airtable.config_label": "Airtable API Configuration:",
     "airtable.api_key_label": "API Key:",
     "airtable.api_key_placeholder": "Paste your Airtable API key here...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Error connecting to Airtable",
     "airtable.table_loaded": "Airtable table '{table}' loaded successfully!",
     "airtable.error_loading_table": "Error loading Airtable table",
-
     "datetime.step2_heading": "Step 2 - Optional Datetime Processing",
     "datetime.enable_label": "Enable datetime parsing",
     "datetime.toggle_tooltip": "Turn ON to define a datetime column and format. This will enrich your data with helpful time-related features like year, month, weekday, calendar week, etc.\n\nTurn OFF to skip datetime conversion and load the raw data directly into the table.",
@@ -154,13 +138,11 @@
     "datetime.format_placeholder": "Select datetime format",
     "datetime.custom_label": "Custom Format",
     "datetime.custom_placeholder": "Enter custom strftime(), e.g. %Y-%m-%d",
-    "datetime.custom_tooltip": "This must follow Python's strftime syntax.\n\nExample: %Y-%m-%d %H:%M:%S.%f\n\nUse the \ud83d\udd17 icon to open the full documentation.",
+    "datetime.custom_tooltip": "This must follow Python's strftime syntax.\n\nExample: %Y-%m-%d %H:%M:%S.%f\n\nUse the 🔗 icon to open the full documentation.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Step 3 - View, filter, aggregate, group your data",
     "grid.export_excel": "Export to Excel",
     "grid.export_csv": "Export to CSV",
-
     "chart.step4_heading": "Step 4 - Visualize your data (3 independent charts)",
     "chart.config_heading": "Chart {num} Configuration",
     "chart.select_type": "Select Chart Type:",
@@ -168,7 +150,7 @@
     "chart.x_axis": "X-axis",
     "chart.y_axis": "Y-axis",
     "chart.color": "Color",
-    "chart.z_axis": "Z-axis \u24d8",
+    "chart.z_axis": "Z-axis ⓘ",
     "chart.x_axis_placeholder": "Select x-axis column",
     "chart.y_axis_placeholder": "Select y-axis columns",
     "chart.color_placeholder": "Select color column",
@@ -187,17 +169,15 @@
     "chart.y_axis_title_placeholder": "Enter y-axis title",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Chart {num} - No Data",
-
     "dashboard.heading": "Combined Dashboard Export",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Data Analysis Dashboard",
     "dashboard.generated_on": "Generated on {timestamp}",
     "dashboard.chart_heading": "Chart {num}",
-
     "messages.error": "Error",
     "messages.file_uploaded": "File uploaded: {filename}",
     "messages.file_too_large": "File too large: {size}MB | Maximum supported size is {max_size}MB.",
-    "messages.dimensions": "Dataframe dimensions: {rows} rows \u00d7 {cols} columns",
+    "messages.dimensions": "Dataframe dimensions: {rows} rows × {cols} columns",
     "messages.columns": "Columns: {columns}",
     "messages.unnamed_removed": "- Unnamed columns and fully empty rows have been removed.",
     "messages.delimiter_used": "- Delimiter used: '{delimiter}'",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Suggested delimiter: '{delimiter}' ",
     "messages.confirm_delimiter": "Confirm or adjust delimiter, then click Confirm button.",
     "messages.fields_count": "{count} fields",
-
     "test_dataset.try_label": "Try with our test dataset:",
     "test_dataset.try_label_plural": "Try with our test datasets",
     "test_dataset.browse_btn": "Browse Datasets",
     "test_dataset.copy_btn": "Copy",
     "test_dataset.copied_btn": "Copied!",
-
     "donate.heading": "Buy our devTeam a coffee or a Caribbean rum shot",
     "donate.description": "This tool is free and open source. If it saved you time, consider supporting our work!",
     "donate.btn": "Cheers!"

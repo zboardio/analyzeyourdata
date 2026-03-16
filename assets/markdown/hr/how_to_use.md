@@ -30,11 +30,11 @@ Microsoftova zamjena zahtijeva Azure AD OAuth 2.0 autentikaciju, koja dodaje zna
 > **Preporučena alternativa:** Preuzmite svoju datoteku sa SharePoint/OneDrive na računalo, a zatim koristite **Izravno učitavanje datoteke** iznad. To je brže, pouzdanije i vaši podaci ostaju u potpunosti pod vašom kontrolom.
 
 ### Google Sheets
-- Zalijepite javni Google Sheets URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Opcionalno unesite **GID** (ID kartice lista) za učitavanje određenog lista
+- Kopirajte URL iz adresne trake preglednika dok gledate željenu karticu lista i zalijepite ga
+- Kartica lista (GID) automatski se prepoznaje iz URL-a
 - Dokument mora biti podijeljen kao "Svatko s vezom može vidjeti"
 
-**Kako dobiti URL za dijeljenje:** U Google Sheets, kliknite Dijeli → postavite na "Svatko s vezom" → Pregledavatelj → kopirajte vezu. Za učitavanje određene kartice lista, kopirajte URL iz adresne trake preglednika i upotrijebite broj `#gid=123456789` u GID polju.
+**Kako dobiti URL:** U Google Sheets, kliknite Dijeli → postavite na "Svatko s vezom" → Pregledavatelj. Zatim prijeđite na karticu lista koju želite učitati i kopirajte URL iz adresne trake preglednika (automatski sadrži ID lista).
 
 **Testni URL** — pokušajte ovo za provjeru postavke:
 ```
@@ -93,21 +93,31 @@ Generirani stupci uključuju: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinute`
 
 ---
 
-## Korak 3: Istražite svoje podatke u tablici
+## Korak 3: Istražite svoje podatke u AG Grid
 
-**AG Grid** tablica pruža moćno istraživanje podataka:
+**AG Grid** pruža moćno interaktivno istraživanje podataka s ugrađenim bočnim panelima:
 
 - **Sortiraj** — kliknite na bilo koje zaglavlje stupca
-- **Filtriraj** — kliknite ikonu filtera na bilo kojem zaglavlju stupca za postavljanje uvjeta
+- **Filtriraj** — kliknite ikonu filtera na bilo kojem zaglavlju stupca za postavljanje uvjeta, ili koristite **Panel filtera** na desnoj strani za upravljanje svim filterima stupaca na jednom mjestu
 - **Grupiraj** — povucite zaglavlja stupaca u "Row Group" panel iznad tablice
-- **Okreni** — omogućite pivot način iz izbornika stupca za unakrsne tabulacije
+- **Okreni** — omogućite pivot način iz **Panela stupaca** na desnoj strani za unakrsne tabulacije
 - **Promijeni veličinu** — povucite rubove stupaca za prilagodbu širine
-- **Zbrajaj** — pri grupiranju, tablica prikazuje međuzbrojeve i ukupne zbrojeve
+- **Zbrajaj** — pri grupiranju, AG Grid prikazuje međuzbrojeve i ukupne zbrojeve
+- **Panel stupaca** — uključite/isključite vidljivost stupaca, promijenite redoslijed stupaca i konfigurirajte postavke pivota/vrijednosti iz bočnog panela
+- **Panel filtera** — pregledajte i upravljajte svim aktivnim filterima na svim stupcima iz jednog praktičnog panela
 
-> **Ključno:** Grafikoni ispod čitaju iz **trenutno filtriranih/grupiranih podataka** vidljivih u tablici. Svaka akcija filtriranja, sortiranja ili grupiranja odmah ažurira sve grafikone — **to je osnovna snaga alata.** Koristite tablicu kao svoj interaktivni rezač podataka i vidite rezultate koji se trenutno odražavaju u svim vašim vizualizacijama.
+> **Ključno:** Grafikoni ispod čitaju iz **trenutno filtriranih/grupiranih podataka** vidljivih u AG Grid. Svaka akcija filtriranja, sortiranja ili grupiranja odmah ažurira sve grafikone — **to je osnovna snaga alata.** Koristite AG Grid kao svoj interaktivni rezač podataka i vidite rezultate koji se trenutno odražavaju u svim vašim vizualizacijama.
 
+### Izvoz iz AG Grid
 
-> **Izvezite podatke iz tablice:** Kliknite desnom tipkom miša bilo gdje u AG Grid tablici za izvoz trenutno filtriranih i strukturiranih podataka izravno u **CSV ili Excel** datoteku. Izvoz odražava upravo ono što vidite u tablici — uključujući sve filtere, grupiranje ili sortiranje koje ste primijenili.
+Koristite tipke **Export to Excel** i **Export to CSV** ispod AG Grid za preuzimanje trenutno vidljivih podataka:
+
+- Izvoz uvijek odražava **trenutni prikaz** AG Grid — filteri, grupiranje i sortiranje se poštuju
+- **Izvoz u Excel** uključuje formatiranje tablice s aktivnim filterima, tako da možete nastaviti filtriranje izravno u Excelu
+- **Izvoz u CSV** pruža čistu ravnu datoteku filtriranih podataka
+- To znači da možete primijeniti različite kriterije filtera u AG Grid i izvoziti više puta za stvaranje **zasebnih datoteka za različite podskupove** vaših podataka — moćan tijek rada za analizu podataka i izvještavanje
+
+> **Savjet:** Također možete kliknuti desnom tipkom miša bilo gdje u AG Grid tablici za dodatne mogućnosti izvoza putem kontekstnog izbornika.
 
 ---
 
@@ -123,7 +133,7 @@ Možete stvoriti do **3 neovisna grafikona**, svaki sa svojom konfiguracijom:
 6. **Stupac Z-osi** (opcionalno) — za vrste grafikona Bubble i Heatmap
 7. **Naslovi** — postavite prilagođeni naslov grafikona, naslov X-osi i naslov Y-osi
 
-Grafikoni čitaju iz trenutno filtriranih/grupiranih podataka tablice. **Svaka akcija filtriranja, sortiranja ili grupiranja u tablici odmah ažurira sve grafikone.**
+Grafikoni čitaju iz trenutno filtriranih/grupiranih podataka AG Grid. **Svaka akcija filtriranja, sortiranja ili grupiranja u AG Grid odmah ažurira sve grafikone.**
 
 ---
 
@@ -137,11 +147,11 @@ Grafikoni čitaju iz trenutno filtriranih/grupiranih podataka tablice. **Svaka a
 - Svaki aktivni grafikon izvozi se kao zasebna samostalna HTML datoteka, objedinjeni u jednom ZIP preuzimanju
 - U ZIP su uključeni samo grafikoni s podacima
 
-### Podaci tablice
-- Desni klik u AG Grid tablici → **Export to CSV** ili **Export to Excel**
-- Izvozi upravo podatke trenutno vidljive u tablici (poštuje filtere, grupiranje, sortiranje)
+### Podaci AG Grid
+- Koristite tipke **Export to Excel** ili **Export to CSV** ispod AG Grid (pogledajte Korak 3 iznad)
+- Izvozi upravo podatke trenutno vidljive u AG Grid (poštuje filtere, grupiranje, sortiranje)
 
-> **Savjet:** Izvezene HTML datoteke su potpuno interaktivne — možete zumirati, prelaziti za opise alata i pomicati — nije potreban softver, samo web preglednik.
+> **Savjet:** Izvezene HTML datoteke grafikona su potpuno interaktivne — možete zumirati, prelaziti za opise alata i pomicati — nije potreban softver, samo web preglednik.
 
 ---
 
@@ -154,8 +164,8 @@ Grafikoni čitaju iz trenutno filtriranih/grupiranih podataka tablice. **Svaka a
 | Google Sheet se ne učitava | Provjerite je li dijeljenje postavljeno na "Svatko s vezom može vidjeti" |
 | Airtable se ne povezuje | Provjerite ima li vaš Personal Access Token `data.records:read` i `schema.bases:read` dozvole, i počinje li Base ID s `app` |
 | Greške u parsiranju datuma i vremena | Provjerite odgovara li odabrani format vašim podacima. Pokušajte prilagođeni format ako je potrebno |
-| Grafikoni su prazni | Provjerite su li podaci učitani u tablici i odabrani X/Y stupci |
-| Tablica ne prikazuje podatke nakon filtra | Obrišite ili prilagodite svoje filtere stupaca |
+| Grafikoni su prazni | Provjerite su li podaci učitani u AG Grid i odabrani X/Y stupci |
+| AG Grid ne prikazuje podatke nakon filtra | Obrišite ili prilagodite svoje filtere stupaca u Panelu filtera |
 
 ---
 

@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "Výkonný, jednoduchý nástroj na analýzu a vizualizáciu dát. Nahrajte, analyzujte a vytvorte úžasné grafy za minúty.",
-
     "navbar.language": "Jazyk",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "Ako používať",
     "navbar.feedback": "Spätná väzba",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Kontaktujte nás",
     "footer.our_website": "Naša webstránka",
     "footer.open_source": "Open Source",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Overiť zdrojový kód",
     "footer.all_rights": ". Všetky práva vyhradené.",
     "footer.email_copied": "Kontaktný e-mail skopírovaný do schránky",
-
     "powered_by.heading": "Poháňané",
     "powered_by.plotly_dash_desc": "Webový framework",
     "powered_by.dash_ag_grid_desc": "Dash integrácia",
     "powered_by.ag_grid_desc": "Enterprise tabuľka",
     "powered_by.author_desc": "Vývoj",
-
     "feedback.title": "Odoslať spätnú väzbu",
     "feedback.category_label": "Kategória",
     "feedback.category_not_specified": "Nešpecifikované",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Prosím, zadajte správu spätnej väzby.",
     "feedback.success": "Ďakujeme za vašu spätnú väzbu!",
     "feedback.error": "Spätnú väzbu sa nepodarilo uložiť. Skúste to neskôr.",
-
     "how_to_use.title": "Ako používať",
     "how_to_use.btn_close": "Zavrieť",
     "how_to_use.btn_docs": "Zobraziť dokumentáciu",
-
     "video.intro_heading": "Úvodné video - bez zvuku",
     "video.updated_date": "(Aktualizované 13.08.2024)",
-
     "data_source.step1_heading": "Krok 1 - Vybrať zdroj dát | Maximálna veľkosť súboru: {max_size}MB",
     "data_source.choose_source": "Vyberte zdroj svojich dát:",
     "data_source.upload": "Priamy upload súboru",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Pretiahnite alebo ",
     "data_source.select_files": "Vyberte súbory",
-
     "delimiter.label": "Vyberte oddeľovač pre CSV / TXT / LOG súbor:",
     "delimiter.comma": "Čiarka (,)",
     "delimiter.semicolon": "Bodkočiarka (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Vlastný",
     "delimiter.custom_placeholder": "Zadajte vlastný oddeľovač",
     "delimiter.confirm_btn": "Potvrdiť oddeľovač",
-
     "sqlite.select_table_label": "Vyberte tabuľku z SQLite databázy:",
     "sqlite.table_placeholder": "Vyberte tabuľku na načítanie...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Chyba pri načítaní SQLite databázy",
     "sqlite.table_loaded": "SQLite tabuľka '{table}' úspešne načítaná!",
     "sqlite.error_loading_table": "Chyba pri načítaní SQLite tabuľky",
-
     "sharepoint.url_label": "SharePoint / OneDrive zdieľacia URL:",
     "sharepoint.url_placeholder": "Vložte váš SharePoint/OneDrive zdieľací odkaz sem...",
     "sharepoint.load_btn": "Načítať zo SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "SharePoint dáta úspešne načítané!",
     "sharepoint.sheet_loaded": "Hárok '{sheet}' úspešne načítaný!",
     "sharepoint.error_loading": "Chyba pri načítaní SharePoint dát",
-
     "google_sheets.url_label": "Google Sheets zdieľacia URL:",
     "google_sheets.url_placeholder": "Vložte váš Google Sheets zdieľací odkaz sem...",
     "google_sheets.load_btn": "Načítať",
     "google_sheets.access_alert": "Uistite sa, že Google Sheets odkaz umožňuje anonymný prístup (Ktokoľvek s odkazom môže zobraziť).",
-    "google_sheets.gid_label": "Sheet ID (GID) - Voliteľné:",
-    "google_sheets.gid_placeholder": "Zadajte konkrétny sheet GID (nechajte prázdne pre prvý hárok)",
-    "google_sheets.gid_help": "GID nájdete v Google Sheets URL po '#gid=' pri zobrazení konkrétneho hárku.",
     "google_sheets.invalid_url": "Neplatná Google Sheets URL",
     "google_sheets.invalid_url_detail": "Prosím, uistite sa, že URL je platný Google Sheets zdieľací odkaz.",
     "google_sheets.data_loaded": "Google Sheets dáta úspešne načítané!",
     "google_sheets.error_loading": "Chyba pri načítaní Google Sheets dát",
-
     "airtable.config_label": "Airtable API konfigurácia:",
     "airtable.api_key_label": "API Key:",
     "airtable.api_key_placeholder": "Vložte váš Airtable API kľúč sem...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Chyba pri pripájaní k Airtable",
     "airtable.table_loaded": "Airtable tabuľka '{table}' úspešne načítaná!",
     "airtable.error_loading_table": "Chyba pri načítaní Airtable tabuľky",
-
     "datetime.step2_heading": "Krok 2 - Voliteľné spracovanie dátumu a času",
     "datetime.enable_label": "Povoliť spracovanie dátumu a času",
     "datetime.toggle_tooltip": "Zapnite pre definovanie stĺpca a formátu dátumu a času. To obohatí vaše dáta o užitočné časové vlastnosti ako rok, mesiac, deň v týždni, kalendárny týždeň atď.\n\nVypnite pre preskočenie konverzie dátumu a času a načítanie surových dát priamo do tabuľky.",
@@ -156,11 +140,9 @@
     "datetime.custom_placeholder": "Zadajte vlastný strftime(), napr. %Y-%m-%d",
     "datetime.custom_tooltip": "Toto musí nasledovať syntax Python strftime.\n\nPríklad: %Y-%m-%d %H:%M:%S.%f\n\nPoužite ikonu 🔗 pre otvorenie úplnej dokumentácie.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Krok 3 - Zobrazenie, filtrovanie, agregácia, zoskupenie vašich dát",
     "grid.export_excel": "Export do Excelu",
     "grid.export_csv": "Export do CSV",
-
     "chart.step4_heading": "Krok 4 - Vizualizácia vašich dát (3 nezávislé grafy)",
     "chart.config_heading": "Konfigurácia grafu {num}",
     "chart.select_type": "Vyberte typ grafu:",
@@ -187,13 +169,11 @@
     "chart.y_axis_title_placeholder": "Zadajte titulok osi y",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Graf {num} - Žiadne dáta",
-
     "dashboard.heading": "Export kombinovaného dashboardu",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Dashboard analýzy dát",
     "dashboard.generated_on": "Vygenerované {timestamp}",
     "dashboard.chart_heading": "Graf {num}",
-
     "messages.error": "Chyba",
     "messages.file_uploaded": "Súbor nahraný: {filename}",
     "messages.file_too_large": "Súbor je príliš veľký: {size}MB | Maximálna podporovaná veľkosť je {max_size}MB.",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Navrhovaný oddeľovač: '{delimiter}' ",
     "messages.confirm_delimiter": "Potvrďte alebo upravte oddeľovač a potom kliknite na tlačidlo Potvrdiť.",
     "messages.fields_count": "{count} polí",
-
     "test_dataset.try_label": "Vyskúšajte s naším testovacím súborom údajov:",
     "test_dataset.try_label_plural": "Vyskúšajte s našimi testovacími súbormi údajov",
     "test_dataset.browse_btn": "Prehľadávať datasety",
     "test_dataset.copy_btn": "Kopírovať",
     "test_dataset.copied_btn": "Skopírované!",
-
     "donate.heading": "Kúp nášmu vývojovému tímu kávu alebo karibský rumový panák",
     "donate.description": "Tento nástroj je bezplatný a open source. Ak ti ušetril čas, zváž podporu našej práce!",
     "donate.btn": "Na zdravie!"

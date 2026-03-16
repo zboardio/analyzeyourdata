@@ -30,11 +30,11 @@ Microsofts erstatning kræver Azure AD OAuth 2.0-godkendelse, som tilføjer bety
 > **Anbefalet alternativ:** Download din fil fra SharePoint/OneDrive til din computer, og brug derefter **Direkte filupload** ovenfor. Det er hurtigere, mere pålideligt, og dine data forbliver fuldt under din kontrol.
 
 ### Google Sheets
-- Indsæt en offentlig Google Sheets-URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Indtast eventuelt et **GID** (ark-fane-ID) for at indlæse et specifikt ark
+- Kopiér URL'en fra browserlinjen mens du ser den ønskede ark-fane og indsæt den
+- Ark-fanen (GID) registreres automatisk fra URL'en
 - Dokumentet skal deles som "Enhver med linket kan se"
 
-**Sådan får du en deling-URL:** I Google Sheets, klik Del → indstil til "Enhver med linket" → Seer → kopiér linket. For at indlæse en specifik ark-fane, kopiér URL'en fra browserlinjen og brug `#gid=123456789`-nummeret i GID-feltet.
+**Sådan får du URL'en:** I Google Sheets, klik Del → indstil til "Enhver med linket" → Seer. Naviger derefter til den ark-fane du vil indlæse og kopiér URL'en fra browserens adresselinje (den indeholder ark-ID'et automatisk).
 
 **Test-URL** — prøv dette for at verificere din opsætning:
 ```
@@ -93,21 +93,31 @@ Genererede kolonner inkluderer: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinut
 
 ---
 
-## Trin 3: Udforsk dine data i gitteret
+## Trin 3: Udforsk dine data i AG Grid
 
-**AG Grid**-tabellen giver kraftfuld dataudforskning:
+**AG Grid** giver kraftfuld interaktiv dataudforskning med indbyggede sidepaneler:
 
 - **Sortér** — klik på en hvilken som helst kolonneoverskrift
-- **Filtrér** — klik på filterikonet på en hvilken som helst kolonneoverskrift for at indstille betingelser
+- **Filtrér** — klik på filterikonet på en hvilken som helst kolonneoverskrift for at indstille betingelser, eller brug **Filterpanelet** i højre side til at administrere alle kolonnefiltre ét sted
 - **Gruppér** — træk kolonneoverskrifter ind i "Row Group"-panelet over tabellen
-- **Pivot** — aktiver pivot-tilstand fra kolonnemenuen for krydstabuleringer
+- **Pivot** — aktiver pivot-tilstand fra **Kolonnepanelet** i højre side for krydstabuleringer
 - **Tilpas størrelse** — træk kolonnekanter for at justere bredder
-- **Aggregér** — ved gruppering viser gitteret subtotaler og hovedtotaler
+- **Aggregér** — ved gruppering viser AG Grid subtotaler og hovedtotaler
+- **Kolonnepanel** — skift kolonnesynlighed, omarranger kolonner og konfigurer pivot/værdiindstillinger fra sidepanelet
+- **Filterpanel** — se og administrer alle aktive filtre på tværs af kolonner fra ét praktisk panel
 
-> **Nøgle:** Diagrammerne nedenfor læser fra de **aktuelt filtrerede/grupperede data** synlige i gitteret. Hver filtrering, sortering eller grupperingshandling opdaterer alle diagrammer øjeblikkeligt — **dette er værktøjets kerneværdi.** Brug gitteret som din interaktive data-slicer og se resultaterne afspejlet i realtid på tværs af alle dine visualiseringer.
+> **Nøgle:** Diagrammerne nedenfor læser fra de **aktuelt filtrerede/grupperede data** synlige i AG Grid. Hver filtrering, sortering eller grupperingshandling opdaterer alle diagrammer øjeblikkeligt — **dette er værktøjets kerneværdi.** Brug AG Grid som din interaktive data-slicer og se resultaterne afspejlet i realtid på tværs af alle dine visualiseringer.
 
+### AG Grid Eksport
 
-> **Eksportér data fra gitteret:** Højreklik hvor som helst i AG Grid-tabellen for at eksportere de aktuelt filtrerede og strukturerede data direkte til **CSV eller Excel**-fil. Eksporten afspejler præcis hvad du ser i gitteret — inklusive eventuelle filtre, grupperinger eller sorteringer du har anvendt.
+Brug knapperne **Export to Excel** og **Export to CSV** under AG Grid til at downloade de aktuelt synlige data:
+
+- Eksporten afspejler altid den **aktuelle visning** af AG Grid — filtre, grupperinger og sorteringer respekteres
+- **Excel-eksport** inkluderer tabelformatering med aktive filtre, så du kan fortsætte med at filtrere direkte i Excel
+- **CSV-eksport** giver en ren flad fil af de filtrerede data
+- Det betyder, at du kan anvende forskellige filterkriterier i AG Grid og eksportere flere gange for at oprette **separate filer for forskellige delmængder** af dine data — et kraftfuldt workflow til dataanalyse og rapportering
+
+> **Tip:** Du kan også højreklikke hvor som helst i AG Grid-tabellen for yderligere eksportmuligheder via kontekstmenuen.
 
 ---
 
@@ -123,7 +133,7 @@ Du kan oprette op til **3 uafhængige diagrammer**, hver med sin egen konfigurat
 6. **Z-aksens kolonne** (valgfrit) — for Bubble- og Heatmap-diagramtyper
 7. **Titler** — indstil brugerdefineret diagramtitel, X-aksetitel og Y-aksetitel
 
-Diagrammer læser fra de aktuelt filtrerede/grupperede gitterdata. **Hver filtrering, sortering eller grupperingshandling i gitteret opdaterer alle diagrammer øjeblikkeligt.**
+Diagrammer læser fra de aktuelt filtrerede/grupperede AG Grid data. **Hver filtrering, sortering eller grupperingshandling i AG Grid opdaterer alle diagrammer øjeblikkeligt.**
 
 ---
 
@@ -137,11 +147,11 @@ Diagrammer læser fra de aktuelt filtrerede/grupperede gitterdata. **Hver filtre
 - Hvert aktivt diagram eksporteres som en separat selvstændig HTML-fil, samlet i én ZIP-download
 - Kun diagrammer med data inkluderes i ZIP-filen
 
-### Gitterdata
-- Højreklik i AG Grid-tabellen → **Export to CSV** eller **Export to Excel**
-- Eksporterer præcis de data der aktuelt er synlige i gitteret (respekterer filtre, gruppering, sortering)
+### AG Grid Data
+- Brug knapperne **Export to Excel** eller **Export to CSV** under AG Grid (se Trin 3 ovenfor)
+- Eksporterer præcis de data der aktuelt er synlige i AG Grid (respekterer filtre, gruppering, sortering)
 
-> **Tip:** Eksporterede HTML-filer er fuldt interaktive — du kan zoome, holde markøren over for værktøjstips og panorere — ingen software nødvendig, kun en webbrowser.
+> **Tip:** Eksporterede HTML-diagramfiler er fuldt interaktive — du kan zoome, holde markøren over for værktøjstips og panorere — ingen software nødvendig, kun en webbrowser.
 
 ---
 
@@ -154,8 +164,8 @@ Diagrammer læser fra de aktuelt filtrerede/grupperede gitterdata. **Hver filtre
 | Google Sheet indlæses ikke | Sørg for at deling er indstillet til "Enhver med linket kan se" |
 | Airtable vil ikke forbinde | Verificér at dit Personal Access Token har `data.records:read` og `schema.bases:read` scopes, og at Base ID'et starter med `app` |
 | Datetime-parsing-fejl | Verificér at det valgte format matcher dine data. Prøv et brugerdefineret format hvis nødvendigt |
-| Diagrammer er tomme | Sørg for at data er indlæst i gitteret, og at X/Y-kolonner er valgt |
-| Gitteret viser ingen data efter filtrering | Ryd eller juster dine kolonnefiltre |
+| Diagrammer er tomme | Sørg for at data er indlæst i AG Grid, og at X/Y-kolonner er valgt |
+| AG Grid viser ingen data efter filtrering | Ryd eller juster dine kolonnefiltre i Filterpanelet |
 
 ---
 

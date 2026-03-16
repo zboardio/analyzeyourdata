@@ -30,11 +30,11 @@ A solução de substituição da Microsoft requer autenticação Azure AD OAuth 
 > **Alternativa recomendada:** Transfira o seu ficheiro do SharePoint/OneDrive para o computador e depois utilize o **Carregamento direto de ficheiro** acima. É mais rápido, mais fiável e os seus dados ficam totalmente sob o seu controlo.
 
 ### Google Sheets
-- Cole uma URL pública do Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Opcionalmente insira um **GID** (ID da aba da planilha) para carregar uma planilha específica
+- Copie a URL da barra do navegador enquanto visualiza a aba da planilha desejada e cole-a
+- A aba da planilha (GID) é automaticamente detectada a partir da URL
 - O documento deve estar compartilhado como "Qualquer pessoa com o link pode visualizar"
 
-**Como obter uma URL de compartilhamento:** No Google Sheets, clique em Compartilhar → defina como "Qualquer pessoa com o link" → Leitor → copie o link. Para carregar uma aba de planilha específica, copie a URL da barra do navegador e use o número `#gid=123456789` no campo GID.
+**Como obter a URL:** No Google Sheets, clique em Compartilhar → defina como "Qualquer pessoa com o link" → Leitor. Em seguida, navegue até a aba da planilha que deseja carregar e copie a URL da barra de endereços do navegador (ela contém o ID da planilha automaticamente).
 
 **URL de teste** — experimente isto para verificar sua configuração:
 ```
@@ -93,21 +93,31 @@ As colunas geradas incluem: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinute`, 
 
 ---
 
-## Passo 3: Explore Seus Dados na Grade
+## Passo 3: Explore Seus Dados no AG Grid
 
-A tabela **AG Grid** fornece exploração poderosa de dados:
+**AG Grid** fornece uma exploração interativa e poderosa de dados com painéis laterais integrados:
 
 - **Ordenar** — clique em qualquer cabeçalho de coluna
-- **Filtrar** — clique no ícone de filtro em qualquer cabeçalho de coluna para definir condições
+- **Filtrar** — clique no ícone de filtro em qualquer cabeçalho de coluna para definir condições, ou use o **Painel de filtros** no lado direito para gerenciar todos os filtros de coluna em um só lugar
 - **Agrupar** — arraste cabeçalhos de coluna para o painel "Row Group" acima da tabela
-- **Pivotear** — habilite o modo pivot no menu de coluna para tabulações cruzadas
+- **Pivotear** — habilite o modo pivot no **Painel de colunas** no lado direito para tabulações cruzadas
 - **Redimensionar** — arraste as bordas das colunas para ajustar as larguras
-- **Agregar** — ao agrupar, a grade mostra subtotais e totais gerais
+- **Agregar** — ao agrupar, o AG Grid mostra subtotais e totais gerais
+- **Painel de colunas** — alterne a visibilidade das colunas, reordene colunas e configure as definições de pivot/valores a partir do painel lateral
+- **Painel de filtros** — visualize e gerencie todos os filtros ativos em todas as colunas a partir de um painel conveniente
 
-> **Importante:** Os gráficos abaixo leem dos **dados atualmente filtrados/agrupados** visíveis na grade. Cada ação de filtro, ordenação ou agrupamento atualiza todos os gráficos instantaneamente — **este é o poder central da ferramenta.** Use a grade como seu fatiador de dados interativo e veja os resultados refletidos em tempo real em todas as suas visualizações.
+> **Importante:** Os gráficos abaixo leem dos **dados atualmente filtrados/agrupados** visíveis no AG Grid. Cada ação de filtro, ordenação ou agrupamento atualiza todos os gráficos instantaneamente — **este é o poder central da ferramenta.** Use o AG Grid como seu fatiador de dados interativo e veja os resultados refletidos em tempo real em todas as suas visualizações.
 
+### Exportação do AG Grid
 
-> **Exporte dados da grade:** Clique com o botão direito em qualquer lugar na tabela AG Grid para exportar os dados atualmente filtrados e estruturados diretamente para arquivo **CSV ou Excel**. A exportação reflete exatamente o que você vê na grade — incluindo quaisquer filtros, agrupamentos ou ordenações que você aplicou.
+Use os botões **Export to Excel** e **Export to CSV** abaixo do AG Grid para baixar os dados atualmente visíveis:
+
+- A exportação sempre reflete a **visualização atual** do AG Grid — filtros, agrupamentos e ordenações são respeitados
+- **Exportação para Excel** inclui formatação de tabela com filtros ativos, para que você possa continuar filtrando diretamente no Excel
+- **Exportação para CSV** fornece um arquivo plano limpo dos dados filtrados
+- Isso significa que você pode aplicar diferentes critérios de filtro no AG Grid e exportar várias vezes para criar **arquivos separados para diferentes subconjuntos** dos seus dados — um fluxo de trabalho poderoso para análise de dados e relatórios
+
+> **Dica:** Você também pode clicar com o botão direito em qualquer lugar na tabela AG Grid para opções adicionais de exportação pelo menu de contexto.
 
 ---
 
@@ -123,7 +133,7 @@ Você pode criar até **3 gráficos independentes**, cada um com sua própria co
 6. **Coluna do Eixo Z** (opcional) — para tipos de gráfico Bubble e Heatmap
 7. **Títulos** — defina título personalizado do gráfico, título do eixo X e título do eixo Y
 
-Os gráficos leem dos dados da grade atualmente filtrados/agrupados. **Cada ação de filtro, ordenação ou agrupamento na grade atualiza todos os gráficos instantaneamente.**
+Os gráficos leem dos dados do AG Grid atualmente filtrados/agrupados. **Cada ação de filtro, ordenação ou agrupamento no AG Grid atualiza todos os gráficos instantaneamente.**
 
 ---
 
@@ -137,11 +147,11 @@ Os gráficos leem dos dados da grade atualmente filtrados/agrupados. **Cada aç�
 - Cada gráfico ativo é exportado como um arquivo HTML independente, agrupados em um único download ZIP
 - Apenas gráficos com dados são incluídos no ZIP
 
-### Dados da Grade
-- Clique com o botão direito na tabela AG Grid → **Export to CSV** ou **Export to Excel**
-- Exporta exatamente os dados atualmente visíveis na grade (respeita filtros, agrupamentos, ordenação)
+### Dados do AG Grid
+- Use os botões **Export to Excel** ou **Export to CSV** abaixo do AG Grid (veja Passo 3 acima)
+- Exporta exatamente os dados atualmente visíveis no AG Grid (respeita filtros, agrupamentos, ordenação)
 
-> **Dica:** Arquivos HTML exportados são totalmente interativos — você pode dar zoom, passar o mouse para dicas de ferramentas e mover — nenhum software necessário, apenas um navegador web.
+> **Dica:** Arquivos HTML de gráficos exportados são totalmente interativos — você pode dar zoom, passar o mouse para dicas de ferramentas e mover — nenhum software necessário, apenas um navegador web.
 
 ---
 
@@ -154,8 +164,8 @@ Os gráficos leem dos dados da grade atualmente filtrados/agrupados. **Cada aç�
 | Google Sheet não carrega | Certifique-se de que o compartilhamento está definido como "Qualquer pessoa com o link pode visualizar" |
 | Airtable não conecta | Verifique se seu Personal Access Token tem os escopos `data.records:read` e `schema.bases:read`, e se o Base ID começa com `app` |
 | Erros de análise de datetime | Verifique se o formato selecionado corresponde aos seus dados. Tente um formato personalizado se necessário |
-| Gráficos estão vazios | Certifique-se de que os dados estão carregados na grade e as colunas X/Y estão selecionadas |
-| Grade não mostra dados após filtro | Limpe ou ajuste seus filtros de coluna |
+| Gráficos estão vazios | Certifique-se de que os dados estão carregados no AG Grid e as colunas X/Y estão selecionadas |
+| AG Grid não mostra dados após filtro | Limpe ou ajuste seus filtros de coluna no Painel de filtros |
 
 ---
 

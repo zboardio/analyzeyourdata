@@ -30,11 +30,11 @@ Microsofts Ersatzlösung erfordert Azure AD OAuth 2.0-Authentifizierung, die erh
 > **Empfohlene Alternative:** Laden Sie Ihre Datei von SharePoint/OneDrive auf Ihren Computer herunter und verwenden Sie dann den **Direkten Datei-Upload** oben. Das ist schneller, zuverlässiger und Ihre Daten bleiben vollständig unter Ihrer Kontrolle.
 
 ### Google Sheets
-- Fügen Sie eine öffentliche Google Sheets URL ein (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Geben Sie optional eine **GID** (Blatt-Tab-ID) ein, um ein bestimmtes Blatt zu laden
+- Kopieren Sie die URL aus der Browserleiste während Sie den gewünschten Blatt-Tab anzeigen und fügen Sie sie ein
+- Der Blatt-Tab (GID) wird automatisch aus der URL erkannt
 - Das Dokument muss als "Jeder mit dem Link kann anzeigen" freigegeben sein
 
-**So erhalten Sie eine Freigabe-URL:** Klicken Sie in Google Sheets auf Teilen → auf "Jeder mit dem Link" setzen → Betrachter → Link kopieren. Um ein bestimmtes Blatt zu laden, kopieren Sie die URL aus der Browserleiste und verwenden Sie die Nummer `#gid=123456789` im GID-Feld.
+**So erhalten Sie die URL:** Klicken Sie in Google Sheets auf Teilen → auf "Jeder mit dem Link" setzen → Betrachter. Navigieren Sie dann zum gewünschten Blatt-Tab und kopieren Sie die URL aus der Adressleiste Ihres Browsers (sie enthält die Blatt-ID automatisch).
 
 **Test URL** — probieren Sie diese aus, um Ihre Einrichtung zu überprüfen:
 ```
@@ -92,20 +92,31 @@ Generierte Spalten umfassen: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinute`,
 
 ---
 
-## Schritt 3: Daten im Grid erkunden
+## Schritt 3: Daten in AG Grid erkunden
 
-Die **AG Grid**-Tabelle bietet leistungsstarke Datenexploration:
+**AG Grid** bietet leistungsstarke interaktive Datenexploration mit integrierten Seitenleisten:
 
 - **Sortieren** — klicken Sie auf eine beliebige Spaltenüberschrift
-- **Filtern** — klicken Sie auf das Filtersymbol in einer beliebigen Spaltenüberschrift, um Bedingungen festzulegen
+- **Filtern** — klicken Sie auf das Filtersymbol in einer beliebigen Spaltenüberschrift, um Bedingungen festzulegen, oder verwenden Sie das **Filterfeld** auf der rechten Seite, um alle Spaltenfilter an einem Ort zu verwalten
 - **Gruppieren** — ziehen Sie Spaltenüberschriften in den "Row Group"-Bereich oberhalb der Tabelle
-- **Pivotieren** — aktivieren Sie den Pivot-Modus über das Spaltenmenü für Kreuztabellierungen
+- **Pivotieren** — aktivieren Sie den Pivot-Modus über das **Spaltenfeld** auf der rechten Seite für Kreuztabellierungen
 - **Größe ändern** — ziehen Sie an den Spaltenrändern, um die Breite anzupassen
-- **Aggregieren** — bei Gruppierungen zeigt das Grid Zwischensummen und Gesamtsummen an
+- **Aggregieren** — bei Gruppierungen zeigt AG Grid Zwischensummen und Gesamtsummen an
+- **Spaltenfeld** — schalten Sie die Spaltensichtbarkeit um, ordnen Sie Spalten neu an und konfigurieren Sie Pivot-/Werteinstellungen über die Seitenleiste
+- **Filterfeld** — sehen und verwalten Sie alle aktiven Filter über alle Spalten hinweg in einem übersichtlichen Feld
 
-> **Wichtig:** Die untenstehenden Diagramme lesen die **aktuell gefilterten/gruppierten Daten**, die im Grid sichtbar sind. Jede Filter-, Sortier- oder Gruppierungsaktion aktualisiert alle Diagramme sofort — **das ist die zentrale Stärke des Tools.** Verwenden Sie das Grid als interaktiven Datenschneider und sehen Sie die Ergebnisse in Echtzeit in allen Ihren Visualisierungen.
+> **Wichtig:** Die untenstehenden Diagramme lesen die **aktuell gefilterten/gruppierten Daten**, die in AG Grid sichtbar sind. Jede Filter-, Sortier- oder Gruppierungsaktion aktualisiert alle Diagramme sofort — **das ist die zentrale Stärke des Tools.** Verwenden Sie AG Grid als interaktiven Datenschneider und sehen Sie die Ergebnisse in Echtzeit in allen Ihren Visualisierungen.
 
-> **Daten aus dem Grid exportieren:** Klicken Sie mit der rechten Maustaste irgendwo in die AG Grid-Tabelle, um die aktuell gefilterten und strukturierten Daten direkt als **CSV- oder Excel**-Datei zu exportieren. Der Export spiegelt genau das wider, was Sie im Grid sehen — einschließlich aller angewendeten Filter, Gruppierungen und Sortierungen.
+### AG Grid Export
+
+Verwenden Sie die Schaltflächen **Export to Excel** und **Export to CSV** unterhalb von AG Grid, um die aktuell sichtbaren Daten herunterzuladen:
+
+- Der Export spiegelt immer die **aktuelle Ansicht** von AG Grid wider — Filter, Gruppierungen und Sortierungen werden berücksichtigt
+- **Excel-Export** enthält Tabellenformatierung mit aktiven Filtern, sodass Sie direkt in Excel weiterfiltern können
+- **CSV-Export** liefert eine saubere flache Datei der gefilterten Daten
+- Das bedeutet, dass Sie verschiedene Filterkriterien in AG Grid anwenden und mehrfach exportieren können, um **separate Dateien für verschiedene Teilmengen** Ihrer Daten zu erstellen — ein leistungsstarker Workflow für Datenanalyse und Berichterstattung
+
+> **Tipp:** Sie können auch mit der rechten Maustaste irgendwo in die AG Grid-Tabelle klicken, um weitere Exportoptionen über das Kontextmenü zu erhalten.
 
 ---
 
@@ -121,7 +132,7 @@ Sie können bis zu **3 unabhängige Diagramme** erstellen, jedes mit eigener Kon
 6. **Z-Achsen-Spalte** (optional) — für Bubble- und Heatmap-Diagrammtypen
 7. **Titel** — legen Sie einen benutzerdefinierten Diagrammtitel, X-Achsen-Titel und Y-Achsen-Titel fest
 
-Die Diagramme lesen die aktuell gefilterten/gruppierten Grid-Daten. **Jede Filter-, Sortier- oder Gruppierungsaktion im Grid aktualisiert alle Diagramme sofort.**
+Die Diagramme lesen die aktuell gefilterten/gruppierten AG Grid Daten. **Jede Filter-, Sortier- oder Gruppierungsaktion in AG Grid aktualisiert alle Diagramme sofort.**
 
 ---
 
@@ -135,11 +146,11 @@ Die Diagramme lesen die aktuell gefilterten/gruppierten Grid-Daten. **Jede Filte
 - Jedes aktive Diagramm wird als separate eigenständige HTML-Datei exportiert, gebündelt in einem ZIP-Download
 - Nur Diagramme mit Daten werden in die ZIP-Datei aufgenommen
 
-### Grid-Daten
-- Klicken Sie mit der rechten Maustaste in die AG Grid-Tabelle → **Export to CSV** oder **Export to Excel**
-- Exportiert genau die Daten, die aktuell im Grid sichtbar sind (berücksichtigt Filter, Gruppierungen, Sortierungen)
+### AG Grid Daten
+- Verwenden Sie die Schaltflächen **Export to Excel** oder **Export to CSV** unterhalb von AG Grid (siehe Schritt 3 oben)
+- Exportiert genau die Daten, die aktuell in AG Grid sichtbar sind (berücksichtigt Filter, Gruppierungen, Sortierungen)
 
-> **Tipp:** Exportierte HTML-Dateien sind vollständig interaktiv — Sie können zoomen, mit der Maus für Tooltips darüberfahren und schwenken — keine Software erforderlich, nur ein Webbrowser.
+> **Tipp:** Exportierte HTML-Diagrammdateien sind vollständig interaktiv — Sie können zoomen, mit der Maus für Tooltips darüberfahren und schwenken — keine Software erforderlich, nur ein Webbrowser.
 
 ---
 
@@ -152,8 +163,8 @@ Die Diagramme lesen die aktuell gefilterten/gruppierten Grid-Daten. **Jede Filte
 | Google Sheet lässt sich nicht laden | Stellen Sie sicher, dass die Freigabe auf "Jeder mit dem Link kann anzeigen" eingestellt ist |
 | Airtable lässt sich nicht verbinden | Überprüfen Sie, ob Ihr Personal Access Token die Berechtigungen `data.records:read` und `schema.bases:read` hat und die Base ID mit `app` beginnt |
 | Datetime-Analysefehler | Überprüfen Sie, ob das ausgewählte Format mit Ihren Daten übereinstimmt. Probieren Sie bei Bedarf ein benutzerdefiniertes Format |
-| Diagramme sind leer | Stellen Sie sicher, dass Daten im Grid geladen sind und X/Y-Spalten ausgewählt wurden |
-| Grid zeigt nach dem Filtern keine Daten | Löschen oder passen Sie Ihre Spaltenfilter an |
+| Diagramme sind leer | Stellen Sie sicher, dass Daten in AG Grid geladen sind und X/Y-Spalten ausgewählt wurden |
+| AG Grid zeigt nach dem Filtern keine Daten | Löschen oder passen Sie Ihre Spaltenfilter im Filterfeld an |
 
 ---
 

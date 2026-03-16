@@ -160,33 +160,26 @@ def create_data_source_section():
                              color='info', className='mb-3'),
                 ], width=12)
             ]),
-            # Sheet GID input for Google Sheets
+            # Test dataset for Google Sheets
             html.Div([
-                dbc.Label(t('google_sheets.gid_label'), style={'fontWeight': 'bold'}),
-                dbc.Input(id='google-sheets-gid-input', placeholder=t('google_sheets.gid_placeholder'), className='mb-3'),
-                dbc.Alert(t('google_sheets.gid_help'),
-                         color='info', className='mb-3'),
-                # Test dataset for Google Sheets
                 html.Div([
-                    html.Div([
-                        html.I(className="fas fa-flask me-2"),
-                        html.Span(t('test_dataset.try_label')),
-                    ], className='mb-2'),
-                    dbc.InputGroup([
-                        dbc.Input(
-                            id='test-url-google',
-                            value=get_variable('URL_TEST_DATASET_GOOGLE'),
-                            readonly=True,
-                        ),
-                        dbc.Button(
-                            [html.I(className="fas fa-copy me-1"), html.Span(t('test_dataset.copy_btn'), id='copy-google-label')],
-                            id='copy-google-test-url',
-                            color='outline-primary',
-                        ),
-                    ]),
-                ], id='test-dataset-google-section', className='test-dataset-section',
-                   style={'display': 'none'} if not get_variable('URL_TEST_DATASET_GOOGLE') else {}),
-            ])
+                    html.I(className="fas fa-flask me-2"),
+                    html.Span(t('test_dataset.try_label')),
+                ], className='mb-2'),
+                dbc.InputGroup([
+                    dbc.Input(
+                        id='test-url-google',
+                        value=get_variable('URL_TEST_DATASET_GOOGLE'),
+                        readonly=True,
+                    ),
+                    dbc.Button(
+                        [html.I(className="fas fa-copy me-1"), html.Span(t('test_dataset.copy_btn'), id='copy-google-label')],
+                        id='copy-google-test-url',
+                        color='outline-primary',
+                    ),
+                ]),
+            ], id='test-dataset-google-section', className='test-dataset-section',
+               style={'display': 'none'} if not get_variable('URL_TEST_DATASET_GOOGLE') else {}),
         ], id='google-sheets-section', style={'display': 'none'}),
 
         # Airtable API section

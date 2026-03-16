@@ -30,11 +30,11 @@ De vervangende oplossing van Microsoft vereist Azure AD OAuth 2.0-authenticatie,
 > **Aanbevolen alternatief:** Download uw bestand van SharePoint/OneDrive naar uw computer en gebruik vervolgens de **Directe bestandsupload** hierboven. Dit is sneller, betrouwbaarder en uw gegevens blijven volledig onder uw controle.
 
 ### Google Sheets
-- Plak een openbare Google Sheets-URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Voer optioneel een **GID** (blad-tab-ID) in om een specifiek blad te laden
+- Kopieer de URL uit de adresbalk van de browser terwijl u het gewenste blad-tab bekijkt en plak deze
+- Het blad-tab (GID) wordt automatisch gedetecteerd uit de URL
 - Het document moet gedeeld zijn als "Iedereen met de link kan bekijken"
 
-**Hoe krijgt u een deel-URL:** In Google Sheets, klik op Delen → stel in op "Iedereen met de link" → Viewer → kopieer de link. Om een specifieke blad-tab te laden, kopieer de URL uit de adresbalk van de browser en gebruik het `#gid=123456789` nummer in het GID-veld.
+**Hoe krijgt u de URL:** In Google Sheets, klik op Delen → stel in op "Iedereen met de link" → Viewer. Navigeer vervolgens naar het blad-tab dat u wilt laden en kopieer de URL uit de adresbalk van uw browser (deze bevat het blad-ID automatisch).
 
 **Test-URL** — probeer dit om uw configuratie te verifiëren:
 ```
@@ -93,21 +93,31 @@ Gegenereerde kolommen omvatten: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinut
 
 ---
 
-## Stap 3: Verken uw gegevens in het raster
+## Stap 3: Verken uw gegevens in AG Grid
 
-De **AG Grid**-tabel biedt krachtige gegevensverkenning:
+**AG Grid** biedt krachtige interactieve gegevensverkenning met ingebouwde zijpanelen:
 
 - **Sorteren** — klik op elke kolomkop
-- **Filteren** — klik op het filterpictogram op elke kolomkop om voorwaarden in te stellen
+- **Filteren** — klik op het filterpictogram op elke kolomkop om voorwaarden in te stellen, of gebruik het **Filterpaneel** aan de rechterkant om alle kolomfilters op één plek te beheren
 - **Groeperen** — sleep kolomkoppen naar het "Row Group"-paneel boven de tabel
-- **Draaien** — schakel draaimodus in vanuit het kolommenu voor kruistabellen
+- **Draaien** — schakel draaimodus in vanuit het **Kolommenpaneel** aan de rechterkant voor kruistabellen
 - **Grootte wijzigen** — sleep kolomranden om breedtes aan te passen
-- **Aggregeren** — bij groepering toont het raster subtotalen en eindtotalen
+- **Aggregeren** — bij groepering toont AG Grid subtotalen en eindtotalen
+- **Kolommenpaneel** — schakel kolomzichtbaarheid, herorden kolommen en configureer pivot/waarde-instellingen vanuit het zijpaneel
+- **Filterpaneel** — bekijk en beheer alle actieve filters over alle kolommen vanuit één handig paneel
 
-> **Belangrijk:** De onderstaande grafieken lezen van de **momenteel gefilterde/gegroepeerde gegevens** die zichtbaar zijn in het raster. Elke filter-, sorteer- of groepeeringsactie werkt alle grafieken direct bij — **dit is de kernkracht van de tool.** Gebruik het raster als uw interactieve gegevensslicer en zie de resultaten in realtime weerspiegeld in al uw visualisaties.
+> **Belangrijk:** De onderstaande grafieken lezen van de **momenteel gefilterde/gegroepeerde gegevens** die zichtbaar zijn in AG Grid. Elke filter-, sorteer- of groepeeringsactie werkt alle grafieken direct bij — **dit is de kernkracht van de tool.** Gebruik AG Grid als uw interactieve gegevensslicer en zie de resultaten in realtime weerspiegeld in al uw visualisaties.
 
+### AG Grid Export
 
-> **Exporteer gegevens uit het raster:** Klik met de rechtermuisknop ergens in de AG Grid-tabel om de momenteel gefilterde en gestructureerde gegevens direct naar **CSV of Excel**-bestand te exporteren. De export weerspiegelt precies wat u in het raster ziet — inclusief filters, groeperingen of sorteringen die u heeft toegepast.
+Gebruik de knoppen **Export to Excel** en **Export to CSV** onder AG Grid om de momenteel zichtbare gegevens te downloaden:
+
+- De export weerspiegelt altijd de **huidige weergave** van AG Grid — filters, groeperingen en sorteringen worden gerespecteerd
+- **Excel-export** bevat tabelopmaak met actieve filters, zodat u direct in Excel kunt doorfilteren
+- **CSV-export** biedt een schoon plat bestand van de gefilterde gegevens
+- Dit betekent dat u verschillende filtercriteria kunt toepassen in AG Grid en meerdere keren kunt exporteren om **afzonderlijke bestanden voor verschillende subsets** van uw gegevens te maken — een krachtige workflow voor gegevensanalyse en rapportage
+
+> **Tip:** U kunt ook met de rechtermuisknop ergens in de AG Grid-tabel klikken voor extra exportopties via het contextmenu.
 
 ---
 
@@ -123,7 +133,7 @@ U kunt tot **3 onafhankelijke grafieken** maken, elk met zijn eigen configuratie
 6. **Z-as kolom** (optioneel) — voor Bubble en Heatmap grafiektypen
 7. **Titels** — stel aangepaste grafiektitel, X-as titel en Y-as titel in
 
-Grafieken lezen van de momenteel gefilterde/gegroepeerde rastergegevens. **Elke filter-, sorteer- of groepeeringsactie in het raster werkt alle grafieken direct bij.**
+Grafieken lezen van de momenteel gefilterde/gegroepeerde AG Grid gegevens. **Elke filter-, sorteer- of groepeeringsactie in AG Grid werkt alle grafieken direct bij.**
 
 ---
 
@@ -137,11 +147,11 @@ Grafieken lezen van de momenteel gefilterde/gegroepeerde rastergegevens. **Elke 
 - Elke actieve grafiek wordt geëxporteerd als een apart zelfstandig HTML-bestand, gebundeld in één ZIP-download
 - Alleen grafieken met data worden opgenomen in het ZIP-bestand
 
-### Rastergegevens
-- Klik met de rechtermuisknop in de AG Grid-tabel → **Export to CSV** of **Export to Excel**
-- Exporteert precies de gegevens die momenteel zichtbaar zijn in het raster (respecteert filters, groeperingen, sorteringen)
+### AG Grid Gegevens
+- Gebruik de knoppen **Export to Excel** of **Export to CSV** onder AG Grid (zie Stap 3 hierboven)
+- Exporteert precies de gegevens die momenteel zichtbaar zijn in AG Grid (respecteert filters, groeperingen, sorteringen)
 
-> **Tip:** Geëxporteerde HTML-bestanden zijn volledig interactief — u kunt zoomen, zweven voor tooltips en pannen — geen software nodig, alleen een webbrowser.
+> **Tip:** Geëxporteerde HTML-grafiekbestanden zijn volledig interactief — u kunt zoomen, zweven voor tooltips en pannen — geen software nodig, alleen een webbrowser.
 
 ---
 
@@ -154,8 +164,8 @@ Grafieken lezen van de momenteel gefilterde/gegroepeerde rastergegevens. **Elke 
 | Google Sheet wordt niet geladen | Zorg ervoor dat delen is ingesteld op "Iedereen met de link kan bekijken" |
 | Airtable maakt geen verbinding | Verifieer dat uw Personal Access Token `data.records:read` en `schema.bases:read` scopes heeft, en de Base ID begint met `app` |
 | Datetime-parsefouten | Verifieer dat het geselecteerde formaat overeenkomt met uw gegevens. Probeer zo nodig een aangepast formaat |
-| Grafieken zijn leeg | Zorg ervoor dat gegevens in het raster zijn geladen en X/Y-kolommen zijn geselecteerd |
-| Raster toont geen gegevens na filter | Wis of pas uw kolomfilters aan |
+| Grafieken zijn leeg | Zorg ervoor dat gegevens in AG Grid zijn geladen en X/Y-kolommen zijn geselecteerd |
+| AG Grid toont geen gegevens na filter | Wis of pas uw kolomfilters aan in het Filterpaneel |
 
 ---
 
