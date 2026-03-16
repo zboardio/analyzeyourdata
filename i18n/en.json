@@ -107,7 +107,7 @@
 
     "google_sheets.url_label": "Google Sheets Sharing URL:",
     "google_sheets.url_placeholder": "Paste your Google Sheets sharing link here...",
-    "google_sheets.load_btn": "Load from Google Sheets",
+    "google_sheets.load_btn": "Load",
     "google_sheets.access_alert": "Make sure the Google Sheets link allows anonymous access (Anyone with the link can view).",
     "google_sheets.gid_label": "Sheet ID (GID) - Optional:",
     "google_sheets.gid_placeholder": "Enter specific sheet GID (leave empty for first sheet)",
@@ -122,7 +122,7 @@
     "airtable.api_key_placeholder": "Paste your Airtable API key here...",
     "airtable.base_id_label": "Base ID:",
     "airtable.base_id_placeholder": "Enter your Airtable base ID (e.g., appXXXXXXXXXXXXXX)",
-    "airtable.connect_btn": "Connect to Airtable",
+    "airtable.connect_btn": "Connect",
     "airtable.help_heading": "How to get your Airtable credentials:",
     "airtable.help_step1_prefix": "1. Go to ",
     "airtable.help_step1_link": "airtable.com/create/tokens",
@@ -158,6 +158,8 @@
     "datetime.load_btn": "Load data to AgGrid Table",
 
     "grid.step3_heading": "Step 3 - View, filter, aggregate, group your data",
+    "grid.export_excel": "Export to Excel",
+    "grid.export_csv": "Export to CSV",
 
     "chart.step4_heading": "Step 4 - Visualize your data (3 independent charts)",
     "chart.config_heading": "Chart {num} Configuration",

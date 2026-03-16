@@ -107,7 +107,7 @@
 
     "google_sheets.url_label": "URL de partage Google Sheets :",
     "google_sheets.url_placeholder": "Collez votre lien de partage Google Sheets ici...",
-    "google_sheets.load_btn": "Charger depuis Google Sheets",
+    "google_sheets.load_btn": "Charger",
     "google_sheets.access_alert": "Assurez-vous que le lien Google Sheets permet l'accès anonyme (Toute personne disposant du lien peut afficher).",
     "google_sheets.gid_label": "ID de feuille (GID) - Optionnel :",
     "google_sheets.gid_placeholder": "Entrez le GID spécifique de la feuille (laissez vide pour la première feuille)",
@@ -122,7 +122,7 @@
     "airtable.api_key_placeholder": "Collez votre clé API Airtable ici...",
     "airtable.base_id_label": "Base ID :",
     "airtable.base_id_placeholder": "Entrez votre Base ID Airtable (par exemple, appXXXXXXXXXXXXXX)",
-    "airtable.connect_btn": "Connect to Airtable",
+    "airtable.connect_btn": "Connecter",
     "airtable.help_heading": "Comment obtenir vos identifiants Airtable :",
     "airtable.help_step1_prefix": "1. Accédez à ",
     "airtable.help_step1_link": "airtable.com/create/tokens",
@@ -158,6 +158,8 @@
     "datetime.load_btn": "Load data to AgGrid Table",
 
     "grid.step3_heading": "Étape 3 - Visualisez, filtrez, agrégez, regroupez vos données",
+    "grid.export_excel": "Exporter en Excel",
+    "grid.export_csv": "Exporter en CSV",
 
     "chart.step4_heading": "Étape 4 - Visualisez vos données (3 graphiques indépendants)",
     "chart.config_heading": "Configuration du graphique {num}",
