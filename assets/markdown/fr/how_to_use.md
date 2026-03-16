@@ -30,11 +30,11 @@ La solution de remplacement de Microsoft nécessite l'authentification Azure AD 
 > **Alternative recommandée :** Téléchargez votre fichier depuis SharePoint/OneDrive sur votre ordinateur, puis utilisez le **Téléversement direct de fichier** ci-dessus. C'est plus rapide, plus fiable et vos données restent entièrement sous votre contrôle.
 
 ### Google Sheets
-- Collez une URL publique Google Sheets (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Entrez éventuellement un **GID** (ID de l'onglet de feuille) pour charger une feuille spécifique
+- Copiez l'URL depuis la barre du navigateur en visualisant l'onglet de feuille souhaité et collez-la
+- L'onglet de feuille (GID) est automatiquement détecté depuis l'URL
 - Le document doit être partagé en tant que "Toute personne disposant du lien peut afficher"
 
-**Comment obtenir une URL de partage :** Dans Google Sheets, cliquez sur Partager → définir sur "Toute personne disposant du lien" → Lecteur → copier le lien. Pour charger un onglet de feuille spécifique, copiez l'URL depuis la barre du navigateur et utilisez le numéro `#gid=123456789` dans le champ GID.
+**Comment obtenir l'URL :** Dans Google Sheets, cliquez sur Partager → définir sur "Toute personne disposant du lien" → Lecteur. Naviguez ensuite vers l'onglet de feuille que vous souhaitez charger et copiez l'URL depuis la barre d'adresse de votre navigateur (elle contient l'ID de feuille automatiquement).
 
 **URL de test** — essayez ceci pour vérifier votre configuration :
 ```
@@ -93,21 +93,31 @@ Les colonnes générées incluent : `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsM
 
 ---
 
-## Étape 3 : Explorer vos données dans la grille
+## Étape 3 : Explorer vos données dans AG Grid
 
-La table **AG Grid** offre une exploration de données puissante :
+**AG Grid** offre une exploration de données interactive et puissante avec des panneaux latéraux intégrés :
 
 - **Trier** — cliquez sur n'importe quel en-tête de colonne
-- **Filtrer** — cliquez sur l'icône de filtre sur n'importe quel en-tête de colonne pour définir des conditions
+- **Filtrer** — cliquez sur l'icône de filtre sur n'importe quel en-tête de colonne pour définir des conditions, ou utilisez le **Panneau de filtres** sur le côté droit pour gérer tous les filtres de colonnes en un seul endroit
 - **Regrouper** — faites glisser les en-têtes de colonne dans le panneau "Row Group" au-dessus de la table
-- **Pivoter** — activez le mode pivot depuis le menu de colonne pour les tableaux croisés
+- **Pivoter** — activez le mode pivot depuis le **Panneau de colonnes** sur le côté droit pour les tableaux croisés
 - **Redimensionner** — faites glisser les bordures de colonne pour ajuster les largeurs
-- **Agréger** — lors du regroupement, la grille affiche les sous-totaux et les totaux généraux
+- **Agréger** — lors du regroupement, AG Grid affiche les sous-totaux et les totaux généraux
+- **Panneau de colonnes** — basculez la visibilité des colonnes, réorganisez les colonnes et configurez les paramètres de pivot/valeurs depuis le panneau latéral
+- **Panneau de filtres** — visualisez et gérez tous les filtres actifs sur toutes les colonnes depuis un panneau pratique
 
-> **Important :** Les graphiques ci-dessous lisent les **données actuellement filtrées/regroupées** visibles dans la grille. Chaque action de filtre, tri ou regroupement met à jour tous les graphiques instantanément — **c'est la puissance fondamentale de l'outil.** Utilisez la grille comme votre sélecteur de données interactif et voyez les résultats reflétés en temps réel dans toutes vos visualisations.
+> **Important :** Les graphiques ci-dessous lisent les **données actuellement filtrées/regroupées** visibles dans AG Grid. Chaque action de filtre, tri ou regroupement met à jour tous les graphiques instantanément — **c'est la puissance fondamentale de l'outil.** Utilisez AG Grid comme votre sélecteur de données interactif et voyez les résultats reflétés en temps réel dans toutes vos visualisations.
 
+### Export depuis AG Grid
 
-> **Exportez les données depuis la grille :** Faites un clic droit n'importe où dans la table AG Grid pour exporter les données actuellement filtrées et structurées directement vers un fichier **CSV ou Excel**. L'export reflète exactement ce que vous voyez dans la grille — y compris tous les filtres, regroupements ou tris que vous avez appliqués.
+Utilisez les boutons **Export to Excel** et **Export to CSV** sous AG Grid pour télécharger les données actuellement visibles :
+
+- L'export reflète toujours la **vue actuelle** d'AG Grid — les filtres, regroupements et tris sont respectés
+- **L'export Excel** inclut le formatage de tableau avec les filtres actifs, afin que vous puissiez continuer à filtrer directement dans Excel
+- **L'export CSV** fournit un fichier plat propre des données filtrées
+- Cela signifie que vous pouvez appliquer différents critères de filtre dans AG Grid et exporter plusieurs fois pour créer **des fichiers séparés pour différents sous-ensembles** de vos données — un workflow puissant pour l'analyse de données et le reporting
+
+> **Astuce :** Vous pouvez également faire un clic droit n'importe où dans la table AG Grid pour des options d'export supplémentaires via le menu contextuel.
 
 ---
 
@@ -123,7 +133,7 @@ Vous pouvez créer jusqu'à **3 graphiques indépendants**, chacun avec sa propr
 6. **Colonne de l'axe Z** (optionnel) — pour les types de graphiques Bubble et Heatmap
 7. **Titres** — définissez un titre de graphique personnalisé, un titre d'axe X et un titre d'axe Y
 
-Les graphiques lisent les données actuellement filtrées/regroupées de la grille. **Chaque action de filtre, tri ou regroupement dans la grille met à jour tous les graphiques instantanément.**
+Les graphiques lisent les données actuellement filtrées/regroupées d'AG Grid. **Chaque action de filtre, tri ou regroupement dans AG Grid met à jour tous les graphiques instantanément.**
 
 ---
 
@@ -137,11 +147,11 @@ Les graphiques lisent les données actuellement filtrées/regroupées de la gril
 - Chaque graphique actif est exporté sous forme de fichier HTML autonome, regroupés dans un téléchargement ZIP
 - Seuls les graphiques contenant des données sont inclus dans le ZIP
 
-### Données de la grille
-- Faites un clic droit dans la table AG Grid → **Export to CSV** ou **Export to Excel**
-- Exporte exactement les données actuellement visibles dans la grille (respecte les filtres, regroupements, tris)
+### Données AG Grid
+- Utilisez les boutons **Export to Excel** ou **Export to CSV** sous AG Grid (voir Étape 3 ci-dessus)
+- Exporte exactement les données actuellement visibles dans AG Grid (respecte les filtres, regroupements, tris)
 
-> **Astuce :** Les fichiers HTML exportés sont entièrement interactifs — vous pouvez zoomer, survoler pour les info-bulles et faire un panoramique — aucun logiciel nécessaire, juste un navigateur web.
+> **Astuce :** Les fichiers HTML de graphiques exportés sont entièrement interactifs — vous pouvez zoomer, survoler pour les info-bulles et faire un panoramique — aucun logiciel nécessaire, juste un navigateur web.
 
 ---
 
@@ -154,8 +164,8 @@ Les graphiques lisent les données actuellement filtrées/regroupées de la gril
 | Google Sheet ne se charge pas | Assurez-vous que le partage est défini sur "Toute personne disposant du lien peut afficher" |
 | Airtable ne se connecte pas | Vérifiez que votre Personal Access Token dispose des scopes `data.records:read` et `schema.bases:read`, et que le Base ID commence par `app` |
 | Erreurs d'analyse datetime | Vérifiez que le format sélectionné correspond à vos données. Essayez un format personnalisé si nécessaire |
-| Les graphiques sont vides | Assurez-vous que les données sont chargées dans la grille et que les colonnes X/Y sont sélectionnées |
-| La grille n'affiche aucune donnée après le filtre | Effacez ou ajustez vos filtres de colonne |
+| Les graphiques sont vides | Assurez-vous que les données sont chargées dans AG Grid et que les colonnes X/Y sont sélectionnées |
+| AG Grid n'affiche aucune donnée après le filtre | Effacez ou ajustez vos filtres de colonne dans le Panneau de filtres |
 
 ---
 

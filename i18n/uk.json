@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "Потужний, простий інструмент для аналізу та візуалізації даних. Завантажуйте, аналізуйте та створюйте приголомшливі графіки за лічені хвилини.",
-
     "navbar.language": "Мова",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "Як користуватися",
     "navbar.feedback": "Відгук",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Зв'яжіться з нами",
     "footer.our_website": "Наш вебсайт",
     "footer.open_source": "Open Source",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Перевірити вихідний код",
     "footer.all_rights": ". Усі права захищені.",
     "footer.email_copied": "Контактний email скопійовано в буфер обміну",
-
     "powered_by.heading": "Працює на",
     "powered_by.plotly_dash_desc": "Веб-фреймворк",
     "powered_by.dash_ag_grid_desc": "Інтеграція Dash",
     "powered_by.ag_grid_desc": "Enterprise таблиця",
     "powered_by.author_desc": "Розробка",
-
     "feedback.title": "Надіслати відгук",
     "feedback.category_label": "Категорія",
     "feedback.category_not_specified": "Не вказано",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Будь ласка, введіть ваше повідомлення відгуку.",
     "feedback.success": "Дякуємо за ваш відгук!",
     "feedback.error": "Відгук не вдалося зберегти. Будь ласка, спробуйте пізніше.",
-
     "how_to_use.title": "Як користуватися",
     "how_to_use.btn_close": "Закрити",
     "how_to_use.btn_docs": "Переглянути документацію",
-
     "video.intro_heading": "Ознайомче відео - без звуку",
     "video.updated_date": "(Оновлено 13.08.2024)",
-
     "data_source.step1_heading": "Крок 1 - Виберіть джерело даних | Максимальний розмір файлу: {max_size}MB",
     "data_source.choose_source": "Виберіть ваше джерело даних:",
     "data_source.upload": "Пряме завантаження файлу",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Перетягніть або ",
     "data_source.select_files": "Виберіть файли",
-
     "delimiter.label": "Виберіть роздільник для CSV / TXT / LOG файлу:",
     "delimiter.comma": "Кома (,)",
     "delimiter.semicolon": "Крапка з комою (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Власний",
     "delimiter.custom_placeholder": "Введіть власний роздільник",
     "delimiter.confirm_btn": "Підтвердити роздільник",
-
     "sqlite.select_table_label": "Виберіть таблицю з бази даних SQLite:",
     "sqlite.table_placeholder": "Виберіть таблицю для завантаження...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Помилка завантаження бази даних SQLite",
     "sqlite.table_loaded": "Таблиця SQLite '{table}' успішно завантажена!",
     "sqlite.error_loading_table": "Помилка завантаження таблиці SQLite",
-
     "sharepoint.url_label": "URL для спільного доступу SharePoint / OneDrive:",
     "sharepoint.url_placeholder": "Вставте ваше посилання SharePoint/OneDrive тут...",
     "sharepoint.load_btn": "Завантажити з SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "Дані SharePoint успішно завантажені!",
     "sharepoint.sheet_loaded": "Аркуш '{sheet}' успішно завантажено!",
     "sharepoint.error_loading": "Помилка завантаження даних SharePoint",
-
     "google_sheets.url_label": "URL для спільного доступу Google Sheets:",
     "google_sheets.url_placeholder": "Вставте ваше посилання Google Sheets тут...",
     "google_sheets.load_btn": "Завантажити",
     "google_sheets.access_alert": "Переконайтеся, що посилання Google Sheets дозволяє анонімний доступ (Будь-хто з посиланням може переглядати).",
-    "google_sheets.gid_label": "ID аркуша (GID) - За бажанням:",
-    "google_sheets.gid_placeholder": "Введіть конкретний GID аркуша (залишіть порожнім для першого аркуша)",
-    "google_sheets.gid_help": "Ви можете знайти GID в URL Google Sheets після '#gid=' під час перегляду конкретного аркуша.",
     "google_sheets.invalid_url": "Недійсний URL Google Sheets",
     "google_sheets.invalid_url_detail": "Будь ласка, переконайтеся, що URL є дійсним посиланням для спільного доступу Google Sheets.",
     "google_sheets.data_loaded": "Дані Google Sheets успішно завантажені!",
     "google_sheets.error_loading": "Помилка завантаження даних Google Sheets",
-
     "airtable.config_label": "Конфігурація Airtable API:",
     "airtable.api_key_label": "Ключ API:",
     "airtable.api_key_placeholder": "Вставте ваш ключ Airtable API тут...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Помилка підключення до Airtable",
     "airtable.table_loaded": "Таблиця Airtable '{table}' успішно завантажена!",
     "airtable.error_loading_table": "Помилка завантаження таблиці Airtable",
-
     "datetime.step2_heading": "Крок 2 - Необов'язкова обробка дати та часу",
     "datetime.enable_label": "Увімкнути розбір datetime",
     "datetime.toggle_tooltip": "Увімкніть, щоб визначити стовпець datetime і формат. Це збагатить ваші дані корисними функціями, пов'язаними з часом, такими як рік, місяць, день тижня, календарний тиждень тощо.\n\nВимкніть, щоб пропустити перетворення datetime і завантажити необроблені дані безпосередньо в таблицю.",
@@ -154,13 +138,11 @@
     "datetime.format_placeholder": "Виберіть формат datetime",
     "datetime.custom_label": "Власний формат",
     "datetime.custom_placeholder": "Введіть власний strftime(), наприклад %Y-%m-%d",
-    "datetime.custom_tooltip": "Це має відповідати синтаксису strftime Python.\n\nПриклад: %Y-%m-%d %H:%M:%S.%f\n\nВикористовуйте значок \ud83d\udd17, щоб відкрити повну документацію.",
+    "datetime.custom_tooltip": "Це має відповідати синтаксису strftime Python.\n\nПриклад: %Y-%m-%d %H:%M:%S.%f\n\nВикористовуйте значок 🔗, щоб відкрити повну документацію.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Крок 3 - Переглядайте, фільтруйте, агрегуйте, групуйте ваші дані",
     "grid.export_excel": "Експорт в Excel",
     "grid.export_csv": "Експорт у CSV",
-
     "chart.step4_heading": "Крок 4 - Візуалізуйте ваші дані (3 незалежні графіки)",
     "chart.config_heading": "Конфігурація графіка {num}",
     "chart.select_type": "Виберіть тип графіка:",
@@ -168,7 +150,7 @@
     "chart.x_axis": "Вісь X",
     "chart.y_axis": "Вісь Y",
     "chart.color": "Колір",
-    "chart.z_axis": "Вісь Z \u24d8",
+    "chart.z_axis": "Вісь Z ⓘ",
     "chart.x_axis_placeholder": "Виберіть стовпець осі x",
     "chart.y_axis_placeholder": "Виберіть стовпці осі y",
     "chart.color_placeholder": "Виберіть стовпець кольору",
@@ -187,13 +169,11 @@
     "chart.y_axis_title_placeholder": "Введіть заголовок осі y",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Графік {num} - Немає даних",
-
     "dashboard.heading": "Експорт комбінованого дашборду",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Дашборд аналізу даних",
     "dashboard.generated_on": "Згенеровано {timestamp}",
     "dashboard.chart_heading": "Графік {num}",
-
     "messages.error": "Помилка",
     "messages.file_uploaded": "Файл завантажено: {filename}",
     "messages.file_too_large": "Файл занадто великий: {size}MB | Максимальний підтримуваний розмір {max_size}MB.",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Запропонований роздільник: '{delimiter}' ",
     "messages.confirm_delimiter": "Підтвердіть або налаштуйте роздільник, потім натисніть кнопку Підтвердити.",
     "messages.fields_count": "Полів: {count}",
-
     "test_dataset.try_label": "Спробуйте з нашим тестовим набором даних:",
     "test_dataset.try_label_plural": "Спробуйте з нашими тестовими наборами даних",
     "test_dataset.browse_btn": "Переглянути набори даних",
     "test_dataset.copy_btn": "Копіювати",
     "test_dataset.copied_btn": "Скопійовано!",
-
     "donate.heading": "Купи нашій команді розробників каву або карибський ром",
     "donate.description": "Цей інструмент безкоштовний і з відкритим вихідним кодом. Якщо він заощадив тобі час, підтримай нашу роботу!",
     "donate.btn": "Будьмо!"

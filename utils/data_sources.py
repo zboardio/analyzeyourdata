@@ -42,14 +42,14 @@ class DataSourceHandler:
             raise ValueError(f"Failed to create SharePoint direct URL: {str(e)}")
     
     @staticmethod
-    def create_google_sheets_csv_url(google_sheets_url: str, sheet_gid: Optional[str] = None) -> str:
+    def create_google_sheets_csv_url(google_sheets_url: str) -> str:
         """
-        Convert Google Sheets URL to CSV export URL
-        
+        Convert Google Sheets URL to CSV export URL.
+        Automatically extracts the GID from the URL if present.
+
         Args:
-            google_sheets_url (str): Google Sheets sharing URL
-            sheet_gid (str, optional): Specific sheet ID (gid parameter)
-            
+            google_sheets_url (str): Google Sheets URL (sharing or browser bar)
+
         Returns:
             str: CSV export URL
         """
@@ -60,25 +60,29 @@ class DataSourceHandler:
                 r'key=([a-zA-Z0-9-_]+)',
                 r'/d/([a-zA-Z0-9-_]+)'
             ]
-            
+
             spreadsheet_id = None
             for pattern in patterns:
                 match = re.search(pattern, google_sheets_url)
                 if match:
                     spreadsheet_id = match.group(1)
                     break
-            
+
             if not spreadsheet_id:
                 raise ValueError("Could not extract spreadsheet ID from URL")
-            
+
+            # Auto-extract GID from URL (supports ?gid=, &gid=, #gid= formats)
+            gid_match = re.search(r'[?&#]gid=(\d+)', google_sheets_url)
+            sheet_gid = gid_match.group(1) if gid_match else None
+
             # Create CSV export URL
             if sheet_gid:
                 csv_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/export?format=csv&gid={sheet_gid}"
             else:
                 csv_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/export?format=csv"
-            
+
             return csv_url
-            
+
         except Exception as e:
             raise ValueError(f"Failed to create Google Sheets CSV URL: {str(e)}")
     
@@ -166,19 +170,19 @@ class DataSourceHandler:
             raise ValueError(f"Failed to load from SharePoint: {str(e)}")
     
     @staticmethod
-    def load_from_google_sheets(google_sheets_url: str, sheet_gid: Optional[str] = None) -> pd.DataFrame:
+    def load_from_google_sheets(google_sheets_url: str) -> pd.DataFrame:
         """
-        Load data from Google Sheets URL
-        
+        Load data from Google Sheets URL.
+        GID is automatically extracted from the URL if present.
+
         Args:
-            google_sheets_url (str): Google Sheets sharing URL
-            sheet_gid (str, optional): Specific sheet ID
-            
+            google_sheets_url (str): Google Sheets URL (sharing or browser bar)
+
         Returns:
             pd.DataFrame: Loaded data
         """
         try:
-            csv_url = DataSourceHandler.create_google_sheets_csv_url(google_sheets_url, sheet_gid)
+            csv_url = DataSourceHandler.create_google_sheets_csv_url(google_sheets_url)
             
             # Download CSV data
             response = requests.get(csv_url, timeout=30)

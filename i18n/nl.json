@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "Een krachtige, eenvoudige tool voor gegevensanalyse en visualisatie. Upload, analyseer en maak in enkele minuten prachtige grafieken.",
-
     "navbar.language": "Taal",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "Hoe te gebruiken",
     "navbar.feedback": "Feedback",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Contact",
     "footer.our_website": "Onze website",
     "footer.open_source": "Open Source",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Broncode verifiëren",
     "footer.all_rights": ". Alle rechten voorbehouden.",
     "footer.email_copied": "Contact-e-mail gekopieerd naar klembord",
-
     "powered_by.heading": "Aangedreven door",
     "powered_by.plotly_dash_desc": "Web framework",
     "powered_by.dash_ag_grid_desc": "Dash-integratie",
     "powered_by.ag_grid_desc": "Enterprise grid",
     "powered_by.author_desc": "Ontwikkeling",
-
     "feedback.title": "Feedback versturen",
     "feedback.category_label": "Categorie",
     "feedback.category_not_specified": "Niet gespecificeerd",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Voer uw feedbackbericht in.",
     "feedback.success": "Bedankt voor uw feedback!",
     "feedback.error": "Feedback kon niet worden opgeslagen. Probeer het later opnieuw.",
-
     "how_to_use.title": "Hoe te gebruiken",
     "how_to_use.btn_close": "Sluiten",
     "how_to_use.btn_docs": "Bekijk documentatie",
-
     "video.intro_heading": "Introductievideo - zonder geluid",
     "video.updated_date": "(Bijgewerkt op 13.08.2024)",
-
     "data_source.step1_heading": "Stap 1 - Selecteer gegevensbron | Bestand maximale grootte: {max_size}MB",
     "data_source.choose_source": "Kies uw gegevensbron:",
     "data_source.upload": "Directe bestandsupload",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Sleep en plaats of ",
     "data_source.select_files": "Selecteer bestanden",
-
     "delimiter.label": "Selecteer scheidingsteken voor CSV / TXT / LOG-bestand:",
     "delimiter.comma": "Komma (,)",
     "delimiter.semicolon": "Puntkomma (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Aangepast",
     "delimiter.custom_placeholder": "Voer aangepast scheidingsteken in",
     "delimiter.confirm_btn": "Bevestig scheidingsteken",
-
     "sqlite.select_table_label": "Selecteer tabel uit SQLite-database:",
     "sqlite.table_placeholder": "Selecteer een tabel om te laden...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Fout bij het laden van SQLite-database",
     "sqlite.table_loaded": "SQLite-tabel '{table}' succesvol geladen!",
     "sqlite.error_loading_table": "Fout bij het laden van SQLite-tabel",
-
     "sharepoint.url_label": "SharePoint / OneDrive deel-URL:",
     "sharepoint.url_placeholder": "Plak hier uw SharePoint/OneDrive-deellink...",
     "sharepoint.load_btn": "Laden vanuit SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "SharePoint-gegevens succesvol geladen!",
     "sharepoint.sheet_loaded": "Blad '{sheet}' succesvol geladen!",
     "sharepoint.error_loading": "Fout bij het laden van SharePoint-gegevens",
-
     "google_sheets.url_label": "Google Sheets deel-URL:",
     "google_sheets.url_placeholder": "Plak hier uw Google Sheets-deellink...",
     "google_sheets.load_btn": "Laden",
     "google_sheets.access_alert": "Zorg ervoor dat de Google Sheets-link anonieme toegang toestaat (Iedereen met de link kan bekijken).",
-    "google_sheets.gid_label": "Blad-ID (GID) - Optioneel:",
-    "google_sheets.gid_placeholder": "Voer specifieke blad-GID in (laat leeg voor eerste blad)",
-    "google_sheets.gid_help": "U kunt de GID vinden in de Google Sheets-URL na '#gid=' wanneer u een specifiek blad bekijkt.",
     "google_sheets.invalid_url": "Ongeldige Google Sheets-URL",
     "google_sheets.invalid_url_detail": "Zorg ervoor dat de URL een geldige Google Sheets-deellink is.",
     "google_sheets.data_loaded": "Google Sheets-gegevens succesvol geladen!",
     "google_sheets.error_loading": "Fout bij het laden van Google Sheets-gegevens",
-
     "airtable.config_label": "Airtable API-configuratie:",
     "airtable.api_key_label": "API Key:",
     "airtable.api_key_placeholder": "Plak hier uw Airtable API-sleutel...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Fout bij verbinden met Airtable",
     "airtable.table_loaded": "Airtable-tabel '{table}' succesvol geladen!",
     "airtable.error_loading_table": "Fout bij het laden van Airtable-tabel",
-
     "datetime.step2_heading": "Stap 2 - Optionele datetime-verwerking",
     "datetime.enable_label": "Datetime-parsing inschakelen",
     "datetime.toggle_tooltip": "Schakel IN om een datetime-kolom en formaat te definiëren. Dit verrijkt uw gegevens met handige tijdgerelateerde functies zoals jaar, maand, weekdag, kalenderweek, enz.\n\nSchakel UIT om datetime-conversie over te slaan en de ruwe gegevens direct in de tabel te laden.",
@@ -156,11 +140,9 @@
     "datetime.custom_placeholder": "Voer aangepast strftime() in, bijv. %Y-%m-%d",
     "datetime.custom_tooltip": "Dit moet de Python strftime-syntaxis volgen.\n\nVoorbeeld: %Y-%m-%d %H:%M:%S.%f\n\nGebruik het 🔗-pictogram om de volledige documentatie te openen.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Stap 3 - Bekijk, filter, aggregeer, groepeer uw gegevens",
     "grid.export_excel": "Exporteren naar Excel",
     "grid.export_csv": "Exporteren naar CSV",
-
     "chart.step4_heading": "Stap 4 - Visualiseer uw gegevens (3 onafhankelijke grafieken)",
     "chart.config_heading": "Grafiek {num} configuratie",
     "chart.select_type": "Selecteer grafiektype:",
@@ -187,13 +169,11 @@
     "chart.y_axis_title_placeholder": "Voer y-as titel in",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Grafiek {num} - Geen gegevens",
-
     "dashboard.heading": "Gecombineerde dashboard-export",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Gegevensanalyse-dashboard",
     "dashboard.generated_on": "Gegenereerd op {timestamp}",
     "dashboard.chart_heading": "Grafiek {num}",
-
     "messages.error": "Fout",
     "messages.file_uploaded": "Bestand geüpload: {filename}",
     "messages.file_too_large": "Bestand te groot: {size}MB | Maximaal ondersteunde grootte is {max_size}MB.",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Voorgesteld scheidingsteken: '{delimiter}' ",
     "messages.confirm_delimiter": "Bevestig of pas scheidingsteken aan, klik vervolgens op Bevestig-knop.",
     "messages.fields_count": "{count} velden",
-
     "test_dataset.try_label": "Probeer met onze testdataset:",
     "test_dataset.try_label_plural": "Probeer met onze testdatasets",
     "test_dataset.browse_btn": "Datasets bekijken",
     "test_dataset.copy_btn": "Kopiëren",
     "test_dataset.copied_btn": "Gekopieerd!",
-
     "donate.heading": "Koop ons devTeam een koffie of een Caribische rum shot",
     "donate.description": "Deze tool is gratis en open source. Als het je tijd heeft bespaard, overweeg dan ons werk te ondersteunen!",
     "donate.btn": "Proost!"

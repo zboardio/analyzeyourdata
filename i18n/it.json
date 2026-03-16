@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "Uno strumento potente e semplice per l'analisi e la visualizzazione dei dati. Carica, analizza e crea grafici straordinari in pochi minuti.",
-
     "navbar.language": "Lingua",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "Come utilizzare",
     "navbar.feedback": "Feedback",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Contattaci",
     "footer.our_website": "Il Nostro Sito Web",
     "footer.open_source": "Open Source",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Verifica codice sorgente",
     "footer.all_rights": ". Tutti i diritti riservati.",
     "footer.email_copied": "Email di contatto copiata negli appunti",
-
     "powered_by.heading": "Sviluppato con",
     "powered_by.plotly_dash_desc": "Framework web",
     "powered_by.dash_ag_grid_desc": "Integrazione Dash",
     "powered_by.ag_grid_desc": "Griglia enterprise",
     "powered_by.author_desc": "Sviluppo",
-
     "feedback.title": "Invia Feedback",
     "feedback.category_label": "Categoria",
     "feedback.category_not_specified": "Non specificata",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Per favore inserisci il tuo messaggio di feedback.",
     "feedback.success": "Grazie per il tuo feedback!",
     "feedback.error": "Il feedback non può essere salvato. Riprova più tardi.",
-
     "how_to_use.title": "Come Utilizzare",
     "how_to_use.btn_close": "Chiudi",
     "how_to_use.btn_docs": "Visualizza Documentazione",
-
     "video.intro_heading": "Video introduttivo - senza audio",
     "video.updated_date": "(Aggiornato il 13.08.2024)",
-
     "data_source.step1_heading": "Passo 1 - Seleziona Sorgente Dati | Dimensione massima file: {max_size}MB",
     "data_source.choose_source": "Scegli la tua sorgente dati:",
     "data_source.upload": "Caricamento Diretto File",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Trascina e Rilascia o ",
     "data_source.select_files": "Seleziona File",
-
     "delimiter.label": "Seleziona delimitatore per file CSV / TXT / LOG:",
     "delimiter.comma": "Virgola (,)",
     "delimiter.semicolon": "Punto e virgola (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Personalizzato",
     "delimiter.custom_placeholder": "Inserisci delimitatore personalizzato",
     "delimiter.confirm_btn": "Conferma Delimitatore",
-
     "sqlite.select_table_label": "Seleziona tabella dal database SQLite:",
     "sqlite.table_placeholder": "Seleziona una tabella da caricare...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Errore durante il caricamento del database SQLite",
     "sqlite.table_loaded": "Tabella SQLite '{table}' caricata con successo!",
     "sqlite.error_loading_table": "Errore durante il caricamento della tabella SQLite",
-
     "sharepoint.url_label": "URL di Condivisione SharePoint / OneDrive:",
     "sharepoint.url_placeholder": "Incolla qui il tuo link di condivisione SharePoint/OneDrive...",
     "sharepoint.load_btn": "Carica da SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "Dati SharePoint caricati con successo!",
     "sharepoint.sheet_loaded": "Foglio '{sheet}' caricato con successo!",
     "sharepoint.error_loading": "Errore durante il caricamento dei dati SharePoint",
-
     "google_sheets.url_label": "URL di Condivisione Google Sheets:",
     "google_sheets.url_placeholder": "Incolla qui il tuo link di condivisione Google Sheets...",
     "google_sheets.load_btn": "Carica",
     "google_sheets.access_alert": "Assicurati che il link Google Sheets consenta l'accesso anonimo (Chiunque con il link può visualizzare).",
-    "google_sheets.gid_label": "ID Foglio (GID) - Opzionale:",
-    "google_sheets.gid_placeholder": "Inserisci GID foglio specifico (lascia vuoto per il primo foglio)",
-    "google_sheets.gid_help": "Puoi trovare il GID nell'URL di Google Sheets dopo '#gid=' quando visualizzi un foglio specifico.",
     "google_sheets.invalid_url": "URL Google Sheets non valido",
     "google_sheets.invalid_url_detail": "Assicurati che l'URL sia un link di condivisione Google Sheets valido.",
     "google_sheets.data_loaded": "Dati Google Sheets caricati con successo!",
     "google_sheets.error_loading": "Errore durante il caricamento dei dati Google Sheets",
-
     "airtable.config_label": "Configurazione API Airtable:",
     "airtable.api_key_label": "Chiave API:",
     "airtable.api_key_placeholder": "Incolla qui la tua chiave API Airtable...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Errore durante la connessione ad Airtable",
     "airtable.table_loaded": "Tabella Airtable '{table}' caricata con successo!",
     "airtable.error_loading_table": "Errore durante il caricamento della tabella Airtable",
-
     "datetime.step2_heading": "Passo 2 - Elaborazione Datetime Opzionale",
     "datetime.enable_label": "Abilita analisi datetime",
     "datetime.toggle_tooltip": "Attiva ON per definire una colonna datetime e un formato. Questo arricchirà i tuoi dati con utili funzionalità relative al tempo come anno, mese, giorno della settimana, settimana di calendario, ecc.\n\nAttiva OFF per saltare la conversione datetime e caricare i dati grezzi direttamente nella tabella.",
@@ -156,11 +140,9 @@
     "datetime.custom_placeholder": "Inserisci strftime() personalizzato, es. %Y-%m-%d",
     "datetime.custom_tooltip": "Questo deve seguire la sintassi strftime di Python.\n\nEsempio: %Y-%m-%d %H:%M:%S.%f\n\nUsa l'icona 🔗 per aprire la documentazione completa.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Passo 3 - Visualizza, filtra, aggrega, raggruppa i tuoi dati",
     "grid.export_excel": "Esporta in Excel",
     "grid.export_csv": "Esporta in CSV",
-
     "chart.step4_heading": "Passo 4 - Visualizza i tuoi dati (3 grafici indipendenti)",
     "chart.config_heading": "Configurazione Grafico {num}",
     "chart.select_type": "Seleziona Tipo di Grafico:",
@@ -187,13 +169,11 @@
     "chart.y_axis_title_placeholder": "Inserisci titolo asse-y",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Grafico {num} - Nessun Dato",
-
     "dashboard.heading": "Esportazione Dashboard Combinata",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Dashboard Analisi Dati",
     "dashboard.generated_on": "Generato il {timestamp}",
     "dashboard.chart_heading": "Grafico {num}",
-
     "messages.error": "Errore",
     "messages.file_uploaded": "File caricato: {filename}",
     "messages.file_too_large": "File troppo grande: {size}MB | La dimensione massima supportata è {max_size}MB.",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Delimitatore suggerito: '{delimiter}' ",
     "messages.confirm_delimiter": "Conferma o modifica il delimitatore, quindi clicca sul pulsante Conferma.",
     "messages.fields_count": "{count} campi",
-
     "test_dataset.try_label": "Prova con il nostro set di dati di test:",
     "test_dataset.try_label_plural": "Prova con i nostri set di dati di test",
     "test_dataset.browse_btn": "Sfoglia i set di dati",
     "test_dataset.copy_btn": "Copia",
     "test_dataset.copied_btn": "Copiato!",
-
     "donate.heading": "Offri al nostro devTeam un caffè o un bicchierino di rum caraibico",
     "donate.description": "Questo strumento è gratuito e open source. Se ti ha fatto risparmiare tempo, considera di supportare il nostro lavoro!",
     "donate.btn": "Salute!"

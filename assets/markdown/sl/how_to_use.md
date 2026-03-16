@@ -30,11 +30,11 @@ Microsoftova nadomestna rešitev zahteva avtentikacijo Azure AD OAuth 2.0, ki do
 > **Priporočena alternativa:** Prenesite svojo datoteko iz SharePoint/OneDrive na računalnik in nato uporabite **Neposreden prenos datoteke** zgoraj. To je hitrejše, zanesljivejše in vaši podatki ostanejo v celoti pod vašim nadzorom.
 
 ### Google Sheets
-- Prilepite javni Google Sheets URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Po želji vnesite **GID** (ID zavihka lista) za nalaganje določenega lista
+- Kopirajte URL iz vrstice brskalnika med ogledom želenega zavihka lista in ga prilepite
+- Zavihek lista (GID) se samodejno zazna iz URL-ja
 - Dokument mora biti deljen kot "Kdorkoli s povezavo lahko pogleda"
 
-**Kako dobiti URL za deljenje:** V Google Sheets kliknite Deli → nastavite na "Kdorkoli s povezavo" → Gledalec → kopirajte povezavo. Za nalaganje določenega zavihka lista kopirajte URL iz vrstice brskalnika in uporabite številko `#gid=123456789` v polju GID.
+**Kako dobiti URL:** V Google Sheets kliknite Deli → nastavite na "Kdorkoli s povezavo" → Gledalec. Nato se pomaknite na zavihek lista, ki ga želite naložiti, in kopirajte URL iz vrstice brskalnika (samodejno vsebuje ID lista).
 
 **Testni URL** — poskusite to za preverjanje vaše nastavitve:
 ```
@@ -93,21 +93,31 @@ Generirani stolpci vključujejo: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinu
 
 ---
 
-## Korak 3: Raziščite svoje podatke v tabeli
+## Korak 3: Raziščite svoje podatke v AG Grid
 
-Tabela **AG Grid** ponuja močno raziskovanje podatkov:
+**AG Grid** ponuja močno interaktivno raziskovanje podatkov z vgrajenimi stranskimi ploščami:
 
 - **Razvrsti** — kliknite na katerikoli glavo stolpca
-- **Filtriraj** — kliknite na ikono filtra na katerikoli glavi stolpca za nastavitev pogojev
+- **Filtriraj** — kliknite na ikono filtra na katerikoli glavi stolpca za nastavitev pogojev, ali uporabite **Ploščo filtrov** na desni strani za upravljanje vseh filtrov stolpcev na enem mestu
 - **Grupiraj** — povlecite glave stolpcev v ploščo "Row Group" nad tabelo
-- **Obračaj** — omogočite pivot način iz menija stolpca za navzkrižne tabelacije
+- **Obračaj** — omogočite pivot način iz **Plošče stolpcev** na desni strani za navzkrižne tabelacije
 - **Spremeni velikost** — povlecite obrobe stolpcev za prilagoditev širin
-- **Agregacija** — pri grupiranju tabela prikazuje vmesne seštevke in skupne seštevke
+- **Agregacija** — pri grupiranju AG Grid prikazuje vmesne seštevke in skupne seštevke
+- **Plošča stolpcev** — preklapljajte vidnost stolpcev, prerazporejajte stolpce in konfigurirajte nastavitve pivota/vrednosti iz stranske plošče
+- **Plošča filtrov** — oglejte si in upravljajte vse aktivne filtre v vseh stolpcih iz ene priročne plošče
 
-> **Ključno:** Grafi spodaj berejo iz **trenutno filtriranih/grupiranih podatkov**, vidnih v tabeli. Vsaka akcija filtriranja, razvrščanja ali grupiranja takoj posodobi vse grafe — **to je osnovna moč tega orodja.** Uporabite tabelo kot vaš interaktivni rezalnik podatkov in vidite rezultate, ki se odražajo v realnem času v vseh vaših vizualizacijah.
+> **Ključno:** Grafi spodaj berejo iz **trenutno filtriranih/grupiranih podatkov**, vidnih v AG Grid. Vsaka akcija filtriranja, razvrščanja ali grupiranja takoj posodobi vse grafe — **to je osnovna moč tega orodja.** Uporabite AG Grid kot vaš interaktivni rezalnik podatkov in vidite rezultate, ki se odražajo v realnem času v vseh vaših vizualizacijah.
 
+### Izvoz iz AG Grid
 
-> **Izvozite podatke iz tabele:** Kliknite desno kjerkoli v AG Grid tabeli in izvozite trenutno filtrirane in strukturirane podatke neposredno v **CSV ali Excel** datoteko. Izvoz odraža točno tisto, kar vidite v tabeli — vključno z vsemi filtri, grupiranjem ali razvrščanjem, ki ste ga uporabili.
+Uporabite gumba **Export to Excel** in **Export to CSV** pod AG Grid za prenos trenutno vidnih podatkov:
+
+- Izvoz vedno odraža **trenutni pogled** AG Grid — filtri, grupiranje in razvrščanje so upoštevani
+- **Izvoz v Excel** vključuje oblikovanje tabele z aktivnimi filtri, tako da lahko nadaljujete filtriranje neposredno v Excelu
+- **Izvoz v CSV** zagotavlja čisto ravno datoteko filtriranih podatkov
+- To pomeni, da lahko uporabite različna merila filtrov v AG Grid in izvozite večkrat za ustvarjanje **ločenih datotek za različne podmnožice** vaših podatkov — zmogljiv delovni tok za analizo podatkov in poročanje
+
+> **Nasvet:** Lahko tudi kliknete desno kjerkoli v AG Grid tabeli za dodatne možnosti izvoza prek kontekstnega menija.
 
 ---
 
@@ -123,7 +133,7 @@ Ustvarite lahko do **3 neodvisne grafe**, vsak s svojo konfiguracijo:
 6. **Stolpec osi Z** (neobvezno) — za tipe grafov Bubble in Heatmap
 7. **Naslovi** — nastavite naslov grafa po meri, naslov osi X in naslov osi Y
 
-Grafi berejo iz trenutno filtriranih/grupiranih podatkov tabele. **Vsaka akcija filtriranja, razvrščanja ali grupiranja v tabeli takoj posodobi vse grafe.**
+Grafi berejo iz trenutno filtriranih/grupiranih podatkov AG Grid. **Vsaka akcija filtriranja, razvrščanja ali grupiranja v AG Grid takoj posodobi vse grafe.**
 
 ---
 
@@ -137,11 +147,11 @@ Grafi berejo iz trenutno filtriranih/grupiranih podatkov tabele. **Vsaka akcija 
 - Vsak aktiven grafikon se izvozi kot ločena samostojna HTML datoteka, združena v en ZIP prenos
 - V ZIP so vključeni samo grafikoni s podatki
 
-### Podatki tabele
-- Kliknite desno v AG Grid tabeli → **Export to CSV** ali **Export to Excel**
-- Izvozi točno podatke, ki so trenutno vidni v tabeli (upošteva filtre, grupiranje, razvrščanje)
+### Podatki AG Grid
+- Uporabite gumba **Export to Excel** ali **Export to CSV** pod AG Grid (glejte Korak 3 zgoraj)
+- Izvozi točno podatke, ki so trenutno vidni v AG Grid (upošteva filtre, grupiranje, razvrščanje)
 
-> **Nasvet:** Izvožene HTML datoteke so popolnoma interaktivne — lahko približate, premaknete miško za opise orodij in premikate — ne potrebujete programske opreme, samo spletni brskalnik.
+> **Nasvet:** Izvožene HTML datoteke grafov so popolnoma interaktivne — lahko približate, premaknete miško za opise orodij in premikate — ne potrebujete programske opreme, samo spletni brskalnik.
 
 ---
 
@@ -154,8 +164,8 @@ Grafi berejo iz trenutno filtriranih/grupiranih podatkov tabele. **Vsaka akcija 
 | Google Sheet se ne naloži | Prepričajte se, da je deljenje nastavljeno na "Kdorkoli s povezavo lahko pogleda" |
 | Airtable se ne poveže | Preverite, da ima vaš Personal Access Token obsege `data.records:read` in `schema.bases:read`, in da se Base ID začne z `app` |
 | Napake pri razčlenjevanju datetime | Preverite, da se izbrana oblika ujema z vašimi podatki. Po potrebi poskusite obliko po meri |
-| Grafi so prazni | Prepričajte se, da so podatki naloženi v tabeli in da so izbrani stolpci X/Y |
-| Tabela ne prikazuje podatkov po filtriranju | Počistite ali prilagodite vaše filtre stolpcev |
+| Grafi so prazni | Prepričajte se, da so podatki naloženi v AG Grid in da so izbrani stolpci X/Y |
+| AG Grid ne prikazuje podatkov po filtriranju | Počistite ali prilagodite vaše filtre stolpcev v Plošči filtrov |
 
 ---
 

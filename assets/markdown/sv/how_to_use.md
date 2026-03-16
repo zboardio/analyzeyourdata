@@ -30,11 +30,11 @@ Microsofts ersättning kräver Azure AD OAuth 2.0-autentisering, vilket lägger 
 > **Rekommenderat alternativ:** Ladda ner din fil från SharePoint/OneDrive till din dator och använd sedan **Direkt filuppladdning** ovan. Det är snabbare, mer tillförlitligt och dina data förblir helt under din kontroll.
 
 ### Google Sheets
-- Klistra in en offentlig Google Sheets-URL (`https://docs.google.com/spreadsheets/d/[ID]/edit...`)
-- Ange eventuellt ett **GID** (arkflik-ID) för att ladda ett specifikt ark
+- Kopiera URL:en från webbläsarens adressfält medan du visar den önskade arkfliken och klistra in den
+- Arkfliken (GID) identifieras automatiskt från URL:en
 - Dokumentet måste delas som "Anyone with the link can view"
 
-**Hur du får en delnings-URL:** I Google Sheets, klicka på Dela → ställ in på "Anyone with the link" → Viewer → kopiera länken. För att ladda en specifik arkflik, kopiera URL:en från webbläsarens adressfält och använd `#gid=123456789`-numret i GID-fältet.
+**Hur du får URL:en:** I Google Sheets, klicka på Dela → ställ in på "Anyone with the link" → Viewer. Navigera sedan till den arkflik du vill ladda och kopiera URL:en från webbläsarens adressfält (den innehåller ark-ID:t automatiskt).
 
 **Test-URL** — prova detta för att verifiera din konfiguration:
 ```
@@ -93,21 +93,31 @@ Genererade kolumner inkluderar: `tsYear`, `tsMonth`, `tsDay`, `tsHour`, `tsMinut
 
 ---
 
-## Steg 3: Utforska din data i tabellen
+## Steg 3: Utforska din data i AG Grid
 
-**AG Grid**-tabellen erbjuder kraftfull datautforskning:
+**AG Grid** erbjuder kraftfull interaktiv datautforskning med inbyggda sidopaneler:
 
 - **Sortera** — klicka på valfri kolumnrubrik
-- **Filtrera** — klicka på filterikonen på valfri kolumnrubrik för att ställa in villkor
+- **Filtrera** — klicka på filterikonen på valfri kolumnrubrik för att ställa in villkor, eller använd **Filterpanelen** på höger sida för att hantera alla kolumnfilter på ett ställe
 - **Gruppera** — dra kolumnrubriker till "Row Group"-panelen ovanför tabellen
-- **Pivotera** — aktivera pivotläge från kolumnmenyn för korsklassificering
+- **Pivotera** — aktivera pivotläge från **Kolumnpanelen** på höger sida för korsklassificering
 - **Ändra storlek** — dra kolumnkanter för att justera bredder
-- **Aggregera** — vid gruppering visar tabellen delsummor och totalsummor
+- **Aggregera** — vid gruppering visar AG Grid delsummor och totalsummor
+- **Kolumnpanel** — växla kolumnsynlighet, ordna om kolumner och konfigurera pivot/värdeinställningar från sidopanelen
+- **Filterpanel** — visa och hantera alla aktiva filter över alla kolumner från en praktisk panel
 
-> **Viktigt:** Diagrammen nedan läser från den **aktuellt filtrerade/grupperade datan** som är synlig i tabellen. Varje filter-, sorterings- eller grupperingsåtgärd uppdaterar alla diagram omedelbart — **detta är verktygets kärnkraft.** Använd tabellen som din interaktiva data-slicer och se resultaten återspeglas i realtid över alla dina visualiseringar.
+> **Viktigt:** Diagrammen nedan läser från den **aktuellt filtrerade/grupperade datan** som är synlig i AG Grid. Varje filter-, sorterings- eller grupperingsåtgärd uppdaterar alla diagram omedelbart — **detta är verktygets kärnkraft.** Använd AG Grid som din interaktiva data-slicer och se resultaten återspeglas i realtid över alla dina visualiseringar.
 
+### AG Grid Export
 
-> **Exportera data från tabellen:** Högerklicka var som helst i AG Grid-tabellen för att exportera den aktuellt filtrerade och strukturerade datan direkt till **CSV eller Excel**-fil. Exporten återspeglar exakt vad du ser i tabellen — inklusive eventuella filter, grupperingar eller sorteringar du har tillämpat.
+Använd knapparna **Export to Excel** och **Export to CSV** under AG Grid för att ladda ner den aktuellt synliga datan:
+
+- Exporten återspeglar alltid den **aktuella vyn** av AG Grid — filter, grupperingar och sorteringar respekteras
+- **Excel-export** inkluderar tabellformatering med aktiva filter, så att du kan fortsätta filtrera direkt i Excel
+- **CSV-export** ger en ren platt fil av den filtrerade datan
+- Det innebär att du kan tillämpa olika filterkriterier i AG Grid och exportera flera gånger för att skapa **separata filer för olika delmängder** av din data — ett kraftfullt arbetsflöde för dataanalys och rapportering
+
+> **Tips:** Du kan också högerklicka var som helst i AG Grid-tabellen för ytterligare exportalternativ via snabbmenyn.
 
 ---
 
@@ -123,7 +133,7 @@ Du kan skapa upp till **3 oberoende diagram**, vart och ett med sin egen konfigu
 6. **Z-axelkolumn** (valfritt) — för Bubble- och Heatmap-diagramtyper
 7. **Titlar** — ställ in anpassad diagramtitel, X-axeltitel och Y-axeltitel
 
-Diagram läser från den aktuellt filtrerade/grupperade tabelldatan. **Varje filter-, sorterings- eller grupperingsåtgärd i tabellen uppdaterar alla diagram omedelbart.**
+Diagram läser från den aktuellt filtrerade/grupperade AG Grid-datan. **Varje filter-, sorterings- eller grupperingsåtgärd i AG Grid uppdaterar alla diagram omedelbart.**
 
 ---
 
@@ -137,11 +147,11 @@ Diagram läser från den aktuellt filtrerade/grupperade tabelldatan. **Varje fil
 - Varje aktivt diagram exporteras som en separat fristående HTML-fil, samlade i en ZIP-nedladdning
 - Endast diagram med data inkluderas i ZIP-filen
 
-### Tabelldata
-- Högerklicka i AG Grid-tabellen → **Export to CSV** eller **Export to Excel**
-- Exporterar exakt den data som för närvarande är synlig i tabellen (respekterar filter, gruppering, sortering)
+### AG Grid Data
+- Använd knapparna **Export to Excel** eller **Export to CSV** under AG Grid (se Steg 3 ovan)
+- Exporterar exakt den data som för närvarande är synlig i AG Grid (respekterar filter, gruppering, sortering)
 
-> **Tips:** Exporterade HTML-filer är helt interaktiva — du kan zooma, hovra för verktygstips och panorera — ingen programvara behövs, bara en webbläsare.
+> **Tips:** Exporterade HTML-diagramfiler är helt interaktiva — du kan zooma, hovra för verktygstips och panorera — ingen programvara behövs, bara en webbläsare.
 
 ---
 
@@ -154,8 +164,8 @@ Diagram läser från den aktuellt filtrerade/grupperade tabelldatan. **Varje fil
 | Google Sheet laddar inte | Se till att delning är inställd på "Anyone with the link can view" |
 | Airtable ansluter inte | Verifiera att din Personal Access Token har `data.records:read`- och `schema.bases:read`-behörigheter, och att Base ID börjar med `app` |
 | Datetime-tolkningsfel | Verifiera att det valda formatet matchar din data. Prova ett anpassat format om det behövs |
-| Diagram är tomma | Se till att data är laddad i tabellen och att X/Y-kolumner är valda |
-| Tabellen visar ingen data efter filtrering | Rensa eller justera dina kolumnfilter |
+| Diagram är tomma | Se till att data är laddad i AG Grid och att X/Y-kolumner är valda |
+| AG Grid visar ingen data efter filtrering | Rensa eller justera dina kolumnfilter i Filterpanelen |
 
 ---
 

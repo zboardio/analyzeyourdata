@@ -215,11 +215,10 @@ def register_callbacks(app):
          Output('upload-alert', 'is_open', allow_duplicate=True),
          Output('loading-container', 'style', allow_duplicate=True)],
         Input('google-sheets-load-btn', 'n_clicks'),
-        [State('google-sheets-url-input', 'value'),
-         State('google-sheets-gid-input', 'value')],
+        State('google-sheets-url-input', 'value'),
         prevent_initial_call=True
     )
-    def handle_google_sheets_data(n_clicks, url, gid):
+    def handle_google_sheets_data(n_clicks, url):
         if not n_clicks or not url:
             return dash.no_update, "", 'info', False, {'display': 'none'}
 
@@ -231,7 +230,7 @@ def register_callbacks(app):
                 ])
                 return dash.no_update, alert, 'warning', True, {'display': 'none'}
 
-            df = DataSourceHandler.load_from_google_sheets(url, gid)
+            df = DataSourceHandler.load_from_google_sheets(url)
             log_usage('data_load', source_type='google_sheets', rows=df.shape[0], columns=df.shape[1])
             alert = html.Div([
                 html.P(f"✅ {t('google_sheets.data_loaded')}"),

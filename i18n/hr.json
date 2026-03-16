@@ -2,7 +2,6 @@
     "app.title": "Analyze Your Data",
     "app.brand_name": "Analyze Your Data",
     "app.description": "Moćan, jednostavan alat za analizu i vizualizaciju podataka. Učitajte, analizirajte i stvarajte zadivljujuće grafikone u minutama.",
-
     "navbar.language": "Jezik",
     "navbar.lang_english": "English",
     "navbar.lang_czech": "Čeština",
@@ -22,7 +21,6 @@
     "navbar.how_to_use": "Kako koristiti",
     "navbar.feedback": "Povratne informacije",
     "navbar.github": "GitHub",
-
     "footer.contact_us": "Kontaktirajte nas",
     "footer.our_website": "Naša web stranica",
     "footer.open_source": "Otvoreni kod",
@@ -32,13 +30,11 @@
     "footer.verify_source": "Provjerite izvorni kod",
     "footer.all_rights": ". Sva prava pridržana.",
     "footer.email_copied": "Kontakt e-mail kopiran u međuspremnik",
-
     "powered_by.heading": "Pokreće",
     "powered_by.plotly_dash_desc": "Web framework",
     "powered_by.dash_ag_grid_desc": "Dash integracija",
     "powered_by.ag_grid_desc": "Enterprise tablica",
     "powered_by.author_desc": "Razvoj",
-
     "feedback.title": "Pošaljite povratne informacije",
     "feedback.category_label": "Kategorija",
     "feedback.category_not_specified": "Nije navedeno",
@@ -52,14 +48,11 @@
     "feedback.validation_empty": "Molimo unesite vašu poruku s povratnim informacijama.",
     "feedback.success": "Hvala vam na povratnim informacijama!",
     "feedback.error": "Povratne informacije nisu mogle biti spremljene. Molimo pokušajte ponovno kasnije.",
-
     "how_to_use.title": "Kako koristiti",
     "how_to_use.btn_close": "Zatvori",
     "how_to_use.btn_docs": "Pogledaj dokumentaciju",
-
     "video.intro_heading": "Uvodni video - bez zvuka",
     "video.updated_date": "(Ažurirano 13.08.2024)",
-
     "data_source.step1_heading": "Korak 1 - Odaberite izvor podataka | Maksimalna veličina datoteke: {max_size}MB",
     "data_source.choose_source": "Odaberite svoj izvor podataka:",
     "data_source.upload": "Izravno učitavanje datoteke",
@@ -68,7 +61,6 @@
     "data_source.airtable": "Airtable API",
     "data_source.drag_drop": "Povucite i ispustite ili ",
     "data_source.select_files": "Odaberite datoteke",
-
     "delimiter.label": "Odaberite rastavni znak za CSV / TXT / LOG datoteku:",
     "delimiter.comma": "Zarez (,)",
     "delimiter.semicolon": "Točka-zarez (;)",
@@ -78,7 +70,6 @@
     "delimiter.custom": "Prilagođeno",
     "delimiter.custom_placeholder": "Unesite prilagođeni rastavni znak",
     "delimiter.confirm_btn": "Potvrdite rastavni znak",
-
     "sqlite.select_table_label": "Odaberite tablicu iz SQLite baze podataka:",
     "sqlite.table_placeholder": "Odaberite tablicu za učitavanje...",
     "sqlite.load_btn": "Load selected Table",
@@ -89,7 +80,6 @@
     "sqlite.error_loading": "Greška pri učitavanju SQLite baze podataka",
     "sqlite.table_loaded": "SQLite tablica '{table}' uspješno učitana!",
     "sqlite.error_loading_table": "Greška pri učitavanju SQLite tablice",
-
     "sharepoint.url_label": "SharePoint / OneDrive URL za dijeljenje:",
     "sharepoint.url_placeholder": "Zalijepite svoju SharePoint/OneDrive vezu za dijeljenje ovdje...",
     "sharepoint.load_btn": "Učitaj iz SharePoint",
@@ -104,19 +94,14 @@
     "sharepoint.data_loaded": "SharePoint podaci uspješno učitani!",
     "sharepoint.sheet_loaded": "List '{sheet}' uspješno učitan!",
     "sharepoint.error_loading": "Greška pri učitavanju SharePoint podataka",
-
     "google_sheets.url_label": "Google Sheets URL za dijeljenje:",
     "google_sheets.url_placeholder": "Zalijepite svoju Google Sheets vezu za dijeljenje ovdje...",
     "google_sheets.load_btn": "Učitaj",
     "google_sheets.access_alert": "Provjerite dopušta li Google Sheets veza anonimni pristup (Svatko s vezom može vidjeti).",
-    "google_sheets.gid_label": "ID lista (GID) - Opcionalno:",
-    "google_sheets.gid_placeholder": "Unesite specifični GID lista (ostavite prazno za prvi list)",
-    "google_sheets.gid_help": "GID možete pronaći u Google Sheets URL-u nakon '#gid=' kada gledate određeni list.",
     "google_sheets.invalid_url": "Nevažeći Google Sheets URL",
     "google_sheets.invalid_url_detail": "Molimo provjerite je li URL valjana Google Sheets veza za dijeljenje.",
     "google_sheets.data_loaded": "Google Sheets podaci uspješno učitani!",
     "google_sheets.error_loading": "Greška pri učitavanju Google Sheets podataka",
-
     "airtable.config_label": "Airtable API konfiguracija:",
     "airtable.api_key_label": "API ključ:",
     "airtable.api_key_placeholder": "Zalijepite svoj Airtable API ključ ovdje...",
@@ -142,7 +127,6 @@
     "airtable.error_connecting": "Greška pri spajanju na Airtable",
     "airtable.table_loaded": "Airtable tablica '{table}' uspješno učitana!",
     "airtable.error_loading_table": "Greška pri učitavanju Airtable tablice",
-
     "datetime.step2_heading": "Korak 2 - Opcionalna obrada datuma i vremena",
     "datetime.enable_label": "Omogući parsiranje datuma i vremena",
     "datetime.toggle_tooltip": "Uključite za definiranje stupca datuma i vremena i formata. To će obogatiti vaše podatke korisnim značajkama vezanim uz vrijeme kao što su godina, mjesec, dan u tjednu, kalendarski tjedan, itd.\n\nIsključite za preskakanje pretvorbe datuma i vremena i izravno učitavanje sirovih podataka u tablicu.",
@@ -156,11 +140,9 @@
     "datetime.custom_placeholder": "Unesite prilagođeni strftime(), npr. %Y-%m-%d",
     "datetime.custom_tooltip": "Ovo mora slijediti Python strftime sintaksu.\n\nPrimjer: %Y-%m-%d %H:%M:%S.%f\n\nUpotrijebite 🔗 ikonu za otvaranje potpune dokumentacije.",
     "datetime.load_btn": "Load data to AgGrid Table",
-
     "grid.step3_heading": "Korak 3 - Pregledajte, filtrirajte, agregirajte, grupirajte svoje podatke",
     "grid.export_excel": "Izvoz u Excel",
     "grid.export_csv": "Izvoz u CSV",
-
     "chart.step4_heading": "Korak 4 - Vizualizirajte svoje podatke (3 neovisna grafikona)",
     "chart.config_heading": "Konfiguracija grafikona {num}",
     "chart.select_type": "Odaberite vrstu grafikona:",
@@ -187,13 +169,11 @@
     "chart.y_axis_title_placeholder": "Unesite naslov y-osi",
     "chart.download_btn": "Download Chart {num} as HTML",
     "chart.no_data": "Grafikon {num} - Nema podataka",
-
     "dashboard.heading": "Izvoz kombinirane nadzorne ploče",
     "dashboard.download_btn": "Download Combined Dashboard as HTML",
     "dashboard.title": "Nadzorna ploča za analizu podataka",
     "dashboard.generated_on": "Generirano {timestamp}",
     "dashboard.chart_heading": "Grafikon {num}",
-
     "messages.error": "Greška",
     "messages.file_uploaded": "Datoteka učitana: {filename}",
     "messages.file_too_large": "Datoteka prevelika: {size}MB | Maksimalna podržana veličina je {max_size}MB.",
@@ -205,13 +185,11 @@
     "messages.suggested_delimiter": "Predloženi rastavni znak: '{delimiter}' ",
     "messages.confirm_delimiter": "Potvrdite ili prilagodite rastavni znak, zatim kliknite gumb Potvrdi.",
     "messages.fields_count": "{count} polja",
-
     "test_dataset.try_label": "Isprobajte s našim testnim skupom podataka:",
     "test_dataset.try_label_plural": "Isprobajte s našim testnim skupovima podataka",
     "test_dataset.browse_btn": "Pregledaj skupove podataka",
     "test_dataset.copy_btn": "Kopiraj",
     "test_dataset.copied_btn": "Kopirano!",
-
     "donate.heading": "Kupi našem razvojnom timu kavu ili čašicu karipskog ruma",
     "donate.description": "Ovaj alat je besplatan i otvorenog koda. Ako ti je uštedio vrijeme, razmisli o podršci našem radu!",
     "donate.btn": "Živjeli!"
