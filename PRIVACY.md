@@ -27,5 +27,5 @@
 
 ## Open Source
 
-- Full source code available on [GitHub](https://github.com/your-repo)
+- Full source code available on [GitHub](https://github.com/zboardio/analyzeyourdata)
 - Reproducible Docker builds from public Dockerfile
