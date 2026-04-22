@@ -1,8 +1,8 @@
 # GitHub Actions CI/CD Pipeline
 #
 # Triggers:
-#   - Push to main branch (auto-deploy)
-#   - Manual dispatch (for on-demand deployments)
+#   - Push to main branch (auto-deploy of HEAD)
+#   - Manual dispatch (on-demand deploy / rollback to any previously built SHA)
 #
 # Required Secrets (Settings → Secrets → Actions):
 #   - VDS_HOST: VDS IP address or hostname
@@ -10,9 +10,18 @@
 #   - VDS_SSH_KEY: Private SSH key for deployment
 #
 # What it does:
-#   1. Build Docker image with git commit hash
-#   2. Push to GitHub Container Registry (ghcr.io)
-#   3. SSH to VDS and update Docker Swarm stack
+#   1. Build Docker image tagged with git short SHA (plus :latest)
+#   2. Push both tags to GitHub Container Registry (ghcr.io)
+#   3. SSH to VDS and run `docker stack deploy` with IMAGE_TAG=<sha>
+#      Because the image reference in the service spec changes from one
+#      SHA to another, Swarm performs a proper rolling update without any
+#      `docker service update --force` hack.
+#   4. Verify all 15 services are running the new SHA via /api/version.
+#
+# Manual rollback:
+#   Actions → "Build and Deploy" → Run workflow
+#     → image_tag: <previous-short-sha>
+#   The build job is skipped; the deploy job re-deploys that tag from ghcr.io.
 
 name: Build and Deploy
 
@@ -22,11 +31,16 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      deploy_only:
-        description: 'Skip build, deploy existing latest image'
+      image_tag:
+        description: 'Image tag to deploy (leave empty to build from HEAD). Use to redeploy a specific SHA or roll back.'
         required: false
-        default: 'false'
-        type: boolean
+        default: ''
+
+# Serialize deploys per branch so two rapid pushes can't race.
+# cancel-in-progress=false — never cancel a deploy mid-rollout.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
 
 env:
   REGISTRY: ghcr.io
@@ -36,13 +50,13 @@ jobs:
   build:
     name: Build and Push Image
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.deploy_only != 'true' }}
+    # Skip build when a manual dispatch specifies an existing image tag (rollback path).
+    if: github.event_name == 'push' || github.event.inputs.image_tag == ''
     permissions:
       contents: read
       packages: write
 
     outputs:
-      image_tag: ${{ steps.meta.outputs.tags }}
       git_commit: ${{ steps.vars.outputs.git_commit }}
 
     steps:
@@ -59,6 +73,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get git commit short hash
+        id: vars
+        run: echo "git_commit=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -66,11 +84,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
-            type=sha,prefix=,format=short
-
-      - name: Get git commit short hash
-        id: vars
-        run: echo "git_commit=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+            type=raw,value=${{ steps.vars.outputs.git_commit }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -91,11 +105,28 @@ jobs:
     name: Deploy to VDS
     runs-on: ubuntu-latest
     needs: [build]
-    if: always() && (needs.build.result == 'success' || github.event.inputs.deploy_only == 'true')
+    # Run when build succeeded, or when build was skipped because the
+    # manual dispatch pinned an existing image_tag (rollback).
+    if: always() && !cancelled() && (needs.build.result == 'success' || needs.build.result == 'skipped')
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Determine image tag to deploy
+        id: tag
+        run: |
+          if [ -n "${{ github.event.inputs.image_tag }}" ]; then
+            TAG="${{ github.event.inputs.image_tag }}"
+            MODE="manual dispatch (pin/rollback)"
+          else
+            TAG="${{ needs.build.outputs.git_commit }}"
+            MODE="push auto-deploy"
+          fi
+          echo "image_tag=${TAG}" >> $GITHUB_OUTPUT
+          {
+            echo "## Deploy"
+            echo ""
+            echo "- **Mode:** ${MODE}"
+            echo "- **Image tag:** \`${TAG}\`"
+          } >> $GITHUB_STEP_SUMMARY
 
       - name: Deploy to VDS via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -105,31 +136,64 @@ jobs:
           key: ${{ secrets.VDS_SSH_KEY }}
           script: |
             set -e
+            IMAGE_TAG="${{ steps.tag.outputs.image_tag }}"
+            export IMAGE_TAG
 
             echo "=== Deployment started at $(date) ==="
+            echo "Target image tag: ${IMAGE_TAG}"
 
-            # Navigate to app directory
-            cd /opt/analyzeyourdata || { echo "Directory not found"; exit 1; }
+            cd /opt/analyzeyourdata || { echo "Directory /opt/analyzeyourdata not found"; exit 1; }
 
-            # Pull latest image
-            echo "Pulling latest image..."
-            docker pull ghcr.io/zboardio/analyzeyourdata:latest
+            echo "Pulling ghcr.io/zboardio/analyzeyourdata:${IMAGE_TAG}..."
+            docker pull "ghcr.io/zboardio/analyzeyourdata:${IMAGE_TAG}"
 
-            # Update stack with rolling deployment
-            echo "Updating Docker Swarm stack..."
-            docker stack deploy -c docker-compose.swarm.yml ayd --with-registry-auth
+            echo "Deploying Swarm stack (IMAGE_TAG=${IMAGE_TAG})..."
+            docker stack deploy -c docker-compose.cicd.yml ayd --with-registry-auth
 
-            # Wait for services to stabilize
-            echo "Waiting for services to update..."
-            sleep 10
+            echo ""
+            echo "=== Waiting for rolling update to converge ==="
+            MAX_ATTEMPTS=8
+            WAIT_BETWEEN=15
+            FINAL_STATUS=""
+            SUCCESS=0
 
-            # Show service status
-            echo "=== Service Status ==="
-            docker service ls | grep ayd
+            for attempt in $(seq 1 ${MAX_ATTEMPTS}); do
+              sleep ${WAIT_BETWEEN}
+              FAIL=0
+              CHECKED=0
+              ATTEMPT_STATUS=""
+              for PORT in $(seq 8050 8064); do
+                RESPONSE=$(curl -sf "http://127.0.0.1:${PORT}/api/version" 2>/dev/null || true)
+                if [ -z "${RESPONSE}" ]; then
+                  continue
+                fi
+                CHECKED=$((CHECKED + 1))
+                if echo "${RESPONSE}" | grep -q "\"${IMAGE_TAG}\""; then
+                  ATTEMPT_STATUS="${ATTEMPT_STATUS}  :${PORT} — OK (${IMAGE_TAG})"$'\n'
+                else
+                  ATTEMPT_STATUS="${ATTEMPT_STATUS}  :${PORT} — STALE (${RESPONSE})"$'\n'
+                  FAIL=1
+                fi
+              done
+              echo "Attempt ${attempt}/${MAX_ATTEMPTS}: ${CHECKED}/15 responding, stale=${FAIL}"
+              FINAL_STATUS="${ATTEMPT_STATUS}"
+              if [ ${FAIL} -eq 0 ] && [ ${CHECKED} -ge 15 ]; then
+                SUCCESS=1
+                break
+              fi
+            done
 
-            # Verify deployment
-            echo "=== Verifying deployment ==="
-            curl -s http://localhost:8050/api/version || echo "EN service check failed"
+            echo ""
+            echo "=== Final service status ==="
+            echo "${FINAL_STATUS}"
+
+            if [ ${SUCCESS} -eq 1 ]; then
+              echo "=== Deploy OK — 15 services on tag ${IMAGE_TAG} ==="
+            else
+              echo "!!! Health checks failed after ${MAX_ATTEMPTS} attempts"
+              echo "Inspect: docker service ls | grep ayd"
+              exit 1
+            fi
 
             echo "=== Deployment completed at $(date) ==="
 
