@@ -2,7 +2,7 @@
 
 ## Security
 
-- NEVER read `.env`, `.env.*` files except `.env.example` — they contain secrets
+- NEVER read `.env`, `.env.*`, or any files inside `env/` — they contain secrets. `.env.example` is safe to read.
 - NEVER reference `docs/internal/`, its contents, or its file structure in any committed file — this is a public repository
 
 ## Overview
@@ -14,7 +14,7 @@ Deployed as one Docker container per language (15 languages), routed via Cloudfl
 ## Tech Stack
 
 - **Python**: 3.12+
-- **Dash**: 4.0.0 (Plotly web framework)
+- **Dash**: 4.1.0 (Plotly web framework)
 - **Dash Bootstrap Components**: 2.0.4
 - **Dash AG Grid**: 33.3.3 (Community by default; Enterprise optional via `AG_GRID_ENABLE_ENTERPRISE` / license key)
 - **Pandas**: 3.0.0
@@ -38,9 +38,11 @@ analyzeyourdata-en/
 ├── Dockerfile                      # Production container
 ├── docker-compose.yml              # Local development (15 services)
 ├── docker-compose.single.yml       # Public single-container deployment (GHCR image)
-├── docker-compose.swarm.yml        # Production Swarm deployment with replicas
+├── docker-compose.cicd.yml         # Production Swarm deployment with replicas CI/CD build
+├── docker-compose.local.yml        # Production Swarm deployment with replicas manual build
 ├── .env                            # Real credentials (gitignored)
 ├── .env.example                    # Env var template
+├── env/                            # Credential files (gitignored, never read)
 ├── docs/
 │   ├── README.md                   # Public docs index
 │   └── DEVELOPER.md                # Public developer guide
@@ -103,7 +105,6 @@ analyzeyourdata-en/
 │   │   └── uk/                     # Ukrainian
 │   ├── image/                      # Logo, favicon, images
 │   └── video/                      # Tutorial videos
-└── development/                    # Dev scripts (gitignored)
 ```
 
 ## Key Patterns
@@ -298,14 +299,17 @@ docker compose up                    # All 15 language instances
 docker compose up app-en             # English only (:8050)
 
 # Production (Docker Swarm)
-docker swarm init                                    # One-time setup
-docker stack deploy -c docker-compose.swarm.yml ayd # Deploy stack
-docker service ls                                    # List services
-docker service ps ayd_app-en                         # View replicas
-docker service logs ayd_app-en --follow              # Stream logs
-docker service scale ayd_app-en=5                    # Scale up
-docker service update --image ghcr.io/zboardio/analyzeyourdata:latest ayd_app-en  # Update
-docker service rollback ayd_app-en                   # Rollback
+docker swarm init                                          # One-time setup
+docker stack deploy -c docker-compose.cicd.yml ayd \
+    --with-registry-auth                                   # CI/CD stack (ghcr.io image)
+IMAGE_TAG=a1b2c3d docker stack deploy \
+    -c docker-compose.cicd.yml ayd --with-registry-auth    # Pin a specific SHA
+docker stack deploy -c docker-compose.local.yml ayd        # Manual stack (local build)
+docker service ls                                          # List services
+docker service ps ayd_app-en                               # View replicas
+docker service logs ayd_app-en --follow                    # Stream logs
+docker service scale ayd_app-en=5                          # Scale up
+docker service rollback ayd_app-en                         # Rollback (one step)
 
 # Gunicorn (without Docker)
 gunicorn app:server -b 0.0.0.0:8050 --workers 2 --timeout 120
@@ -347,7 +351,7 @@ Domain routing (Cloudflare Tunnel ingress):
   analyzujsvojedata.zboardio.com → :8051 → app-cs (1 replica)
   ... (15 languages total)
 
-Ports: 8050-8064 (see docker-compose.swarm.yml for exact mapping)
+Ports: 8050-8064 (see docker-compose.cicd.yml for exact mapping)
 ```
 
 Each service is identical code, differentiated only by `APP_LANGUAGE` env var.

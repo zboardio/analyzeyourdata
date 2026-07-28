@@ -1,7 +1,7 @@
 # Docker Swarm Stack - CI/CD Deploy (GitHub Actions)
 #
 # Deploy:
-#   docker stack deploy -c docker-compose.swarm.yml ayd
+#   docker stack deploy -c docker-compose.cicd.yml ayd
 #
 # Difference from docker-compose.local.yml:
 #   - Uses ghcr.io registry image instead of local build

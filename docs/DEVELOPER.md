@@ -73,6 +73,53 @@ GIT_COMMIT=$(git rev-parse --short HEAD) docker compose up --build
 
 ---
 
+## Production Deployment
+
+Production runs on Docker Swarm — one service per language (15 total), each backed by the same image differentiated by `APP_LANGUAGE`. Three Compose files exist, each for a different context:
+
+| File | Image source | Typical use |
+|---|---|---|
+| `docker-compose.yml` | Local `build:` | Local development (`docker compose up`) |
+| `docker-compose.local.yml` | Local `analyzeyourdata:latest` | Manual Swarm deploy (builds on the host) |
+| `docker-compose.cicd.yml` | `ghcr.io/zboardio/analyzeyourdata:${IMAGE_TAG:-latest}` | CI/CD Swarm deploy (registry image) |
+
+Both Swarm files define rolling-update policies (`parallelism: 1`, `order: start-first`, `failure_action: rollback`) and resource limits per service.
+
+### CI/CD Pipeline
+
+Automated deploys live in `.github/workflows/deploy.yml`. On every push to `main`:
+
+1. Build the Docker image, tagging it both `:latest` and `:<short-sha>`.
+2. Push both tags to GitHub Container Registry (`ghcr.io/zboardio/analyzeyourdata`).
+3. SSH into the production host and run `docker stack deploy -c docker-compose.cicd.yml ayd --with-registry-auth` with `IMAGE_TAG=<short-sha>` exported.
+4. Because each deploy references a new SHA tag, Swarm sees a service spec change and performs a rolling update automatically — no `docker service update --force` needed.
+5. Verify all 15 services report the new commit via `/api/version`, with retries until the rolling update converges.
+
+Deploys are serialized with a `concurrency` block so two rapid pushes can't race.
+
+### Rollback
+
+Any image that has been built and pushed is retained on `ghcr.io` and can be redeployed at any time:
+
+1. **GitHub Actions → Build and Deploy → Run workflow**
+2. **`image_tag`** input: the short SHA you want to run (e.g. `a1b2c3d`).
+3. The workflow skips the build step and redeploys that tag.
+
+Docker Swarm also provides a one-step native rollback (`docker service rollback <service>`), which reverts to the previous task spec. The `image_tag` path above is preferred for arbitrary-depth rollback.
+
+### Verifying a Deployment
+
+Every running container exposes its commit at `/api/version`:
+
+```bash
+curl https://<host>/api/version
+# → {"git_commit": "a1b2c3d", "language": "en"}
+```
+
+The same commit is rendered in the footer as "Build: `<commit>`" with a link to the exact commit on GitHub.
+
+---
+
 ## Environment Variables
 
 See `.env.example` for the full list. Key groups:
