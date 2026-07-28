@@ -14,29 +14,6 @@ from utils.mongodb import log_usage
 
 def register_callbacks(app):
 
-    # Clientside callback: copy SharePoint test URL to clipboard
-    app.clientside_callback(
-        """
-        function(n_clicks) {
-            if (!n_clicks) return window.dash_clientside.no_update;
-            var input = document.getElementById('test-url-sharepoint');
-            if (input) {
-                navigator.clipboard.writeText(input.value);
-                var label = document.getElementById('copy-sharepoint-label');
-                if (label) {
-                    var original = label.textContent;
-                    label.textContent = '""" + t('test_dataset.copied_btn') + """';
-                    setTimeout(function() { label.textContent = original; }, 1500);
-                }
-            }
-            return window.dash_clientside.no_update;
-        }
-        """,
-        Output('copy-sharepoint-test-url', 'title'),
-        Input('copy-sharepoint-test-url', 'n_clicks'),
-        prevent_initial_call=True
-    )
-
     # Clientside callback: copy Google Sheets test URL to clipboard
     app.clientside_callback(
         """
@@ -62,17 +39,15 @@ def register_callbacks(app):
 
     @app.callback(
         [Output('upload-section', 'style'),
-         Output('sharepoint-section', 'style'),
          Output('google-sheets-section', 'style'),
          Output('airtable-section', 'style')],
         Input('data-source-type', 'value')
     )
     def toggle_data_source_sections(source_type):
         upload_style = {'display': 'block'} if source_type == 'upload' else {'display': 'none'}
-        sharepoint_style = {'display': 'block'} if source_type == 'sharepoint' else {'display': 'none'}
         google_style = {'display': 'block'} if source_type == 'google_sheets' else {'display': 'none'}
         airtable_style = {'display': 'block'} if source_type == 'airtable' else {'display': 'none'}
-        return upload_style, sharepoint_style, google_style, airtable_style
+        return upload_style, google_style, airtable_style
 
     @app.callback(
         [Output('stored-airtable-credentials', 'data'),
@@ -139,72 +114,6 @@ def register_callbacks(app):
         if delimiter_value == 'custom':
             return {'display': 'block', 'width': '150px', 'marginBottom': '10px'}
         return {'display': 'none'}
-
-    @app.callback(
-        [Output('stored-data', 'data'),
-         Output('stored-sheet-names', 'data'),
-         Output('stored-source-url', 'data'),
-         Output('sharepoint-sheet-selection', 'style'),
-         Output('sharepoint-sheet-dropdown', 'options'),
-         Output('upload-alert', 'children'),
-         Output('upload-alert', 'color'),
-         Output('upload-alert', 'is_open'),
-         Output('loading-container', 'style')],
-        [Input('sharepoint-load-btn', 'n_clicks'),
-         Input('sharepoint-sheet-load-btn', 'n_clicks')],
-        [State('sharepoint-url-input', 'value'),
-         State('sharepoint-sheet-dropdown', 'value'),
-         State('stored-source-url', 'data')]
-    )
-    def handle_sharepoint_data(load_clicks, sheet_clicks, url, selected_sheet, stored_url):
-        ctx = callback_context
-        if not ctx.triggered:
-            return dash.no_update, dash.no_update, dash.no_update, {'display': 'none'}, [], "", 'info', False, {'display': 'none'}
-
-        trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
-
-        try:
-            if trigger_id == 'sharepoint-load-btn' and load_clicks and url:
-                if not DataSourceHandler.validate_url(url, 'sharepoint'):
-                    alert = html.Div([
-                        html.P(f"❌ {t('sharepoint.invalid_url')}"),
-                        html.P(t('sharepoint.invalid_url_detail'))
-                    ])
-                    return dash.no_update, dash.no_update, dash.no_update, {'display': 'none'}, [], alert, 'warning', True, {'display': 'none'}
-
-                df, sheet_names = DataSourceHandler.load_from_sharepoint(url)
-
-                if len(sheet_names) > 1:
-                    sheet_options = [{'label': sheet, 'value': sheet} for sheet in sheet_names]
-                    alert = html.Div([
-                        html.P(f"✅ {t('sharepoint.loaded')}"),
-                        html.P(t('sharepoint.sheets_found', count=len(sheet_names)))
-                    ])
-                    return dash.no_update, sheet_names, url, {'display': 'block'}, sheet_options, alert, 'info', True, {'display': 'none'}
-                else:
-                    log_usage('data_load', source_type='sharepoint', rows=df.shape[0], columns=df.shape[1])
-                    alert = html.Div([
-                        html.P(f"✅ {t('sharepoint.data_loaded')}"),
-                        html.P(t('messages.dimensions', rows=df.shape[0], cols=df.shape[1])),
-                        html.P(t('messages.columns', columns=' | '.join(df.columns)))
-                    ])
-                    return df.to_dict('records'), sheet_names, url, {'display': 'none'}, [], alert, 'success', True, {'display': 'none'}
-
-            elif trigger_id == 'sharepoint-sheet-load-btn' and sheet_clicks and selected_sheet and stored_url:
-                df = DataSourceHandler.load_sharepoint_sheet(stored_url, selected_sheet)
-                log_usage('data_load', source_type='sharepoint', rows=df.shape[0], columns=df.shape[1])
-                alert = html.Div([
-                    html.P(f"✅ {t('sharepoint.sheet_loaded', sheet=selected_sheet)}"),
-                    html.P(t('messages.dimensions', rows=df.shape[0], cols=df.shape[1])),
-                    html.P(t('messages.columns', columns=' | '.join(df.columns)))
-                ])
-                return df.to_dict('records'), dash.no_update, dash.no_update, {'display': 'none'}, [], alert, 'success', True, {'display': 'none'}
-
-        except Exception as e:
-            alert = html.Div([html.P(f"❌ {t('sharepoint.error_loading')}"), html.P(str(e))])
-            return dash.no_update, dash.no_update, dash.no_update, {'display': 'none'}, [], alert, 'danger', True, {'display': 'none'}
-
-        return dash.no_update, dash.no_update, dash.no_update, {'display': 'none'}, [], "", 'info', False, {'display': 'none'}
 
     @app.callback(
         [Output('stored-data', 'data', allow_duplicate=True),

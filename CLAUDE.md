@@ -53,6 +53,7 @@ analyzeyourdata-en/
 │   ├── __init__.py
 │   ├── layout.py                   # Navbar, footer, feedback modal, navbar callbacks
 │   ├── data_source_section.py      # Step 1 UI: data source selection & upload
+│   ├── analysis_section.py         # Steps 2-4 UI: datetime controls, AG Grid, charts
 │   └── chart_config_section.py     # Chart config panels (type, axes, titles)
 ├── callbacks/
 │   ├── __init__.py
@@ -68,7 +69,8 @@ analyzeyourdata-en/
 │   ├── mongodb.py                  # MongoDB: log_usage(), save_feedback()
 │   └── analytics.py                # RAM monitoring (monitor_memory)
 ├── i18n/
-│   ├── __init__.py                 # Translation loader: load_translations(), t()
+│   ├── __init__.py                 # Translation loader: load_translations(), t(), load_aggrid_locale()
+│   ├── aggrid/                     # AG Grid localeText dicts (from @ag-grid-community/locale, MIT)
 │   ├── en.json                     # English
 │   ├── cs.json                     # Czech (Čeština)
 │   ├── da.json                     # Danish (Dansk)
@@ -205,6 +207,7 @@ app.py
  ├── utils/mongodb.py            → config, pymongo
  ├── components/layout.py        → config, i18n, utils/mongodb, utils/general
  ├── components/data_source_section.py → config, i18n
+ ├── components/analysis_section.py → config, i18n, components/chart_config_section
  ├── components/chart_config_section.py → config, i18n
  ├── callbacks/data_loading.py   → config, i18n, utils/data_sources, utils/data_processing, utils/mongodb
  ├── callbacks/data_processing.py → i18n, utils/data_processing
