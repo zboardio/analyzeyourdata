@@ -236,7 +236,7 @@ app.py
 |----------|---------|-------------|
 | `APP_HOST` | `127.0.0.1` | Bind host |
 | `APP_PORT` | `8050` | Bind port |
-| `APP_DEBUG` | `True` | Debug mode |
+| `APP_DEBUG` | `False` | Debug mode (never enable in production) |
 
 ### Language Instance URLs (for navbar cross-links)
 | Variable | Default | Description |
@@ -274,6 +274,8 @@ app.py
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `MAX_FILE_SIZE_MB` | `20` | Max upload size |
+| `MAX_CONTENT_LENGTH_MB` | `0` (auto = 5× `MAX_FILE_SIZE_MB`) | Hard cap on any HTTP request body (Flask `MAX_CONTENT_LENGTH`) |
+| `MAX_EXTERNAL_ROWS` | `0` (unlimited) | Row cap for Google Sheets / Airtable loads |
 | `MONGO_URI` | *(empty)* | MongoDB connection string |
 | `MONGODB_DATABASE` | `analyzeYourData` | MongoDB database name |
 | `MONGODB_COLLECTION_LOGS` | `usageLogs` | Collection for usage analytics |

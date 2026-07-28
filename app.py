@@ -2,7 +2,6 @@ import dash
 from dash import dcc, html, clientside_callback, Input, Output
 import dash_bootstrap_components as dbc
 import dash_ag_grid as dag
-import tracemalloc
 import threading
 
 from config import Config
@@ -53,6 +52,10 @@ app.index_string = '''
 
 app.title = t('app.title')
 server = app.server
+server.secret_key = Config.SECRET_KEY
+# Hard cap on request bodies (uploads are base64, grid/chart callbacks POST the
+# dataset back as JSON — see MAX_CONTENT_LENGTH_MB in config.py)
+server.config['MAX_CONTENT_LENGTH'] = Config.MAX_CONTENT_LENGTH_MB * 1024 * 1024
 
 
 @server.route('/api/version')
@@ -61,12 +64,14 @@ def api_version():
     from flask import jsonify
     return jsonify(git_commit=Config.GIT_COMMIT, language=Config.APP_LANGUAGE)
 
-# Validate configuration on startup
-config_errors = Config.validate_config()
+# Validate configuration on startup — warnings are logged, errors abort
+config_errors, config_warnings = Config.validate_config()
+for warning in config_warnings:
+    print(f"Configuration warning: {warning}")
 if config_errors:
-    print("Configuration Errors:")
     for error in config_errors:
-        print(f"  - {error}")
+        print(f"Configuration error: {error}")
+    raise SystemExit("Invalid configuration — aborting startup.")
 
 # Get navbar and footer
 navbar = create_navbar()
@@ -74,9 +79,6 @@ footer = create_footer()
 
 # Variables
 info_md = load_markdown_file("info.md")
-
-# RAM monitoring
-tracemalloc.start()
 
 # AG Grid: Community by default; Enterprise features only when enabled via config
 grid_default_col_def = {

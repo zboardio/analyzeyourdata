@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import base64
 import re
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 import tempfile
 from typing import Dict, List, Tuple, Optional
 import json
@@ -170,29 +170,30 @@ class DataSourceHandler:
             raise ValueError(f"Failed to load from SharePoint: {str(e)}")
     
     @staticmethod
-    def load_from_google_sheets(google_sheets_url: str) -> pd.DataFrame:
+    def load_from_google_sheets(google_sheets_url: str, max_rows: int = 0) -> pd.DataFrame:
         """
         Load data from Google Sheets URL.
         GID is automatically extracted from the URL if present.
 
         Args:
             google_sheets_url (str): Google Sheets URL (sharing or browser bar)
+            max_rows (int): Row cap for the loaded sheet (0 = unlimited)
 
         Returns:
             pd.DataFrame: Loaded data
         """
         try:
             csv_url = DataSourceHandler.create_google_sheets_csv_url(google_sheets_url)
-            
+
             # Download CSV data
             response = requests.get(csv_url, timeout=30)
             response.raise_for_status()
-            
+
             # Load into DataFrame
-            df = pd.read_csv(pd.io.common.StringIO(response.text))
-            
+            df = pd.read_csv(pd.io.common.StringIO(response.text), nrows=max_rows or None)
+
             return df
-            
+
         except Exception as e:
             raise ValueError(f"Failed to load from Google Sheets: {str(e)}")
     
@@ -248,7 +249,7 @@ class DataSourceHandler:
             }
             
             # Try to get base schema to validate credentials
-            url = f"https://api.airtable.com/v0/meta/bases/{base_id}/tables"
+            url = f"https://api.airtable.com/v0/meta/bases/{quote(base_id, safe='')}/tables"
             response = requests.get(url, headers=headers, timeout=10)
             
             return response.status_code == 200
@@ -275,7 +276,7 @@ class DataSourceHandler:
             }
             
             # Get base schema
-            url = f"https://api.airtable.com/v0/meta/bases/{base_id}/tables"
+            url = f"https://api.airtable.com/v0/meta/bases/{quote(base_id, safe='')}/tables"
             response = requests.get(url, headers=headers, timeout=30)
             response.raise_for_status()
             
@@ -296,15 +297,16 @@ class DataSourceHandler:
             raise ValueError(f"Failed to get Airtable tables: {str(e)}")
     
     @staticmethod
-    def load_from_airtable(api_key: str, base_id: str, table_name: str) -> pd.DataFrame:
+    def load_from_airtable(api_key: str, base_id: str, table_name: str, max_rows: int = 0) -> pd.DataFrame:
         """
         Load data from Airtable table
-        
+
         Args:
             api_key (str): Airtable API key
             base_id (str): Airtable base ID
             table_name (str): Name of the table to load
-            
+            max_rows (int): Record cap across pagination (0 = unlimited)
+
         Returns:
             pd.DataFrame: Loaded data
         """
@@ -313,32 +315,36 @@ class DataSourceHandler:
                 'Authorization': f'Bearer {api_key}',
                 'Content-Type': 'application/json'
             }
-            
+
             # Build the API URL
-            url = f"https://api.airtable.com/v0/{base_id}/{table_name}"
-            
+            url = f"https://api.airtable.com/v0/{quote(base_id, safe='')}/{quote(table_name, safe='')}"
+
             all_records = []
             offset = None
-            
+
             # Handle pagination
             while True:
                 params = {}
                 if offset:
                     params['offset'] = offset
-                
+
                 response = requests.get(url, headers=headers, params=params, timeout=30)
                 response.raise_for_status()
-                
+
                 data = response.json()
                 records = data.get('records', [])
-                
+
                 # Extract fields from each record
                 for record in records:
                     record_data = record.get('fields', {})
                     record_data['airtable_record_id'] = record.get('id')
                     record_data['airtable_created_time'] = record.get('createdTime')
                     all_records.append(record_data)
-                
+
+                if max_rows and len(all_records) >= max_rows:
+                    all_records = all_records[:max_rows]
+                    break
+
                 # Check for more pages
                 offset = data.get('offset')
                 if not offset:
@@ -372,27 +378,33 @@ class DataSourceHandler:
         """
         try:
             parsed = urlparse(url)
-            if not parsed.scheme or not parsed.netloc:
+            # parsed.hostname strips userinfo ("user@host") and port, lowercased —
+            # substring checks on netloc are bypassable (e.g. docs.google.com.evil.com)
+            host = parsed.hostname or ''
+            if parsed.scheme != 'https' or not host:
                 return False
-            
+
             if source_type == 'sharepoint':
-                # Check for SharePoint/OneDrive domains
                 valid_domains = ['1drv.ms', 'onedrive.live.com', 'sharepoint.com', 'office.com']
-                return any(domain in parsed.netloc.lower() for domain in valid_domains)
-            
+                return any(DataSourceHandler._host_allowed(host, domain) for domain in valid_domains)
+
             elif source_type == 'google_sheets':
-                # Check for Google Sheets domains
-                return 'docs.google.com' in parsed.netloc.lower() and 'spreadsheets' in url.lower()
-            
+                return host == 'docs.google.com' and '/spreadsheets/' in parsed.path
+
             elif source_type == 'airtable':
                 # Airtable doesn't use URLs for API access, so this is not used
                 # But we keep it for consistency
-                return 'airtable.com' in parsed.netloc.lower()
-            
+                return DataSourceHandler._host_allowed(host, 'airtable.com')
+
             return False
-            
+
         except Exception:
             return False
+
+    @staticmethod
+    def _host_allowed(host: str, allowed_domain: str) -> bool:
+        """True only for the exact domain or a real subdomain of it."""
+        return host == allowed_domain or host.endswith('.' + allowed_domain)
     
     @staticmethod
     def validate_airtable_base_id(base_id: str) -> bool:
