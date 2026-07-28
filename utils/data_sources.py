@@ -1,46 +1,18 @@
-# utils/data_sources.py - Enhanced with Airtable support
+# utils/data_sources.py - External data sources (Google Sheets, Airtable)
 
 import pandas as pd
 import requests
-import base64
 import re
 from urllib.parse import urlparse, quote
-import tempfile
-from typing import Dict, List, Tuple, Optional
-import json
+from typing import Dict, List
 
 class DataSourceHandler:
     """
-    Enhanced data source handler supporting multiple input methods:
-    - Direct file upload
-    - Microsoft SharePoint URLs
+    External data source handler:
     - Google Sheets URLs
     - Airtable API
     """
-    
-    @staticmethod
-    def create_sharepoint_direct_url(sharepoint_link: str) -> str:
-        """
-        Convert SharePoint sharing link to direct download URL
-        
-        Args:
-            sharepoint_link (str): SharePoint sharing URL
-            
-        Returns:
-            str: Direct download URL for OneDrive API
-        """
-        try:
-            # Encode the URL to base64
-            data_bytes64 = base64.b64encode(bytes(sharepoint_link, 'utf-8'))
-            data_bytes64_string = data_bytes64.decode('utf-8').replace('/', '_').replace('+', '-').rstrip("=")
-            
-            # Create OneDrive API URL
-            result_url = f"https://api.onedrive.com/v1.0/shares/u!{data_bytes64_string}/root/content"
-            return result_url
-            
-        except Exception as e:
-            raise ValueError(f"Failed to create SharePoint direct URL: {str(e)}")
-    
+
     @staticmethod
     def create_google_sheets_csv_url(google_sheets_url: str) -> str:
         """
@@ -87,89 +59,6 @@ class DataSourceHandler:
             raise ValueError(f"Failed to create Google Sheets CSV URL: {str(e)}")
     
     @staticmethod
-    def get_google_sheets_info(google_sheets_url: str) -> Tuple[str, List[Dict]]:
-        """
-        Get spreadsheet information including available sheets
-        
-        Args:
-            google_sheets_url (str): Google Sheets sharing URL
-            
-        Returns:
-            Tuple[str, List[Dict]]: Spreadsheet ID and list of sheet information
-        """
-        try:
-            # Extract spreadsheet ID
-            patterns = [
-                r'/spreadsheets/d/([a-zA-Z0-9-_]+)',
-                r'key=([a-zA-Z0-9-_]+)',
-                r'/d/([a-zA-Z0-9-_]+)'
-            ]
-            
-            spreadsheet_id = None
-            for pattern in patterns:
-                match = re.search(pattern, google_sheets_url)
-                if match:
-                    spreadsheet_id = match.group(1)
-                    break
-            
-            if not spreadsheet_id:
-                raise ValueError("Could not extract spreadsheet ID from URL")
-            
-            # Try to get sheet information (this requires the spreadsheet to be publicly readable)
-            # For now, we'll return a default structure
-            sheets_info = [
-                {'name': 'Sheet1', 'gid': '0'},  # Default first sheet
-            ]
-            
-            return spreadsheet_id, sheets_info
-            
-        except Exception as e:
-            raise ValueError(f"Failed to get Google Sheets info: {str(e)}")
-    
-    @staticmethod
-    def load_from_sharepoint(sharepoint_url: str) -> Tuple[pd.DataFrame, List[str]]:
-        """
-        Load data from SharePoint URL
-        
-        Args:
-            sharepoint_url (str): SharePoint sharing URL
-            
-        Returns:
-            Tuple[pd.DataFrame, List[str]]: DataFrame and list of available sheet names
-        """
-        try:
-            direct_url = DataSourceHandler.create_sharepoint_direct_url(sharepoint_url)
-            
-            # Download the file
-            response = requests.get(direct_url, timeout=30)
-            response.raise_for_status()
-            
-            # Determine file type from content or URL
-            content_type = response.headers.get('content-type', '').lower()
-            
-            if 'excel' in content_type or 'spreadsheet' in content_type:
-                # Handle Excel files
-                with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as tmp_file:
-                    tmp_file.write(response.content)
-                    tmp_file.flush()
-                    
-                    # Read Excel file and get sheet names
-                    excel_file = pd.ExcelFile(tmp_file.name)
-                    sheet_names = excel_file.sheet_names
-                    
-                    # Load first sheet by default
-                    df = pd.read_excel(tmp_file.name, sheet_name=0)
-                    
-                return df, sheet_names
-            else:
-                # Assume CSV format
-                df = pd.read_csv(pd.io.common.StringIO(response.text))
-                return df, ['Sheet1']
-                
-        except Exception as e:
-            raise ValueError(f"Failed to load from SharePoint: {str(e)}")
-    
-    @staticmethod
     def load_from_google_sheets(google_sheets_url: str, max_rows: int = 0) -> pd.DataFrame:
         """
         Load data from Google Sheets URL.
@@ -197,39 +86,8 @@ class DataSourceHandler:
         except Exception as e:
             raise ValueError(f"Failed to load from Google Sheets: {str(e)}")
     
-    @staticmethod
-    def load_sharepoint_sheet(sharepoint_url: str, sheet_name: str) -> pd.DataFrame:
-        """
-        Load specific sheet from SharePoint Excel file
-        
-        Args:
-            sharepoint_url (str): SharePoint sharing URL
-            sheet_name (str): Name of the sheet to load
-            
-        Returns:
-            pd.DataFrame: Loaded data from specific sheet
-        """
-        try:
-            direct_url = DataSourceHandler.create_sharepoint_direct_url(sharepoint_url)
-            
-            # Download the file
-            response = requests.get(direct_url, timeout=30)
-            response.raise_for_status()
-            
-            # Save to temporary file and read specific sheet
-            with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as tmp_file:
-                tmp_file.write(response.content)
-                tmp_file.flush()
-                
-                df = pd.read_excel(tmp_file.name, sheet_name=sheet_name)
-                
-            return df
-            
-        except Exception as e:
-            raise ValueError(f"Failed to load sheet '{sheet_name}' from SharePoint: {str(e)}")
-    
-    # NEW AIRTABLE METHODS
-    
+    # AIRTABLE METHODS
+
     @staticmethod
     def validate_airtable_credentials(api_key: str, base_id: str) -> bool:
         """
@@ -368,11 +226,11 @@ class DataSourceHandler:
     def validate_url(url: str, source_type: str) -> bool:
         """
         Validate URL format for specific source types
-        
+
         Args:
             url (str): URL to validate
-            source_type (str): Type of source ('sharepoint', 'google_sheets', or 'airtable')
-            
+            source_type (str): Type of source ('google_sheets' or 'airtable')
+
         Returns:
             bool: True if URL is valid for the source type
         """
@@ -384,11 +242,7 @@ class DataSourceHandler:
             if parsed.scheme != 'https' or not host:
                 return False
 
-            if source_type == 'sharepoint':
-                valid_domains = ['1drv.ms', 'onedrive.live.com', 'sharepoint.com', 'office.com']
-                return any(DataSourceHandler._host_allowed(host, domain) for domain in valid_domains)
-
-            elif source_type == 'google_sheets':
+            if source_type == 'google_sheets':
                 return host == 'docs.google.com' and '/spreadsheets/' in parsed.path
 
             elif source_type == 'airtable':
@@ -405,21 +259,3 @@ class DataSourceHandler:
     def _host_allowed(host: str, allowed_domain: str) -> bool:
         """True only for the exact domain or a real subdomain of it."""
         return host == allowed_domain or host.endswith('.' + allowed_domain)
-    
-    @staticmethod
-    def validate_airtable_base_id(base_id: str) -> bool:
-        """
-        Validate Airtable base ID format
-        
-        Args:
-            base_id (str): Airtable base ID to validate
-            
-        Returns:
-            bool: True if base ID format is valid
-        """
-        try:
-            # Airtable base IDs start with 'app' followed by 14 alphanumeric characters
-            pattern = r'^app[a-zA-Z0-9]{14}$'
-            return bool(re.match(pattern, base_id))
-        except Exception:
-            return False

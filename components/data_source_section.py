@@ -103,49 +103,6 @@ def create_data_source_section():
             ], id='sqlite-table-selection-container', style={'display': 'none'}),
         ], id='upload-section'),
 
-        # SharePoint URL section
-        html.Div([
-            dbc.Row([
-                dbc.Col([
-                    dbc.Label(t('sharepoint.url_label'), style={'fontWeight': 'bold'}),
-                    dbc.InputGroup([
-                        dbc.Input(id='sharepoint-url-input', placeholder=t('sharepoint.url_placeholder'), type='url'),
-                        dbc.Button([html.I(className="fas fa-download me-2"), t('sharepoint.load_btn')],
-                                  id='sharepoint-load-btn', color='primary')
-                    ], className='mb-3'),
-                    dbc.Alert(t('sharepoint.access_alert'),
-                             color='info', className='mb-3'),
-                    # Test dataset for SharePoint
-                    html.Div([
-                        html.Div([
-                            html.I(className="fas fa-flask me-2"),
-                            html.Span(t('test_dataset.try_label')),
-                        ], className='mb-2'),
-                        dbc.InputGroup([
-                            dbc.Input(
-                                id='test-url-sharepoint',
-                                value=get_variable('URL_TEST_DATASET_SHAREPOINT'),
-                                readonly=True,
-                            ),
-                            dbc.Button(
-                                [html.I(className="fas fa-copy me-1"), html.Span(t('test_dataset.copy_btn'), id='copy-sharepoint-label')],
-                                id='copy-sharepoint-test-url',
-                                color='outline-primary',
-                            ),
-                        ]),
-                    ], id='test-dataset-sharepoint-section', className='test-dataset-section',
-                       style={'display': 'none'} if not get_variable('URL_TEST_DATASET_SHAREPOINT') else {}),
-                ], width=12)
-            ]),
-            # Sheet selection for SharePoint
-            html.Div([
-                dbc.Label(t('sharepoint.select_sheet'), style={'fontWeight': 'bold'}),
-                dcc.Dropdown(id='sharepoint-sheet-dropdown', placeholder=t('sharepoint.sheet_placeholder'), className='mb-3'),
-                dbc.Button([html.I(className="fas fa-table me-2"), t('sharepoint.load_sheet_btn')],
-                          id='sharepoint-sheet-load-btn', color='primary', className='btn-load-full')
-            ], id='sharepoint-sheet-selection', style={'display': 'none'})
-        ], id='sharepoint-section', style={'display': 'none'}),
-
         # Google Sheets URL section
         html.Div([
             dbc.Row([
@@ -253,8 +210,6 @@ def create_data_source_section():
 
         # Storage and alerts
         dcc.Store(id='stored-data', storage_type='memory'),
-        dcc.Store(id='stored-sheet-names', storage_type='memory'),
-        dcc.Store(id='stored-source-url', storage_type='memory'),
         dcc.Store(id='stored-sqlite-tables', storage_type='memory'),
         dcc.Store(id='stored-airtable-credentials', storage_type='memory'),
         dcc.Store(id='stored-airtable-tables', storage_type='memory'),
