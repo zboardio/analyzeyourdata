@@ -179,6 +179,9 @@ jobs:
 
             cd /opt/analyzeyourdata || { echo "Directory /opt/analyzeyourdata not found"; exit 1; }
 
+            echo "Syncing repo (compose file may have changed)..."
+            git pull --ff-only origin main
+
             echo "Pulling ghcr.io/zboardio/analyzeyourdata:${IMAGE_TAG}..."
             docker pull "ghcr.io/zboardio/analyzeyourdata:${IMAGE_TAG}"
 

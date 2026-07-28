@@ -30,7 +30,8 @@ app = dash.Dash(
     ]
 )
 
-# Custom favicon (Dash 4.0+ requires custom index_string for non-.ico favicons)
+# Custom favicon (Dash 4.0+ requires custom index_string for non-.ico favicons).
+# SVG for modern browsers; ICO fallback for Safari and anything that ignores SVG icons.
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -38,6 +39,7 @@ app.index_string = '''
         {%metas%}
         <title>{%title%}</title>
         <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+        <link rel="alternate icon" type="image/x-icon" href="/assets/favicon.ico">
         {%css%}
     </head>
     <body>
@@ -64,6 +66,13 @@ def api_version():
     """Public endpoint for build transparency — returns git commit and language."""
     from flask import jsonify
     return jsonify(git_commit=Config.GIT_COMMIT, language=Config.APP_LANGUAGE)
+
+
+@server.route('/favicon.ico')
+def favicon_ico():
+    """Root fallback for browsers that request /favicon.ico directly."""
+    from flask import redirect
+    return redirect('/assets/favicon.ico')
 
 # Validate configuration on startup — warnings are logged, errors abort
 config_errors, config_warnings = Config.validate_config()

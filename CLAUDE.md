@@ -279,7 +279,7 @@ app.py
 | `DONATE_URL` | *(empty)* | Donation page URL. If empty, donation card is hidden. |
 | `YOUTUBE_INTRO_URL` | *(empty)* | YouTube embed URL. If empty, video section is hidden. |
 
-**Favicon**: Dash auto-discovers `/assets/favicon.ico` — no env var needed.
+**Favicon**: `assets/favicon.svg` (modern browsers) + `assets/favicon.ico` fallback (Safari and root `/favicon.ico` requests) — both wired in `app.py`'s `index_string`, no env var needed.
 
 ### Data & Storage
 | Variable | Default | Description |

@@ -39,12 +39,12 @@ class Config:
     
     # UI Assets
     LOGO_PATH = os.getenv('LOGO_PATH', '/assets/logo.png')  # If empty, logo is hidden in navbar
-    # Favicon: Dash auto-discovers /assets/favicon.svg — added cofig for SVG, as Dash v4.0 supports only ICO
+    # Favicon: assets/favicon.svg + assets/favicon.ico fallback, wired in app.py index_string
 
     # External Links
-    GITHUB_URL = os.getenv('GITHUB_URL', 'https://github.com/your-repo')
-    WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://zboardio-webpage.pages.dev/en/')
-    CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'contact@zboardio.com')
+    GITHUB_URL = os.getenv('GITHUB_URL', 'https://github.com/zboardio/analyzeyourdata')
+    WEBSITE_URL = os.getenv('WEBSITE_URL', 'https://zboardio.com')
+    CONTACT_EMAIL = os.getenv('CONTACT_EMAIL', 'reachus@zboardio.com')
     DOCUMENTATION_URL = os.getenv('DOCUMENTATION_URL', '')  # If empty, docs buttons are hidden
     DONATE_URL = os.getenv('DONATE_URL', '')
     YOUTUBE_INTRO_URL = os.getenv('YOUTUBE_INTRO_URL', '')
