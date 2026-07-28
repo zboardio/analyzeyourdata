@@ -62,6 +62,9 @@ secrets/
 deploy/cloudflared/config.yml
 deploy/cloudflared/*.json
 
+# Test artifacts
+.pytest_cache/
+
 # logs
 *.log
 logs/

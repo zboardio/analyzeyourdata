@@ -14,7 +14,7 @@ Deployed as one Docker container per language (15 languages), routed via Cloudfl
 ## Tech Stack
 
 - **Python**: 3.12+
-- **Dash**: 4.1.0 (Plotly web framework)
+- **Dash**: 4.4.1 (Plotly web framework)
 - **Dash Bootstrap Components**: 2.0.4
 - **Dash AG Grid**: 33.3.3 (Community by default; Enterprise optional via `AG_GRID_ENABLE_ENTERPRISE` / license key)
 - **Pandas**: 3.0.0
@@ -35,6 +35,7 @@ analyzeyourdata-en/
 ├── README.md                       # Project README
 ├── PRIVACY.md                      # Data privacy policy
 ├── requirements.txt                # Pinned dependencies
+├── requirements-dev.txt            # Dev/test dependencies (pytest)
 ├── Dockerfile                      # Production container
 ├── docker-compose.yml              # Local development (15 services)
 ├── docker-compose.single.yml       # Public single-container deployment (GHCR image)
@@ -107,6 +108,13 @@ analyzeyourdata-en/
 │   │   └── uk/                     # Ukrainian
 │   ├── image/                      # Logo, favicon, images
 │   └── video/                      # Tutorial videos
+├── tests/                          # Pytest suite (run in CI before every build)
+│   ├── conftest.py
+│   ├── test_chart_factory.py
+│   ├── test_config.py
+│   ├── test_data_processing.py
+│   ├── test_data_sources.py
+│   └── test_i18n.py
 ```
 
 ## Key Patterns
@@ -297,6 +305,10 @@ app.py
 # Development
 pip install -r requirements.txt
 python app.py                        # Starts on http://127.0.0.1:8050
+
+# Tests (also run in CI before every build)
+pip install -r requirements-dev.txt
+pytest
 
 # Local Docker (without Swarm)
 docker build -t analyzeyourdata .

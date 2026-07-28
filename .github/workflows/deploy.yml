@@ -48,9 +48,34 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    # Skipped on the rollback path (redeploying an already-built image).
+    if: github.event_name == 'push' || github.event.inputs.image_tag == ''
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Run pytest
+        run: pytest -q
+
   build:
     name: Build and Push Image
     runs-on: ubuntu-latest
+    needs: [test]
     # Skip build when a manual dispatch specifies an existing image tag (rollback path).
     if: github.event_name == 'push' || github.event.inputs.image_tag == ''
     permissions:
@@ -109,10 +134,14 @@ jobs:
   deploy:
     name: Deploy to VDS
     runs-on: ubuntu-latest
-    needs: [build]
-    # Run when build succeeded, or when build was skipped because the
-    # manual dispatch pinned an existing image_tag (rollback).
-    if: always() && !cancelled() && (needs.build.result == 'success' || needs.build.result == 'skipped')
+    needs: [test, build]
+    # Run when build succeeded (push path — implies tests passed), or when the
+    # manual dispatch pinned an existing image_tag (rollback path — test and
+    # build are both skipped by design). A failed test run never deploys.
+    if: >-
+      always() && !cancelled() &&
+      (needs.build.result == 'success' ||
+       (github.event_name == 'workflow_dispatch' && github.event.inputs.image_tag != ''))
     permissions: {}
 
     steps:
@@ -206,7 +235,7 @@ jobs:
   notify-failure:
     name: Notify on Failure
     runs-on: ubuntu-latest
-    needs: [build, deploy]
+    needs: [test, build, deploy]
     if: failure()
     permissions: {}
 
