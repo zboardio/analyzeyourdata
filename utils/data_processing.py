@@ -176,10 +176,9 @@ def parse_uploaded_file(decoded, filename, delimiter=','):
     df.dropna(how='all', inplace=True)
 
     # Normalize datetime
-    datetime_columns = df.select_dtypes(include=['datetime64[ns]', 'object']).columns
+    datetime_columns = df.select_dtypes(include=['datetime64[ns]']).columns
     for col in datetime_columns:
-        if df[col].dtype == 'datetime64[ns]':
-            df[col] = df[col].dt.strftime('%Y-%m-%d %H:%M:%S.%f')
+        df[col] = df[col].dt.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     return df
 
