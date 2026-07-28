@@ -161,9 +161,10 @@ APP_URL_FR=                          # hidden (empty)
 ├── components/
 │   ├── layout.py               # Navbar, footer, modals
 │   ├── data_source_section.py  # Step 1: data source UI
+│   ├── analysis_section.py     # Steps 2-4: datetime, grid, charts
 │   └── chart_config_section.py # Chart configuration panels
 ├── callbacks/
-│   ├── data_loading.py         # Upload, SharePoint, Google, Airtable, SQLite
+│   ├── data_loading.py         # Upload, Google, Airtable, SQLite
 │   ├── data_processing.py      # Datetime toggle, grid, dropdowns
 │   └── chart_callbacks.py      # Chart render, download, dashboard export
 ├── utils/
@@ -198,7 +199,7 @@ register_chart_callbacks(app)    # 10 callbacks
 
 ### Data Flow
 
-1. **Data Source** → Upload / SharePoint / Google Sheets / Airtable / SQLite
+1. **Data Source** → Upload / Google Sheets / Airtable / SQLite
 2. **Store** → `dcc.Store(id='stored-data')` holds data as list of dicts
 3. **Datetime Processing** → Optional column enrichment (disabled by default)
 4. **AG Grid** → Interactive table with filtering, grouping, pivoting

@@ -80,11 +80,12 @@ def create_navbar():
             t("navbar.how_to_use")
         ], id="how-to-use-nav-link", className="nav-link", style={"cursor": "pointer"})),
 
-        # Feedback nav link - opens modal
-        dbc.NavItem(dbc.NavLink([
+        # Feedback nav link - opens modal (hidden when MongoDB is not configured)
+        *([dbc.NavItem(dbc.NavLink([
             html.I(className="fas fa-comment-dots me-2"),
             t("navbar.feedback")
-        ], id="feedback-nav-link", className="nav-link", style={"cursor": "pointer"})),
+        ], id="feedback-nav-link", className="nav-link", style={"cursor": "pointer"}))]
+          if Config.MONGODB_URI else []),
 
         dbc.NavItem(dbc.NavLink([
             html.I(className="fab fa-github me-2"),
@@ -133,7 +134,9 @@ def create_navbar():
     )
 
 def create_feedback_modal():
-    """Create the feedback modal component."""
+    """Create the feedback modal component (empty when MongoDB is not configured)."""
+    if not Config.MONGODB_URI:
+        return html.Div()
     return dbc.Modal([
         dbc.ModalHeader(dbc.ModalTitle(t("feedback.title"))),
         dbc.ModalBody([
@@ -233,12 +236,12 @@ def create_footer():
                                 html.I(className="fab fa-github footer-icon"),
                                 t("footer.open_source")
                             ], href=Config.GITHUB_URL, target="_blank"),
-
+                        ] + ([
                             html.A([
                                 html.I(className="fas fa-comment-dots footer-icon"),
                                 t("footer.feedback")
                             ], id="feedback-footer-link", style={"cursor": "pointer"}),
-                        ] + ([
+                        ] if Config.MONGODB_URI else []) + ([
                             html.A([
                                 html.I(className="fas fa-book footer-icon"),
                                 t("footer.documentation")
@@ -398,61 +401,63 @@ def register_navbar_callbacks(app):
     def toggle_how_to_use_modal(nav_clicks, close_clicks, is_open):
         return not is_open
 
-    # Toggle feedback modal open/close
-    @app.callback(
-        Output("feedback-modal", "is_open"),
-        [Input("feedback-nav-link", "n_clicks"),
-         Input("feedback-footer-link", "n_clicks"),
-         Input("feedback-close-btn", "n_clicks"),
-         Input("feedback-submit-btn", "n_clicks")],
-        [State("feedback-modal", "is_open"),
-         State("feedback-message", "value")],
-        prevent_initial_call=True,
-    )
-    def toggle_feedback_modal(nav_clicks, footer_clicks, close_clicks, submit_clicks, is_open, message):
-        ctx = callback_context
-        if not ctx.triggered:
-            return no_update
-        trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
+    # Feedback callbacks only exist when MongoDB is configured (UI is hidden otherwise)
+    if Config.MONGODB_URI:
+        # Toggle feedback modal open/close
+        @app.callback(
+            Output("feedback-modal", "is_open"),
+            [Input("feedback-nav-link", "n_clicks"),
+             Input("feedback-footer-link", "n_clicks"),
+             Input("feedback-close-btn", "n_clicks"),
+             Input("feedback-submit-btn", "n_clicks")],
+            [State("feedback-modal", "is_open"),
+             State("feedback-message", "value")],
+            prevent_initial_call=True,
+        )
+        def toggle_feedback_modal(nav_clicks, footer_clicks, close_clicks, submit_clicks, is_open, message):
+            ctx = callback_context
+            if not ctx.triggered:
+                return no_update
+            trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
-        if trigger_id in ("feedback-nav-link", "feedback-footer-link"):
-            return True
-        if trigger_id == "feedback-close-btn":
-            return False
-        if trigger_id == "feedback-submit-btn":
-            # Close modal only on successful submit (message non-empty)
-            if message and message.strip():
+            if trigger_id in ("feedback-nav-link", "feedback-footer-link"):
+                return True
+            if trigger_id == "feedback-close-btn":
                 return False
-            # Keep open if validation fails
-            return True
-        return no_update
+            if trigger_id == "feedback-submit-btn":
+                # Close modal only on successful submit (message non-empty)
+                if message and message.strip():
+                    return False
+                # Keep open if validation fails
+                return True
+            return no_update
 
-    # Submit feedback
-    @app.callback(
-        [Output("feedback-alert", "children"),
-         Output("feedback-alert", "color"),
-         Output("feedback-alert", "is_open"),
-         Output("feedback-message", "value"),
-         Output("feedback-category", "value")],
-        Input("feedback-submit-btn", "n_clicks"),
-        [State("feedback-category", "value"),
-         State("feedback-message", "value")],
-        prevent_initial_call=True,
-    )
-    def submit_feedback(n_clicks, category, message):
-        if not n_clicks:
-            return no_update, no_update, no_update, no_update, no_update
+        # Submit feedback
+        @app.callback(
+            [Output("feedback-alert", "children"),
+             Output("feedback-alert", "color"),
+             Output("feedback-alert", "is_open"),
+             Output("feedback-message", "value"),
+             Output("feedback-category", "value")],
+            Input("feedback-submit-btn", "n_clicks"),
+            [State("feedback-category", "value"),
+             State("feedback-message", "value")],
+            prevent_initial_call=True,
+        )
+        def submit_feedback(n_clicks, category, message):
+            if not n_clicks:
+                return no_update, no_update, no_update, no_update, no_update
 
-        if not message or not message.strip():
-            return t("feedback.validation_empty"), "warning", True, no_update, no_update
+            if not message or not message.strip():
+                return t("feedback.validation_empty"), "warning", True, no_update, no_update
 
-        from utils.mongodb import save_feedback
-        success, error = save_feedback(category, message.strip(), Config.APP_LANGUAGE)
+            from utils.mongodb import save_feedback
+            success, error = save_feedback(category, message.strip(), Config.APP_LANGUAGE)
 
-        if success:
-            return t("feedback.success"), "success", True, "", "not_specified"
+            if success:
+                return t("feedback.success"), "success", True, "", "not_specified"
 
-        return t("feedback.error"), "danger", True, no_update, no_update
+            return t("feedback.error"), "danger", True, no_update, no_update
 
     # Copy email to clipboard and show toast
     app.clientside_callback(
