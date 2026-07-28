@@ -13,7 +13,7 @@
   <a href="https://github.com/zboardio/analyzeyourdata"><img src="https://img.shields.io/github/commit-activity/m/zboardio/analyzeyourdata?color=dark-green" alt="Commit Activity"></a>
   <a href="https://github.com/zboardio/analyzeyourdata"><img src="https://img.shields.io/github/last-commit/zboardio/analyzeyourdata?color=dark-green" alt="Last Commit"></a>
   <img src="https://img.shields.io/badge/python-3.12+-blue" alt="Python">
-  <img src="https://img.shields.io/badge/dash-4.0.0-blue" alt="Dash">
+  <img src="https://img.shields.io/badge/dash-4.4.1-blue" alt="Dash">
   <img src="https://img.shields.io/badge/languages-15-orange" alt="Languages">
 </p>
 
@@ -82,7 +82,7 @@ Every deployment includes a git commit hash visible in the footer, linking direc
 
 | Component | Version | Purpose |
 |-----------|---------|---------|
-| [Plotly Dash](https://dash.plotly.com) | 4.1.0 | Web framework |
+| [Plotly Dash](https://dash.plotly.com) | 4.4.1 | Web framework |
 | [AG Grid](https://www.ag-grid.com) | 33.3.3 | Interactive data grid (Community by default, Enterprise optional) |
 | [Pandas](https://pandas.pydata.org) | 3.0.0 | Data processing |
 | [Plotly](https://plotly.com/python/) | 6.0.0+ | Chart rendering |
@@ -139,7 +139,7 @@ MongoDB is optional (feedback + anonymous usage analytics) — leave `MONGO_URI`
 
 ## 🤝 Contributing
 
-Contributions are welcome! The project uses Python 3.12+, Dash 4.1.0, and follows a modular callback architecture.
+Contributions are welcome! The project uses Python 3.12+, Dash 4.4.1, and follows a modular callback architecture.
 
 ```bash
 pip install -r requirements.txt

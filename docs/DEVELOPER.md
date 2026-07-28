@@ -7,7 +7,7 @@ Technical documentation for developers who want to understand, modify, or deploy
 ## Tech Stack
 
 - **Python**: 3.12+
-- **Dash**: 4.0.0 (Plotly web framework)
+- **Dash**: 4.4.1 (Plotly web framework)
 - **Dash Bootstrap Components**: 2.0.4
 - **Dash AG Grid**: 33.3.3 (Community by default; Enterprise features optional, see `AG_GRID_ENABLE_ENTERPRISE`)
 - **Pandas**: 3.0.0
