@@ -130,6 +130,9 @@ See `.env.example` for the full list. Key groups:
 | `APP_URL_*` | 15 language URLs for navbar cross-links (empty = hidden from dropdown) |
 | `AG_GRID_LICENSE_KEY` | AG Grid Enterprise license key (optional — setting it enables Enterprise features) |
 | `AG_GRID_ENABLE_ENTERPRISE` | `auto` (default: Enterprise only with key) / `true` (force unlicensed evaluation mode — watermark) / `false` (force Community) |
+| `MAX_FILE_SIZE_MB` | Max upload size (default 20) |
+| `MAX_CONTENT_LENGTH_MB` | Hard cap on any HTTP request body; 0 = auto (5× `MAX_FILE_SIZE_MB`) |
+| `MAX_EXTERNAL_ROWS` | Row cap for Google Sheets / Airtable loads; 0 = unlimited |
 | `MONGO_URI` | MongoDB connection string (optional, for analytics logging) |
 | `GIT_COMMIT` | Git short hash, injected at Docker build time |
 | `LOGO_PATH` | Navbar logo path (empty = hidden) |

@@ -21,10 +21,16 @@ class Config:
     # Server Settings
     APP_HOST = os.getenv('APP_HOST', '127.0.0.1')
     APP_PORT = int(os.getenv('APP_PORT', 8050))
-    APP_DEBUG = os.getenv('APP_DEBUG', 'True').lower() in ['true', '1', 'yes']
-    
+    APP_DEBUG = os.getenv('APP_DEBUG', 'False').lower() in ['true', '1', 'yes']
+
     # File Upload Settings
     MAX_FILE_SIZE_MB = int(os.getenv('MAX_FILE_SIZE_MB', 20))
+    # Hard cap on any HTTP request body (Flask MAX_CONTENT_LENGTH). Must leave
+    # headroom above MAX_FILE_SIZE_MB: uploads travel base64-encoded (~4/3) and
+    # grid/chart callbacks POST the stored dataset back as JSON. 0 = auto (5×).
+    MAX_CONTENT_LENGTH_MB = int(os.getenv('MAX_CONTENT_LENGTH_MB', 0)) or MAX_FILE_SIZE_MB * 5
+    # Row cap for external sources (Google Sheets, Airtable). 0 = unlimited.
+    MAX_EXTERNAL_ROWS = int(os.getenv('MAX_EXTERNAL_ROWS', 0))
     SUPPORTED_FILE_FORMATS = os.getenv('SUPPORTED_FILE_FORMATS', 'csv,xlsx,xls,json,parquet,h5,hdf5,h6,plh,txt,log,db,sqlite,sqlite3').split(',')
     
     # Content Directories
@@ -148,14 +154,13 @@ class Config:
         {'label': '10/30/2024', 'value': '%m/%d/%Y'},
     ]
     
-    # Memory Monitoring
-    MEMORY_MONITORING_ENABLED = os.getenv('MEMORY_MONITORING_ENABLED', 'True').lower() in ['true', '1', 'yes']
+    # Memory Monitoring (prints RSS to stdout every interval — debugging aid)
+    MEMORY_MONITORING_ENABLED = os.getenv('MEMORY_MONITORING_ENABLED', 'False').lower() in ['true', '1', 'yes']
     MEMORY_MONITORING_INTERVAL = int(os.getenv('MEMORY_MONITORING_INTERVAL', 3))
-    
+
     # Security Settings
-    # SECRET_KEY: Used for session management, CSRF protection, and other security features
-    # In production, this should be a strong, unique secret
-    # For this data analysis tool, it's mainly used for secure session handling
+    # SECRET_KEY: Flask session signing key (server.secret_key).
+    # Set a strong, unique value in production.
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key-change-in-production')
     
     @classmethod
@@ -183,25 +188,38 @@ class Config:
     
     @classmethod
     def validate_config(cls):
-        """Validate critical configuration values"""
+        """Validate critical configuration values.
+
+        Returns (errors, warnings) — errors abort startup, warnings are logged.
+        """
         errors = []
-        
+        warnings = []
+
         if cls.AG_GRID_ENTERPRISE_ENABLED and not cls.AG_GRID_LICENSE_KEY:
-            errors.append(
+            warnings.append(
                 "AG Grid Enterprise is enabled without AG_GRID_LICENSE_KEY — "
                 "the grid runs in unlicensed evaluation mode (watermark + console errors)"
             )
-        
+
         if cls.MAX_FILE_SIZE_MB <= 0:
             errors.append("MAX_FILE_SIZE_MB must be greater than 0")
-        
+
+        if cls.MAX_CONTENT_LENGTH_MB < cls.MAX_FILE_SIZE_MB * 2:
+            warnings.append(
+                "MAX_CONTENT_LENGTH_MB is less than 2× MAX_FILE_SIZE_MB — "
+                "base64-encoded uploads or grid/chart callbacks may be rejected with HTTP 413"
+            )
+
+        if cls.MAX_EXTERNAL_ROWS < 0:
+            errors.append("MAX_EXTERNAL_ROWS must be 0 (unlimited) or positive")
+
         if not Path(cls.MARKDOWN_DIRECTORY).exists():
             errors.append(f"MARKDOWN_DIRECTORY '{cls.MARKDOWN_DIRECTORY}' does not exist")
-        
+
         if cls.SQLITE_MAX_TABLE_ROWS_PREVIEW <= 0:
             errors.append("SQLITE_MAX_TABLE_ROWS_PREVIEW must be greater than 0")
-        
+
         if cls.SQLITE_QUERY_TIMEOUT <= 0:
             errors.append("SQLITE_QUERY_TIMEOUT must be greater than 0")
-        
-        return errors
+
+        return errors, warnings

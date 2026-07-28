@@ -255,7 +255,6 @@ def create_data_source_section():
         dcc.Store(id='stored-data', storage_type='memory'),
         dcc.Store(id='stored-sheet-names', storage_type='memory'),
         dcc.Store(id='stored-source-url', storage_type='memory'),
-        dcc.Store(id='stored-sqlite-path', storage_type='memory'),
         dcc.Store(id='stored-sqlite-tables', storage_type='memory'),
         dcc.Store(id='stored-airtable-credentials', storage_type='memory'),
         dcc.Store(id='stored-airtable-tables', storage_type='memory'),

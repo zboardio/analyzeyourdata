@@ -31,9 +31,12 @@ USER appuser
 EXPOSE 8050
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8050/')" || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8050/api/version')" || exit 1
 
+# --max-requests recycles workers periodically to bound memory growth
 CMD ["gunicorn", "app:server", \
      "--bind", "0.0.0.0:8050", \
      "--workers", "2", \
-     "--timeout", "120"]
+     "--timeout", "120", \
+     "--max-requests", "500", \
+     "--max-requests-jitter", "50"]

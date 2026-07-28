@@ -1,50 +1,92 @@
 import io
-import base64
+import os
 import tempfile
 import sqlite3
 import pandas as pd
 import h5py
 import numpy as np
+from contextlib import contextmanager
 
 
-def load_sqlite_tables(file_path):
-    """Load list of tables from SQLite database"""
+def _quote_sqlite_identifier(name):
+    """Quote an SQLite identifier — table names come from untrusted uploaded files."""
+    return '"' + str(name).replace('"', '""') + '"'
+
+
+@contextmanager
+def sqlite_connection_from_bytes(db_bytes):
+    """Yield a connection to an uploaded SQLite database held fully in memory.
+
+    Keeps uploads off the filesystem and independent of which worker process
+    serves a later request. Falls back to a self-deleting temp file when the
+    runtime's sqlite3 lacks Connection.deserialize.
+    """
+    conn = sqlite3.connect(':memory:')
+    tmp_path = None
     try:
-        conn = sqlite3.connect(file_path)
-        cursor = conn.cursor()
-
-        # Get list of tables
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
-        tables = [row[0] for row in cursor.fetchall()]
-
-        # Get table info
-        table_info = {}
-        for table in tables:
-            cursor.execute(f"SELECT COUNT(*) FROM {table}")
-            row_count = cursor.fetchone()[0]
-
-            cursor.execute(f"PRAGMA table_info({table})")
-            columns = [col[1] for col in cursor.fetchall()]
-
-            table_info[table] = {
-                'rows': row_count,
-                'columns': columns
-            }
-
+        if hasattr(conn, 'deserialize'):
+            conn.deserialize(db_bytes)
+        else:
+            conn.close()
+            fd, tmp_path = tempfile.mkstemp(suffix='.db')
+            with os.fdopen(fd, 'wb') as f:
+                f.write(db_bytes)
+            conn = sqlite3.connect(tmp_path)
+        yield conn
+    finally:
         conn.close()
-        return tables, table_info
+        if tmp_path:
+            os.unlink(tmp_path)
+
+
+def load_sqlite_tables(db_bytes):
+    """Load list of tables from uploaded SQLite database bytes"""
+    try:
+        with sqlite_connection_from_bytes(db_bytes) as conn:
+            cursor = conn.cursor()
+
+            # Get list of tables
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            tables = [row[0] for row in cursor.fetchall()]
+
+            # Get table info
+            table_info = {}
+            for table in tables:
+                quoted = _quote_sqlite_identifier(table)
+                cursor.execute(f"SELECT COUNT(*) FROM {quoted}")
+                row_count = cursor.fetchone()[0]
+
+                cursor.execute(f"PRAGMA table_info({quoted})")
+                columns = [col[1] for col in cursor.fetchall()]
+
+                table_info[table] = {
+                    'rows': row_count,
+                    'columns': columns
+                }
+
+            return tables, table_info
 
     except Exception as e:
         raise ValueError(f"Error reading SQLite database: {str(e)}")
 
 
-def load_sqlite_table_data(file_path, table_name):
-    """Load specific table data from SQLite database"""
+def load_sqlite_table_data(db_bytes, table_name, max_rows=0):
+    """Load specific table data from uploaded SQLite database bytes"""
     try:
-        conn = sqlite3.connect(file_path)
-        df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
-        conn.close()
-        return df
+        with sqlite_connection_from_bytes(db_bytes) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            tables = {row[0] for row in cursor.fetchall()}
+            if table_name not in tables:
+                raise ValueError(f"Table '{table_name}' not found in database")
+
+            query = f"SELECT * FROM {_quote_sqlite_identifier(table_name)}"
+            if max_rows:
+                query += f" LIMIT {int(max_rows)}"
+            return pd.read_sql_query(query, conn)
+
+    except ValueError:
+        raise
     except Exception as e:
         raise ValueError(f"Error loading table '{table_name}': {str(e)}")
 
@@ -102,10 +144,12 @@ def _read_hdf5(file_path):
     return _decode_bytes_columns(pd.DataFrame({name.split('/')[-1]: data}))
 
 
-def parse_uploaded_file(contents, filename, delimiter=','):
-    """Parse uploaded file and return pandas DataFrame"""
-    content_type, content_string = contents.split(',')
-    decoded = base64.b64decode(content_string)
+def parse_uploaded_file(decoded, filename, delimiter=','):
+    """Parse uploaded file bytes and return pandas DataFrame.
+
+    SQLite uploads are handled separately via load_sqlite_tables()/
+    load_sqlite_table_data() — never passed here.
+    """
     file_ext = filename.split('.')[-1].lower()
 
     try:
@@ -122,14 +166,6 @@ def parse_uploaded_file(contents, filename, delimiter=','):
                 tmp.write(decoded)
                 tmp.flush()
                 df = _read_hdf5(tmp.name)
-        elif file_ext in ['db', 'sqlite', 'sqlite3']:
-            # Handle SQLite files
-            with tempfile.NamedTemporaryFile(delete=False, suffix='.db') as tmp:
-                tmp.write(decoded)
-                tmp.flush()
-
-                # Return file path for SQLite handling
-                return tmp.name, 'sqlite'
         else:
             raise ValueError("Unsupported file format.")
     except Exception as e:

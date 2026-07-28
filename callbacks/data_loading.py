@@ -1,11 +1,9 @@
-import os
 import dash
 from dash import dcc, html, Input, Output, State, callback_context
 import dash_bootstrap_components as dbc
 import pandas as pd
 import base64
 import csv
-import tempfile
 
 from config import Config
 from i18n import t
@@ -230,7 +228,7 @@ def register_callbacks(app):
                 ])
                 return dash.no_update, alert, 'warning', True, {'display': 'none'}
 
-            df = DataSourceHandler.load_from_google_sheets(url)
+            df = DataSourceHandler.load_from_google_sheets(url, max_rows=Config.MAX_EXTERNAL_ROWS)
             log_usage('data_load', source_type='google_sheets', rows=df.shape[0], columns=df.shape[1])
             alert = html.Div([
                 html.P(f"✅ {t('google_sheets.data_loaded')}"),
@@ -250,16 +248,19 @@ def register_callbacks(app):
          Output('upload-alert', 'is_open', allow_duplicate=True)],
         Input('sqlite-table-load-btn', 'n_clicks'),
         [State('sqlite-table-dropdown', 'value'),
-         State('stored-sqlite-path', 'data')],
+         State('upload-data', 'contents')],
         prevent_initial_call=True
     )
-    def handle_sqlite_table_load(n_clicks, selected_table, sqlite_path):
-        if not n_clicks or not selected_table or not sqlite_path:
+    def handle_sqlite_table_load(n_clicks, selected_table, contents):
+        if not n_clicks or not selected_table or not contents:
             return dash.no_update, "", 'info', False
 
         try:
-            df = load_sqlite_table_data(sqlite_path, selected_table)
-            file_size_mb = round(os.path.getsize(sqlite_path) / (1024 * 1024), 2) if os.path.exists(sqlite_path) else None
+            # Re-decode the uploaded DB from the browser-held upload contents —
+            # works with any worker process, nothing is stored server-side
+            decoded = base64.b64decode(contents.split(',', 1)[1])
+            df = load_sqlite_table_data(decoded, selected_table, max_rows=Config.SQLITE_MAX_TABLE_ROWS_PREVIEW)
+            file_size_mb = round(len(decoded) / (1024 * 1024), 2)
             log_usage('data_load', source_type='upload', file_ext='sqlite', file_size_mb=file_size_mb, rows=df.shape[0], columns=df.shape[1])
             alert = html.Div([
                 html.P(f"✅ {t('sqlite.table_loaded', table=selected_table)}"),
@@ -282,7 +283,6 @@ def register_callbacks(app):
          Output('sqlite-info-alert', 'children'),
          Output('sqlite-info-alert', 'is_open'),
          Output('sqlite-table-dropdown', 'options'),
-         Output('stored-sqlite-path', 'data'),
          Output('stored-sqlite-tables', 'data'),
          Output('stored-data', 'data', allow_duplicate=True),
          Output('upload-alert', 'children', allow_duplicate=True),
@@ -298,63 +298,64 @@ def register_callbacks(app):
     def handle_upload_or_confirm(contents, n_clicks, filename, delimiter_dropdown, custom_delimiter):
         ctx = callback_context
         if not ctx.triggered:
-            return (dash.no_update,) * 15
+            return (dash.no_update,) * 14
 
         trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
         if not contents:
             return ({'display': 'none'}, ',', '', '', False, {'display': 'none'}, '', False, [],
-                    dash.no_update, dash.no_update, dash.no_update, "", 'info', False)
+                    dash.no_update, dash.no_update, "", 'info', False)
 
         file_ext = filename.split('.')[-1].lower()
-        decoded = base64.b64decode(contents.split(',')[1])
+        content_string = contents.split(',', 1)[1]
 
         MAX_FILE_SIZE_BYTES = Config.MAX_FILE_SIZE_MB * 1024 * 1024
 
-        if len(decoded) > MAX_FILE_SIZE_BYTES:
-            size_mb = len(decoded) / (1024 * 1024)
+        # Reject oversized payloads from the base64 length (~4/3 of raw size)
+        # BEFORE decoding, so they are never materialized in memory
+        approx_size = (len(content_string) * 3) // 4
+        if approx_size > MAX_FILE_SIZE_BYTES:
+            size_mb = approx_size / (1024 * 1024)
             alert = html.Div([
                 html.P(f"⚠️ {t('messages.file_too_large', size=f'{size_mb:.2f}', max_size=Config.MAX_FILE_SIZE_MB)}")
             ])
             return ({'display': 'none'}, ',', '', '', False, {'display': 'none'}, '', False, [],
-                    dash.no_update, dash.no_update, dash.no_update, alert, 'warning', True)
+                    dash.no_update, dash.no_update, alert, 'warning', True)
+
+        decoded = base64.b64decode(content_string)
 
         if trigger_id == 'upload-data':
             if file_ext in ['db', 'sqlite', 'sqlite3']:
-                # Handle SQLite files
+                # Handle SQLite files fully in memory — nothing written to disk
                 try:
-                    with tempfile.NamedTemporaryFile(delete=False, suffix='.db') as tmp:
-                        tmp.write(decoded)
-                        tmp.flush()
+                    tables, table_info = load_sqlite_tables(decoded)
 
-                        tables, table_info = load_sqlite_tables(tmp.name)
-
-                        if not tables:
-                            alert = html.Div([
-                                html.P(f"⚠️ {t('sqlite.no_tables')}"),
-                                html.P(t('sqlite.no_tables_detail'))
-                            ])
-                            return ({'display': 'none'}, ',', '', '', False, {'display': 'none'}, '', False, [],
-                                    dash.no_update, dash.no_update, dash.no_update, alert, 'warning', True)
-
-                        # Create table dropdown options with row counts
-                        table_options = []
-                        for table in tables:
-                            info = table_info[table]
-                            label = f"{table} ({info['rows']:,} rows, {len(info['columns'])} columns)"
-                            table_options.append({'label': label, 'value': table})
-
-                        # Create info alert
-                        info_alert = html.Div([
-                            html.P(f"📊 {t('sqlite.db_loaded', filename=filename)}"),
-                            html.Hr(),
-                            html.P(t('sqlite.tables_found', count=len(tables))),
-                            html.Ul([html.Li(f"{table}: {table_info[table]['rows']:,} rows") for table in tables])
+                    if not tables:
+                        alert = html.Div([
+                            html.P(f"⚠️ {t('sqlite.no_tables')}"),
+                            html.P(t('sqlite.no_tables_detail'))
                         ])
+                        return ({'display': 'none'}, ',', '', '', False, {'display': 'none'}, '', False, [],
+                                dash.no_update, dash.no_update, alert, 'warning', True)
 
-                        return ({'display': 'none'}, ',', '', '', False, {'display': 'block'},
-                                info_alert, True, table_options, tmp.name, table_info,
-                                dash.no_update, "", 'info', False)
+                    # Create table dropdown options with row counts
+                    table_options = []
+                    for table in tables:
+                        info = table_info[table]
+                        label = f"{table} ({info['rows']:,} rows, {len(info['columns'])} columns)"
+                        table_options.append({'label': label, 'value': table})
+
+                    # Create info alert
+                    info_alert = html.Div([
+                        html.P(f"📊 {t('sqlite.db_loaded', filename=filename)}"),
+                        html.Hr(),
+                        html.P(t('sqlite.tables_found', count=len(tables))),
+                        html.Ul([html.Li(f"{table}: {table_info[table]['rows']:,} rows") for table in tables])
+                    ])
+
+                    return ({'display': 'none'}, ',', '', '', False, {'display': 'block'},
+                            info_alert, True, table_options, table_info,
+                            dash.no_update, "", 'info', False)
 
                 except Exception as e:
                     alert = html.Div([
@@ -362,7 +363,7 @@ def register_callbacks(app):
                         html.P(str(e))
                     ])
                     return ({'display': 'none'}, ',', '', '', False, {'display': 'none'}, '', False, [],
-                            dash.no_update, dash.no_update, dash.no_update, alert, 'danger', True)
+                            dash.no_update, dash.no_update, alert, 'danger', True)
 
             elif file_ext in ['csv', 'txt', 'log']:
                 sample = decoded.decode('utf-8')[:1024]
@@ -384,12 +385,12 @@ def register_callbacks(app):
                 ])
 
                 return ({'display': 'block'}, dropdown_val, custom_val, msg_define_delimiter, True,
-                        {'display': 'none'}, '', False, [], dash.no_update, dash.no_update,
+                        {'display': 'none'}, '', False, [], dash.no_update,
                         dash.no_update, "", 'info', False)
 
             else:
                 try:
-                    df = parse_uploaded_file(contents, filename)
+                    df = parse_uploaded_file(decoded, filename)
                     file_size_mb = round(len(decoded) / (1024 * 1024), 2)
                     log_usage('data_load', source_type='upload', file_ext=file_ext, file_size_mb=file_size_mb, rows=df.shape[0], columns=df.shape[1])
                     alert = html.Div([
@@ -402,16 +403,16 @@ def register_callbacks(app):
                         ])
                     ])
                     return ({'display': 'none'}, ',', '', '', False, {'display': 'none'}, '', False, [],
-                            dash.no_update, dash.no_update, df.to_dict('records'), alert, 'success', True)
+                            dash.no_update, df.to_dict('records'), alert, 'success', True)
                 except Exception as e:
                     return ({'display': 'none'}, ',', '', '', False, {'display': 'none'}, '', False, [],
-                            dash.no_update, dash.no_update, dash.no_update,
+                            dash.no_update, dash.no_update,
                             html.Div([html.P(str(e))]), 'warning', True)
 
         elif trigger_id == 'delimiter-confirm-btn':
             delimiter = custom_delimiter if delimiter_dropdown == 'custom' else delimiter_dropdown
             try:
-                df = parse_uploaded_file(contents, filename, delimiter)
+                df = parse_uploaded_file(decoded, filename, delimiter)
                 file_size_mb = round(len(decoded) / (1024 * 1024), 2)
                 log_usage('data_load', source_type='upload', file_ext=file_ext, file_size_mb=file_size_mb, rows=df.shape[0], columns=df.shape[1])
                 alert = html.Div([
@@ -425,14 +426,14 @@ def register_callbacks(app):
                     ])
                 ])
                 return ({'display': 'block'}, delimiter_dropdown, custom_delimiter, '', False,
-                        {'display': 'none'}, '', False, [], dash.no_update, dash.no_update,
+                        {'display': 'none'}, '', False, [], dash.no_update,
                         df.to_dict('records'), alert, 'success', True)
             except Exception as e:
                 return ({'display': 'block'}, delimiter_dropdown, custom_delimiter, '', False,
-                        {'display': 'none'}, '', False, [], dash.no_update, dash.no_update,
+                        {'display': 'none'}, '', False, [], dash.no_update,
                         dash.no_update, html.Div([html.P(str(e))]), 'warning', True)
 
-        return (dash.no_update,) * 15
+        return (dash.no_update,) * 14
 
     @app.callback(
         [Output('stored-data', 'data', allow_duplicate=True),
@@ -452,7 +453,8 @@ def register_callbacks(app):
             df = DataSourceHandler.load_from_airtable(
                 credentials['api_key'],
                 credentials['base_id'],
-                selected_table
+                selected_table,
+                max_rows=Config.MAX_EXTERNAL_ROWS
             )
 
             log_usage('data_load', source_type='airtable', rows=df.shape[0], columns=df.shape[1])
