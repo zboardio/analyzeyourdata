@@ -1,0 +1,18 @@
+# Single-container deployment using the prebuilt public image.
+# One container runs one language (APP_LANGUAGE).
+#
+#   docker compose -f docker-compose.single.yml up -d
+#
+# For full configuration, copy .env.example to .env, adjust it, and
+# uncomment the env_file line below — every variable is optional.
+# See README.md ("AG Grid licensing") before enabling Enterprise mode.
+
+services:
+  analyzeyourdata:
+    image: ghcr.io/zboardio/analyzeyourdata:latest
+    ports:
+      - "8050:8050"
+    environment:
+      APP_LANGUAGE: en  # en|cs|da|de|es|fr|hr|it|nl|pl|pt|sk|sl|sv|uk
+    # env_file: .env
+    restart: unless-stopped

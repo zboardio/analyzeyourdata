@@ -9,7 +9,7 @@ Technical documentation for developers who want to understand, modify, or deploy
 - **Python**: 3.12+
 - **Dash**: 4.0.0 (Plotly web framework)
 - **Dash Bootstrap Components**: 2.0.4
-- **Dash AG Grid**: 33.3.3 (Enterprise features require license)
+- **Dash AG Grid**: 33.3.3 (Community by default; Enterprise features optional, see `AG_GRID_ENABLE_ENTERPRISE`)
 - **Pandas**: 3.0.0
 - **Plotly**: 6.0.0+
 - **PyMongo**: 4.16.0 (optional, for usage analytics)
@@ -128,7 +128,8 @@ See `.env.example` for the full list. Key groups:
 |----------|-------------|
 | `APP_LANGUAGE` | Language code (en, cs, de, etc.) — determines i18n and markdown content |
 | `APP_URL_*` | 15 language URLs for navbar cross-links (empty = hidden from dropdown) |
-| `AG_GRID_LICENSE_KEY` | AG Grid Enterprise license (optional, enables advanced features) |
+| `AG_GRID_LICENSE_KEY` | AG Grid Enterprise license key (optional — setting it enables Enterprise features) |
+| `AG_GRID_ENABLE_ENTERPRISE` | `auto` (default: Enterprise only with key) / `true` (force unlicensed evaluation mode — watermark) / `false` (force Community) |
 | `MONGO_URI` | MongoDB connection string (optional, for analytics logging) |
 | `GIT_COMMIT` | Git short hash, injected at Docker build time |
 | `LOGO_PATH` | Navbar logo path (empty = hidden) |

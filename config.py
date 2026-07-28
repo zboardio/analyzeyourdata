@@ -56,7 +56,18 @@ class Config:
     COPYRIGHT_YEAR = os.getenv('COPYRIGHT_YEAR', str(datetime.now().year))
     
     # AgGrid Settings
-    AG_GRID_LICENSE_KEY = os.getenv("AG_GRID_LICENSE_KEY")
+    AG_GRID_LICENSE_KEY = os.getenv("AG_GRID_LICENSE_KEY") or None
+    # Enterprise modules switch: 'auto' | 'true' | 'false'
+    #   auto  — Enterprise on only when AG_GRID_LICENSE_KEY is set (default)
+    #   true  — force Enterprise without a key: AG Grid runs in unlicensed
+    #           evaluation mode (watermark + console errors), which AG Grid
+    #           permits for evaluation/development only
+    #   false — force Community mode even if a key is set
+    AG_GRID_ENABLE_ENTERPRISE = os.getenv('AG_GRID_ENABLE_ENTERPRISE', 'auto').strip().lower()
+    AG_GRID_ENTERPRISE_ENABLED = (
+        AG_GRID_ENABLE_ENTERPRISE in ('true', '1', 'yes')
+        or (AG_GRID_ENABLE_ENTERPRISE == 'auto' and bool(AG_GRID_LICENSE_KEY))
+    )
     AG_GRID_THEME = os.getenv('AG_GRID_THEME', 'ag-theme-alpine')
     AG_GRID_HEIGHT = int(os.getenv('AG_GRID_HEIGHT', 700))
     
@@ -175,8 +186,11 @@ class Config:
         """Validate critical configuration values"""
         errors = []
         
-        if not cls.AG_GRID_LICENSE_KEY and cls.AG_GRID_LICENSE_KEY != "":
-            errors.append("AG_GRID_LICENSE_KEY is not set")
+        if cls.AG_GRID_ENTERPRISE_ENABLED and not cls.AG_GRID_LICENSE_KEY:
+            errors.append(
+                "AG Grid Enterprise is enabled without AG_GRID_LICENSE_KEY — "
+                "the grid runs in unlicensed evaluation mode (watermark + console errors)"
+            )
         
         if cls.MAX_FILE_SIZE_MB <= 0:
             errors.append("MAX_FILE_SIZE_MB must be greater than 0")

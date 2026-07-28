@@ -14,9 +14,9 @@ Deployed as one Docker container per language (15 languages), routed via Cloudfl
 ## Tech Stack
 
 - **Python**: 3.12+
-- **Dash**: 4.0.0 (Plotly web framework)
+- **Dash**: 4.1.0 (Plotly web framework)
 - **Dash Bootstrap Components**: 2.0.4
-- **Dash AG Grid**: 33.3.3 (Enterprise, licensed)
+- **Dash AG Grid**: 33.3.3 (Community by default; Enterprise optional via `AG_GRID_ENABLE_ENTERPRISE` / license key)
 - **Pandas**: 3.0.0
 - **Plotly**: 6.0.0+
 - **PyArrow**: 23.0.0 (Parquet file support)
@@ -37,6 +37,7 @@ analyzeyourdata-en/
 ├── requirements.txt                # Pinned dependencies
 ├── Dockerfile                      # Production container
 ├── docker-compose.yml              # Local development (15 services)
+├── docker-compose.single.yml       # Public single-container deployment (GHCR image)
 ├── docker-compose.cicd.yml         # Production Swarm deployment with replicas CI/CD build
 ├── docker-compose.local.yml        # Production Swarm deployment with replicas manual build
 ├── .env                            # Real credentials (gitignored)
@@ -281,7 +282,8 @@ app.py
 ### External Services
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `AG_GRID_LICENSE_KEY` | *(none)* | AG Grid Enterprise license |
+| `AG_GRID_LICENSE_KEY` | *(none)* | AG Grid Enterprise license key (setting it enables Enterprise) |
+| `AG_GRID_ENABLE_ENTERPRISE` | `auto` | `auto` = Enterprise only with key / `true` = force unlicensed evaluation (watermark) / `false` = force Community |
 | `SECRET_KEY` | `dev-secret-key-...` | Session secret |
 
 ## Commands

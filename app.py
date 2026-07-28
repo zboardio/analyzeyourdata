@@ -78,6 +78,27 @@ info_md = load_markdown_file("info.md")
 # RAM monitoring
 tracemalloc.start()
 
+# AG Grid: Community by default; Enterprise features only when enabled via config
+grid_default_col_def = {
+    'editable': False,
+    'resizable': True,
+    'filter': True,
+    'sortable': True,
+}
+grid_options = {}
+if Config.AG_GRID_ENTERPRISE_ENABLED:
+    grid_default_col_def.update({
+        'enablePivot': True,
+        'enableRowGroup': True,
+        'enableValue': True,
+    })
+    grid_options.update({
+        'groupTotalRow': 'top',
+        'rowGroupPanelShow': 'always',
+        'groupDefaultExpanded': -1,
+        "sideBar": {"toolPanels": ["columns", "filters"]}, # After dash-ag-grid v34.x stable release whitch to "filters-new"
+    })
+
 # Layout of the Dash app
 app.layout = html.Div([
     navbar,
@@ -224,42 +245,29 @@ app.layout = html.Div([
                             columnDefs=[],
                             rowData=[],
                             columnSize='sizeToFit',
-                            defaultColDef={
-                                'editable': False,
-                                'enablePivot': True,
-                                'enableRowGroup': True,
-                                'enableValue': True,
-                                'resizable': True,
-                                'filter': True,
-                                'sortable': True,
-                            },
-                            dashGridOptions={
-                                'groupTotalRow': 'top',
-                                'rowGroupPanelShow': 'always',
-                                'groupDefaultExpanded': -1,
-                                "sideBar": {"toolPanels": ["columns", "filters"]}, # After dash-ag-grid v34.x stable release whitch to "filters-new"
-                            },
-                            enableEnterpriseModules=True,
+                            defaultColDef=grid_default_col_def,
+                            dashGridOptions=grid_options,
+                            enableEnterpriseModules=Config.AG_GRID_ENTERPRISE_ENABLED,
                             licenseKey=Config.AG_GRID_LICENSE_KEY,
                             className=Config.AG_GRID_THEME,
                             style={'height': f'{Config.AG_GRID_HEIGHT}px', 'marginBottom': '10px'}
                         )
                     ])
                 ]),
-                # AgGrid Export Buttons
+                # AgGrid Export Buttons (Excel export requires AG Grid Enterprise)
                 dbc.Row([
-                    dbc.Col([
-                        dbc.Button(
+                    dbc.Col(
+                        ([dbc.Button(
                             [html.I(className="fas fa-file-excel me-2"), t('grid.export_excel')],
                             id='grid-export-excel-btn', color='primary', className='mx-2', style={'width': '48%'}
-                        ),
-                        dbc.Button(
+                        )] if Config.AG_GRID_ENTERPRISE_ENABLED else []) +
+                        [dbc.Button(
                             [html.I(className="fas fa-file-csv me-2"), t('grid.export_csv')],
                             id='grid-export-csv-btn', color='primary', className='mx-2', style={'width': '48%'}
-                        ),
-                    ], style={'display': 'flex', 'justifyContent': 'center'}),
+                        )],
+                        style={'display': 'flex', 'justifyContent': 'center'}),
                 ], className="mt-3"),
-                html.Div(id='grid-export-excel-dummy', style={'display': 'none'}),
+                html.Div(id='grid-export-excel-dummy', style={'display': 'none'}) if Config.AG_GRID_ENTERPRISE_ENABLED else html.Div(),
                 html.Div(id='grid-export-csv-dummy', style={'display': 'none'}),
             ], className='chart-container'),
         ], type='default', color='var(--primary-color)'),
@@ -335,18 +343,19 @@ register_data_processing(app)
 register_chart_callbacks(app)
 
 # Grid export clientside callbacks (Excel via AG Grid Enterprise API, CSV via built-in)
-clientside_callback(
-    """async function(n_clicks) {
-        if (n_clicks) {
-            const api = await dash_ag_grid.getApiAsync("data-grid");
-            api.exportDataAsExcel({exportAsExcelTable: true});
-        }
-        return dash_clientside.no_update;
-    }""",
-    Output('grid-export-excel-dummy', 'children'),
-    Input('grid-export-excel-btn', 'n_clicks'),
-    prevent_initial_call=True,
-)
+if Config.AG_GRID_ENTERPRISE_ENABLED:
+    clientside_callback(
+        """async function(n_clicks) {
+            if (n_clicks) {
+                const api = await dash_ag_grid.getApiAsync("data-grid");
+                api.exportDataAsExcel({exportAsExcelTable: true});
+            }
+            return dash_clientside.no_update;
+        }""",
+        Output('grid-export-excel-dummy', 'children'),
+        Input('grid-export-excel-btn', 'n_clicks'),
+        prevent_initial_call=True,
+    )
 
 clientside_callback(
     """async function(n_clicks) {
