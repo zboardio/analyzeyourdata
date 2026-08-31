@@ -5,7 +5,9 @@
 #   - Manual dispatch (on-demand deploy / rollback to any previously built SHA)
 #
 # Required Secrets (Settings → Secrets → Actions):
-#   - VDS_HOST: VDS IP address or hostname
+#   - TS_OAUTH_CLIENT_ID / TS_OAUTH_SECRET: Tailscale OAuth client — the VDS has
+#     no public IP; the runner joins the tailnet as an ephemeral node (tag:ci)
+#   - VDS_HOST: VDS tailnet address (MagicDNS name or 100.x.y.z IP)
 #   - VDS_USER: SSH username (e.g., root)
 #   - VDS_SSH_KEY: Private SSH key for deployment
 #
@@ -145,6 +147,15 @@ jobs:
     permissions: {}
 
     steps:
+      # The VDS is reachable only inside the tailnet — join it as an ephemeral
+      # node (auto-removed when the job ends) before opening the SSH session.
+      - name: Connect to tailnet
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
       - name: Determine image tag to deploy
         id: tag
         run: |
