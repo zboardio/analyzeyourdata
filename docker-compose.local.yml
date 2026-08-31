@@ -35,7 +35,10 @@ x-standard-deploy: &standard-deploy
       memory: 384M
 
 x-high-traffic-deploy: &high-traffic-deploy
-  replicas: 3
+  # Single-node Swarm: one replica per language is the baseline. en/es keep the
+  # higher CPU/memory ceiling below for burst headroom; horizontal surge is
+  # handled separately, not by raising this number.
+  replicas: 1
   update_config:
     parallelism: 1
     delay: 10s

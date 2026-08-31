@@ -357,14 +357,14 @@ Production runs on Docker Swarm with Cloudflare Tunnel routing:
           │    ┌──────────┴──────────┐        │
           │    │   Docker Swarm      │        │
           │  ┌─┴──┬──────┬──────┬───┴─┐      │
-          │  │en×3│es×3  │cs×1  │...×1│      │
+          │  │en×1│es×1  │cs×1  │...×1│      │
           │  │8050│8055  │8051  │     │      │
           │  └────┴──────┴──────┴─────┘      │
           └────────────────────────────────────┘
 
 Domain routing (Cloudflare Tunnel ingress):
-  analyzeyourdata.zboardio.com → :8050 → app-en (3 replicas)
-  analizatusdatos.zboardio.com → :8055 → app-es (3 replicas)
+  analyzeyourdata.zboardio.com → :8050 → app-en (1 replica)
+  analizatusdatos.zboardio.com → :8055 → app-es (1 replica)
   analyzujsvojedata.zboardio.com → :8051 → app-cs (1 replica)
   ... (15 languages total)
 
