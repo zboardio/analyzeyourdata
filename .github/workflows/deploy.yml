@@ -12,9 +12,10 @@
 #   - VDS_SSH_KEY: Private SSH key for deployment
 #
 # What it does:
-#   1. Build multi-arch Docker image (linux/amd64 + linux/arm64) tagged with
-#      git short SHA (plus :latest)
-#   2. Push both tags to GitHub Container Registry (ghcr.io)
+#   1. Build multi-arch Docker images (linux/amd64 + linux/arm64) tagged with
+#      git short SHA (plus :latest) — the application, and the Swarm autoscaler
+#      from its own ops/autoscaler context
+#   2. Push both tags of both images to GitHub Container Registry (ghcr.io)
 #   3. SSH to VDS and run `docker stack deploy` with IMAGE_TAG=<sha>
 #      Because the image reference in the service spec changes from one
 #      SHA to another, Swarm performs a proper rolling update without any
@@ -48,6 +49,7 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  AUTOSCALER_IMAGE_NAME: ${{ github.repository_owner }}/ayd-swarm-autoscaler
 
 jobs:
   test:
@@ -133,16 +135,73 @@ jobs:
       - name: Image digest
         run: echo "Image pushed with digest ${{ steps.meta.outputs.digest }}"
 
+
+  build_autoscaler:
+    name: Build and Push Autoscaler Image
+    runs-on: ubuntu-latest
+    needs: [test]
+    # Swarm operations tooling, built from its own context so nothing from the
+    # application tree can end up inside it (and vice versa — the root
+    # .dockerignore keeps ops/ out of the application image).
+    if: github.event_name == 'push' || github.event.inputs.image_tag == ''
+    permissions:
+      contents: read
+      packages: write
+
+    outputs:
+      git_commit: ${{ steps.vars.outputs.git_commit }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU (for arm64 cross-build)
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get git commit short hash
+        id: vars
+        run: echo "git_commit=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.AUTOSCALER_IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ steps.vars.outputs.git_commit }}
+
+      - name: Build and push autoscaler image
+        uses: docker/build-push-action@v5
+        with:
+          context: ops/autoscaler
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   deploy:
     name: Deploy to VDS
     runs-on: ubuntu-latest
-    needs: [test, build]
-    # Run when build succeeded (push path — implies tests passed), or when the
+    needs: [test, build, build_autoscaler]
+    # Run when both images built (push path — implies tests passed), or when the
     # manual dispatch pinned an existing image_tag (rollback path — test and
-    # build are both skipped by design). A failed test run never deploys.
+    # both builds are skipped by design). A failed test run never deploys.
     if: >-
       always() && !cancelled() &&
-      (needs.build.result == 'success' ||
+      ((needs.build.result == 'success' && needs.build_autoscaler.result == 'success') ||
        (github.event_name == 'workflow_dispatch' && github.event.inputs.image_tag != ''))
     permissions: {}
 
@@ -184,6 +243,11 @@ jobs:
             set -e
             IMAGE_TAG="${{ steps.tag.outputs.image_tag }}"
             export IMAGE_TAG
+            # Only set on the build path. Left unset on a rollback so the stack
+            # keeps the current autoscaler instead of demanding one built at the
+            # rolled-back SHA.
+            AUTOSCALER_TAG="${{ needs.build_autoscaler.outputs.git_commit || '' }}"
+            [ -n "${AUTOSCALER_TAG}" ] && export AUTOSCALER_TAG
 
             echo "=== Deployment started at $(date) ==="
             echo "Target image tag: ${IMAGE_TAG}"
@@ -195,6 +259,9 @@ jobs:
 
             echo "Pulling ghcr.io/zboardio/analyzeyourdata:${IMAGE_TAG}..."
             docker pull "ghcr.io/zboardio/analyzeyourdata:${IMAGE_TAG}"
+
+            echo "Pulling ghcr.io/zboardio/ayd-swarm-autoscaler:${AUTOSCALER_TAG:-latest}..."
+            docker pull "ghcr.io/zboardio/ayd-swarm-autoscaler:${AUTOSCALER_TAG:-latest}"
 
             echo "Deploying Swarm stack (IMAGE_TAG=${IMAGE_TAG})..."
             docker stack deploy -c docker-compose.cicd.yml ayd --with-registry-auth
@@ -249,7 +316,7 @@ jobs:
   notify-failure:
     name: Notify on Failure
     runs-on: ubuntu-latest
-    needs: [test, build, deploy]
+    needs: [test, build, build_autoscaler, deploy]
     if: failure()
     permissions: {}
 

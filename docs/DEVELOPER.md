@@ -85,6 +85,18 @@ Production runs on Docker Swarm — one service per language (15 total), each ba
 
 Both Swarm files define rolling-update policies (`parallelism: 1`, `order: start-first`, `failure_action: rollback`) and resource limits per service.
 
+### Autoscaling (Swarm only)
+
+Swarm has no built-in autoscaling. `ops/autoscaler/` is a small separate
+service that samples container CPU through the Docker Engine API and moves
+replica counts between the `ayd.autoscale.min` / `ayd.autoscale.max` labels on
+each service.
+
+It is operations tooling, not part of the application: its own build context
+(`ops/autoscaler/`), its own image, and excluded from the application image by
+the root `.dockerignore`. Single-container self-hosting does not involve it at
+all. See `ops/autoscaler/README.md`.
+
 ### CI/CD Pipeline
 
 Automated deploys live in `.github/workflows/deploy.yml`. On every push to `main`:

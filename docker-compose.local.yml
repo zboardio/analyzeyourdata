@@ -16,7 +16,14 @@ networks:
         - subnet: 10.10.0.0/24
 
 x-standard-deploy: &standard-deploy
+  # Baseline. `docker stack deploy` always resets Replicas to this value, so a
+  # surged service drops back here on every deploy and the autoscaler raises it
+  # again within a couple of ticks.
   replicas: 1
+  labels:
+    ayd.autoscale: "true"
+    ayd.autoscale.min: "1"
+    ayd.autoscale.max: "3"
   update_config:
     parallelism: 1
     delay: 10s
@@ -35,10 +42,14 @@ x-standard-deploy: &standard-deploy
       memory: 384M
 
 x-high-traffic-deploy: &high-traffic-deploy
-  # Single-node Swarm: one replica per language is the baseline. en/es keep the
-  # higher CPU/memory ceiling below for burst headroom; horizontal surge is
-  # handled separately, not by raising this number.
+  # Single-node Swarm: one replica per language is the baseline; en/es keep the
+  # higher CPU/memory ceiling below. Horizontal surge up to ayd.autoscale.max is
+  # applied at runtime by the autoscaler service - see ops/autoscaler/README.md.
   replicas: 1
+  labels:
+    ayd.autoscale: "true"
+    ayd.autoscale.min: "1"
+    ayd.autoscale.max: "3"
   update_config:
     parallelism: 1
     delay: 10s
@@ -201,3 +212,34 @@ services:
       - APP_LANGUAGE=uk
     deploy:
       <<: *standard-deploy
+
+  # Swarm autoscaler. Not part of the application - separate image built from
+  # ops/autoscaler/, never bundled into ghcr.io/zboardio/analyzeyourdata.
+  # Holds the Docker socket, so it must sit on a manager node.
+  autoscaler:
+    image: ayd-swarm-autoscaler:latest
+    # Tuning belongs to the host, not the repo: the replica ceiling depends on
+    # the node's cores, and the dry-run switch is an operational toggle that
+    # must not need a commit and a CI build to flip. Copy
+    # .env.example.autoscaler to .env.autoscaler on the host and edit there.
+    # Every value has a default in ops/autoscaler/autoscaler.py, so the file
+    # only needs the lines you actually want to change -- but it must exist,
+    # exactly like .env does for the application services.
+    env_file: .env.autoscaler
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 32M
