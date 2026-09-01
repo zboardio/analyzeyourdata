@@ -1,1 +1,3 @@
 pytest>=8.0
+# Structural assertions on the Swarm stack files (tests/test_autoscaler.py)
+PyYAML>=6.0

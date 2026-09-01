@@ -41,10 +41,13 @@ dist/
 .python-version
 
 # dotenv and environment files
+# Every .env* is ignored except the committed example templates. The broad
+# .env.* rule matters: this is a public repository, and per-component files
+# like .env.autoscaler must never be staged by a `git add .`.
 .env
-.env.local
-.env.production
-.env.*.local
+.env.*
+!.env.example
+!.env.example.*
 .venv
 env/
 venv/

@@ -1,0 +1,58 @@
+# Build context filter for the APPLICATION image (Dockerfile at the repo root).
+#
+# The Dockerfile ends in `COPY . .`, so anything not excluded here ships inside
+# the public image that people self-host. Two rules follow from that:
+#   1. Credentials must never be in the context -- a local `docker build .` runs
+#      against a working tree that holds a real .env.
+#   2. Anything that is not the application itself stays out, so self-hosters
+#      get the app and nothing else.
+# tests/test_autoscaler.py asserts the entries below still exist.
+
+# --- Credentials: never in an image layer ---
+.env
+.env.*
+env/
+
+# --- Version control ---
+.git
+.gitignore
+.gitattributes
+.github/
+
+# --- Swarm operations tooling: infrastructure, not application ---
+ops/
+
+# --- Tests and dev tooling ---
+tests/
+requirements-dev.txt
+.pytest_cache/
+.pre-commit-config.yaml
+.coverage
+htmlcov/
+
+# --- Project documentation and meta (assets/markdown/ is app content, kept) ---
+docs/
+README.md
+CLAUDE.md
+PRIVACY.md
+SECURITY.md
+
+# --- Orchestration files: the image is orchestrator-agnostic ---
+docker-compose*.yml
+Dockerfile
+.dockerignore
+
+# --- Python and tooling caches ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# --- Editor and OS noise ---
+.claude/
+.idea/
+.vscode/
+.DS_Store

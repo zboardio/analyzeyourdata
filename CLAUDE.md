@@ -37,12 +37,14 @@ analyzeyourdata-en/
 ├── requirements.txt                # Pinned dependencies
 ├── requirements-dev.txt            # Dev/test dependencies (pytest)
 ├── Dockerfile                      # Production container
+├── .dockerignore                   # Keeps secrets, tests, docs and ops/ out of the image
 ├── docker-compose.yml              # Local development (15 services)
 ├── docker-compose.single.yml       # Public single-container deployment (GHCR image)
 ├── docker-compose.cicd.yml         # Production Swarm deployment with replicas CI/CD build
 ├── docker-compose.local.yml        # Production Swarm deployment with replicas manual build
 ├── .env                            # Real credentials (gitignored)
 ├── .env.example                    # Env var template
+├── .env.example.autoscaler         # Template for .env.autoscaler (host tuning)
 ├── env/                            # Credential files (gitignored, never read)
 ├── docs/
 │   ├── README.md                   # Public docs index
@@ -108,8 +110,14 @@ analyzeyourdata-en/
 │   │   └── uk/                     # Ukrainian
 │   ├── image/                      # Logo, favicon, images
 │   └── video/                      # Tutorial videos
+├── ops/                            # Swarm operations tooling (never in the app image)
+│   └── autoscaler/                 # CPU-driven replica autoscaler
+│       ├── autoscaler.py           # Dependency-free Engine API client + scaling loop
+│       ├── Dockerfile              # Own build context, own GHCR package
+│       └── README.md               # Labels, env vars, caveats
 ├── tests/                          # Pytest suite (run in CI before every build)
 │   ├── conftest.py
+│   ├── test_autoscaler.py
 │   ├── test_chart_factory.py
 │   ├── test_config.py
 │   ├── test_data_processing.py
@@ -299,6 +307,29 @@ app.py
 | `AG_GRID_ENABLE_ENTERPRISE` | `auto` | `auto` = Enterprise only with key / `true` = force unlicensed evaluation (watermark) / `false` = force Community |
 | `SECRET_KEY` | `dev-secret-key-...` | Session secret |
 
+### Swarm Autoscaler (`.env.autoscaler`)
+
+Read only by the `autoscaler` service, which has no `env_file: .env` — the one
+container holding the Docker socket is not also handed the application's
+secrets. Copy `.env.example.autoscaler` to `.env.autoscaler` on the host; the
+file must exist or `docker stack deploy` fails, exactly like `.env`. Every value
+has a default in `ops/autoscaler/autoscaler.py`.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AUTOSCALER_DRY_RUN` | `false` | Log decisions without acting. Operational toggle — edit the host file and redeploy, no commit needed. |
+| `AUTOSCALER_INTERVAL` | `60` | Seconds between ticks |
+| `AUTOSCALER_MAX_TOTAL_REPLICAS` | `0` | Stack-wide replica ceiling across watched services; 0 = no cap. Size to the node. |
+| `AUTOSCALER_MIN` / `AUTOSCALER_MAX` | `1` / `3` | Bounds when a service carries no `ayd.autoscale.min/max` label |
+| `AUTOSCALER_CPU_HIGH` / `AUTOSCALER_CPU_LOW` | `75` / `25` | Thresholds, as a percentage of the service's *own* CPU limit |
+| `AUTOSCALER_UP_SAMPLES` | `2` | Consecutive busy samples before scaling up |
+| `AUTOSCALER_DOWN_SAMPLES` | `5` | Consecutive idle samples before scaling down |
+| `AUTOSCALER_COOLDOWN` | `180` | Seconds after a change before another is considered |
+| `AUTOSCALER_LOG_LEVEL` | `INFO` | Python log level |
+
+Note: `AUTOSCALER_TAG` is **not** in this file — it is a shell variable exported
+by the deploy step to pin the autoscaler image, like `IMAGE_TAG`.
+
 ## Commands
 
 ```bash
@@ -327,6 +358,10 @@ docker service ps ayd_app-en                               # View replicas
 docker service logs ayd_app-en --follow                    # Stream logs
 docker service scale ayd_app-en=5                          # Scale up
 docker service rollback ayd_app-en                         # Rollback (one step)
+
+# Swarm autoscaler (ops tooling, separate image)
+docker build -t ayd-swarm-autoscaler:latest ops/autoscaler
+docker service logs ayd_autoscaler --follow                 # Watch scaling decisions
 
 # Gunicorn (without Docker)
 gunicorn app:server -b 0.0.0.0:8050 --workers 2 --timeout 120
@@ -373,6 +408,39 @@ Ports: 8050-8064 (see docker-compose.cicd.yml for exact mapping)
 
 Each service is identical code, differentiated only by `APP_LANGUAGE` env var.
 Docker Swarm automatically load-balances requests across replicas.
+
+### Autoscaling
+
+Swarm has no native autoscaling, so `ops/autoscaler/` provides it: a small
+dependency-free service on the manager node that samples container CPU through
+the Docker Engine API and moves replica counts between the labelled bounds.
+
+```yaml
+# Both deploy anchors in docker-compose.cicd.yml carry:
+labels:
+  ayd.autoscale: "true"
+  ayd.autoscale.min: "1"
+  ayd.autoscale.max: "3"
+```
+
+Three things worth knowing:
+
+- **It is not part of the application.** Separate image, own build context
+  (`ops/autoscaler/`), own GHCR package (`ayd-swarm-autoscaler`), own tag
+  variable `AUTOSCALER_TAG` so an application rollback never demands a matching
+  autoscaler build. The root `.dockerignore` keeps `ops/` out of the app image,
+  and `tests/test_autoscaler.py` asserts that boundary holds.
+- **CPU is measured against the service's own limit**, not the host, so 80%
+  means the same for a service capped at 1.5 CPU as for one capped at 1.0.
+- **Tuning lives on the host**, in `.env.autoscaler` (template:
+  `.env.example.autoscaler`). Node-sized limits and the dry-run toggle must not
+  need a commit and a CI build to change. Note `docker stack deploy` does *not*
+  read `.env` for `${...}` interpolation — only `env_file:` and exported shell
+  variables reach a stack service.
+- **`docker stack deploy` always resets replicas** to the compose value.
+  Omitting the `replicas` key does not help — the daemon substitutes `1`. So a
+  surged service drops to baseline on every deploy and is raised again within a
+  couple of ticks.
 
 ## Known Upstream Issues
 
