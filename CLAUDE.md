@@ -325,6 +325,9 @@ has a default in `ops/autoscaler/autoscaler.py`.
 | `AUTOSCALER_UP_SAMPLES` | `2` | Consecutive busy samples before scaling up |
 | `AUTOSCALER_DOWN_SAMPLES` | `5` | Consecutive idle samples before scaling down |
 | `AUTOSCALER_COOLDOWN` | `180` | Seconds after a change before another is considered |
+| `AUTOSCALER_HEAL` | `true` | Force an update of a service that is short of live tasks, so Swarm refills it |
+| `AUTOSCALER_HEAL_SAMPLES` | `3` | Consecutive short samples before healing |
+| `AUTOSCALER_HEAL_COOLDOWN` | `300` | Seconds between heal attempts on the same service |
 | `AUTOSCALER_LOG_LEVEL` | `INFO` | Python log level |
 
 Note: `AUTOSCALER_TAG` is **not** in this file — it is a shell variable exported
@@ -423,7 +426,7 @@ labels:
   ayd.autoscale.max: "3"
 ```
 
-Three things worth knowing:
+Things worth knowing:
 
 - **It is not part of the application.** Separate image, own build context
   (`ops/autoscaler/`), own GHCR package (`ayd-swarm-autoscaler`), own tag
@@ -441,6 +444,16 @@ Three things worth knowing:
   Omitting the `replicas` key does not help — the daemon substitutes `1`. So a
   surged service drops to baseline on every deploy and is raised again within a
   couple of ticks.
+- **Stack services restart on `condition: any`, with no `max_attempts`.**
+  `on-failure` never restarts a clean exit (gunicorn exits 0 on SIGTERM), and
+  `max_attempts` without a `window` is a lifetime budget after which Swarm
+  abandons the task slot — either leaves a service at 0/1 until the next
+  deploy. `tests/test_autoscaler.py` asserts the policy on both stack files.
+- **The autoscaler also heals.** A service with fewer live tasks than its spec
+  for `AUTOSCALER_HEAL_SAMPLES` ticks gets a forced update (the `ForceUpdate`
+  counter, as `docker service update --force`). An unchanged-spec update does
+  *not* refill an abandoned slot — verified on a live Swarm. Safety net behind
+  the restart policy; details in `ops/autoscaler/README.md`.
 
 ## Known Upstream Issues
 

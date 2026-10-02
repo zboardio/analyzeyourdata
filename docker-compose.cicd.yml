@@ -31,9 +31,12 @@ x-standard-deploy: &standard-deploy
     failure_action: rollback
     order: start-first
   restart_policy:
-    condition: on-failure
-    delay: 5s
-    max_attempts: 3
+    # `any`, not `on-failure`: gunicorn exits 0 on SIGTERM, and a clean exit is
+    # never restarted under `on-failure`. No max_attempts either - without a
+    # `window` Swarm counts it over the task slot's whole lifetime and then
+    # gives the slot up, leaving the service at 0/1 until the next deploy.
+    condition: any
+    delay: 10s
   resources:
     limits:
       cpus: '1.0'
@@ -57,9 +60,12 @@ x-high-traffic-deploy: &high-traffic-deploy
     failure_action: rollback
     order: start-first
   restart_policy:
-    condition: on-failure
-    delay: 5s
-    max_attempts: 3
+    # `any`, not `on-failure`: gunicorn exits 0 on SIGTERM, and a clean exit is
+    # never restarted under `on-failure`. No max_attempts either - without a
+    # `window` Swarm counts it over the task slot's whole lifetime and then
+    # gives the slot up, leaving the service at 0/1 until the next deploy.
+    condition: any
+    delay: 10s
   resources:
     limits:
       cpus: '1.5'
@@ -238,7 +244,9 @@ services:
         constraints:
           - node.role == manager
       restart_policy:
-        condition: on-failure
+        # `any`: the service that heals the others must itself come back
+        # after a clean exit.
+        condition: any
         delay: 10s
       resources:
         limits:

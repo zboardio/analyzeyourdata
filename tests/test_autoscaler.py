@@ -257,6 +257,233 @@ def test_a_fresh_state_is_not_treated_as_just_changed():
 
 
 # ---------------------------------------------------------------------------
+# Healing: a service short of tasks gets a forced update
+# ---------------------------------------------------------------------------
+
+
+def make_task(desired="running", state="running", container="c1"):
+    """Task shaped like the Engine API's /tasks entries."""
+    return {
+        "DesiredState": desired,
+        "Status": {"State": state, "ContainerStatus": {"ContainerID": container}},
+    }
+
+
+def test_live_tasks_counts_running_and_starting_tasks():
+    tasks = [
+        make_task("running", "running"),
+        make_task("running", "starting"),
+        make_task("running", "pending"),
+        # Replacement created by the restart supervisor, waiting out its delay.
+        make_task("ready", "ready"),
+    ]
+    assert autoscaler.live_tasks(tasks) == 4
+
+
+@pytest.mark.parametrize(
+    "task",
+    [
+        make_task("shutdown", "complete"),
+        make_task("shutdown", "failed"),
+        make_task("shutdown", "shutdown"),
+        make_task("remove", "running"),
+        # Exited, and the orchestrator has not caught up with it yet.
+        make_task("running", "complete"),
+        make_task("running", "failed"),
+    ],
+    ids=["clean exit", "failed", "shut down", "being removed", "exited 0 unprocessed", "failed unprocessed"],
+)
+def test_live_tasks_ignores_tasks_swarm_is_finished_with(task):
+    assert autoscaler.live_tasks([task]) == 0
+
+
+def test_running_container_ids_only_lists_tasks_meant_to_stay_up():
+    tasks = [
+        make_task("running", "running", container="up"),
+        make_task("running", "starting", container="booting"),
+        make_task("shutdown", "running", container="draining"),
+        make_task("shutdown", "complete", container="gone"),
+    ]
+    assert autoscaler.running_container_ids(tasks) == ["up"]
+
+
+HEAL_NOW = Policy(heal_samples=3, heal_cooldown=300.0)
+
+
+def test_one_short_sample_is_not_enough_to_heal():
+    # A normal restart leaves a brief gap; that must not look like an outage.
+    heal, state = autoscaler.heal_decision(1, 0, HEAL_NOW, State(), now=100.0)
+    assert not heal
+    assert state.missing_streak == 1
+
+
+def test_heals_once_the_short_streak_is_met():
+    heal, state = autoscaler.heal_decision(1, 0, HEAL_NOW, State(missing_streak=2), now=100.0)
+    assert heal
+    assert state.missing_streak == 0
+    assert state.last_heal == 100.0
+
+
+def test_heals_a_surged_service_that_lost_one_of_its_tasks():
+    heal, _ = autoscaler.heal_decision(3, 2, HEAL_NOW, State(missing_streak=2), now=100.0)
+    assert heal
+
+
+def test_recovery_clears_the_short_streak():
+    heal, state = autoscaler.heal_decision(1, 1, HEAL_NOW, State(missing_streak=2), now=100.0)
+    assert not heal
+    assert state.missing_streak == 0
+
+
+def test_heal_cooldown_spaces_out_repeated_attempts():
+    # A service that keeps dying is retried, but not on every tick.
+    recent = State(missing_streak=2, last_heal=50.0)
+    heal, state = autoscaler.heal_decision(1, 0, HEAL_NOW, recent, now=100.0)
+    assert not heal
+    assert state.missing_streak == 3
+
+    heal, _ = autoscaler.heal_decision(1, 0, HEAL_NOW, state, now=351.0)
+    assert heal
+
+
+def test_a_fresh_state_is_not_treated_as_just_healed():
+    heal, _ = autoscaler.heal_decision(1, 0, HEAL_NOW, State(missing_streak=2), now=30.0)
+    assert heal
+
+
+def test_healing_does_not_touch_the_scaling_state():
+    before = State(high_streak=1, low_streak=2, missing_streak=2, last_change=40.0)
+    _, after = autoscaler.heal_decision(1, 0, HEAL_NOW, before, now=100.0)
+    assert (after.high_streak, after.low_streak, after.last_change) == (1, 2, 40.0)
+
+
+def test_force_update_bumps_the_counter_and_keeps_the_rest_of_the_spec():
+    sent = []
+    api = autoscaler.DockerAPI()
+    api.request = lambda method, path, params=None, body=None: sent.append((method, path, params, body))
+    service = {
+        "ID": "svc1",
+        "Version": {"Index": 7},
+        "Spec": {"Name": "ayd_app-en", "TaskTemplate": {"ForceUpdate": 2, "ContainerSpec": {"Image": "img"}}},
+    }
+    api.force_update(service)
+    method, path, params, body = sent[0]
+    assert (method, path, params) == ("POST", "/services/svc1/update", {"version": 7})
+    assert body["TaskTemplate"] == {"ForceUpdate": 3, "ContainerSpec": {"Image": "img"}}
+    assert body["Name"] == "ayd_app-en"
+
+
+class FakeAPI:
+    """Stands in for DockerAPI: one service, scripted tasks, recorded writes."""
+
+    def __init__(self, tasks, replicas=1, update_state=None, fail_updates=False):
+        self.tasks = tasks
+        self.fail_updates = fail_updates
+        self.forced = []
+        self.scaled = []
+        self.service = {
+            "ID": "svc1",
+            "Version": {"Index": 7},
+            "Spec": {
+                "Name": "ayd_app-en",
+                "Labels": {"ayd.autoscale": "true"},
+                "Mode": {"Replicated": {"Replicas": replicas}},
+            },
+        }
+        if update_state:
+            self.service["UpdateStatus"] = {"State": update_state}
+
+    def autoscaled_services(self):
+        return [self.service]
+
+    def service_tasks(self, service_id):
+        return self.tasks
+
+    def container_stats(self, container_id):
+        return make_stats(cpu_delta=4_000_000_000, system_delta=4_000_000_000, online_cpus=4)
+
+    def force_update(self, service):
+        if self.fail_updates:
+            raise autoscaler.DockerError("update out of sequence")
+        self.forced.append(service["ID"])
+
+    def set_replicas(self, service, target):
+        self.scaled.append(target)
+
+
+def make_autoscaler(api, **overrides):
+    policy = Policy(heal_samples=2, heal_cooldown=300.0, up_samples=1, cooldown=0.0)
+    settings = autoscaler.Settings(**{"defaults": policy, **overrides})
+    return autoscaler.Autoscaler(api, settings)
+
+
+DEAD = [make_task("shutdown", "complete")]
+
+
+def test_tick_forces_an_update_on_a_service_whose_only_task_exited():
+    api = FakeAPI(DEAD)
+    scaler = make_autoscaler(api)
+    scaler.tick(now=100.0)
+    assert api.forced == []
+    scaler.tick(now=160.0)
+    assert api.forced == ["svc1"]
+    assert api.scaled == []
+
+
+def test_tick_does_not_heal_and_scale_in_the_same_pass():
+    # One live task of two, and that one is pegged: both a heal and a scale-up
+    # are due, but the heal's update makes the service version stale.
+    api = FakeAPI([make_task(), make_task("shutdown", "failed")], replicas=2)
+    scaler = make_autoscaler(api, defaults=Policy(heal_samples=1, up_samples=1, cooldown=0.0))
+    scaler.tick(now=100.0)
+    assert api.forced == ["svc1"]
+    assert api.scaled == []
+
+
+def test_tick_leaves_a_healthy_service_alone():
+    api = FakeAPI([make_task()])
+    scaler = make_autoscaler(api, defaults=Policy(heal_samples=1, up_samples=99))
+    scaler.tick(now=100.0)
+    scaler.tick(now=160.0)
+    assert api.forced == []
+    assert api.scaled == []
+
+
+def test_tick_dry_run_reports_but_does_not_act():
+    api = FakeAPI(DEAD)
+    scaler = make_autoscaler(api, dry_run=True)
+    scaler.tick(now=100.0)
+    scaler.tick(now=160.0)
+    assert api.forced == []
+
+
+def test_tick_does_not_heal_while_an_update_is_rolling():
+    api = FakeAPI(DEAD, update_state="updating")
+    scaler = make_autoscaler(api)
+    for now in (100.0, 160.0, 220.0):
+        scaler.tick(now=now)
+    assert api.forced == []
+
+
+def test_tick_healing_can_be_switched_off():
+    api = FakeAPI(DEAD)
+    scaler = make_autoscaler(api, heal=False)
+    for now in (100.0, 160.0, 220.0):
+        scaler.tick(now=now)
+    assert api.forced == []
+
+
+def test_tick_retries_a_failed_heal_on_the_next_pass():
+    api = FakeAPI(DEAD, fail_updates=True)
+    scaler = make_autoscaler(api)
+    scaler.tick(now=100.0)
+    scaler.tick(now=160.0)
+    api.fail_updates = False
+    scaler.tick(now=220.0)  # no cooldown: the failed attempt did not count
+    assert api.forced == ["svc1"]
+
+
+# ---------------------------------------------------------------------------
 # Image boundary: ops/ must never reach the published application image
 # ---------------------------------------------------------------------------
 
@@ -336,6 +563,19 @@ def test_language_services_keep_a_single_replica_baseline(stack_file):
 
 
 @pytest.mark.parametrize("stack_file", STACK_FILES)
+def test_no_stack_service_can_be_left_dead_by_its_restart_policy(stack_file):
+    # `on-failure` skips a clean exit (gunicorn exits 0 on SIGTERM), and
+    # max_attempts without a window is a lifetime budget: either one leaves a
+    # service at 0/1 until the next deploy.
+    for name, service in load_compose(stack_file)["services"].items():
+        policy = service["deploy"]["restart_policy"]
+        assert policy["condition"] == "any", f"{name} would not restart after a clean exit"
+        assert "max_attempts" not in policy or "window" in policy, (
+            f"{name}: max_attempts without window is counted over the task's whole lifetime"
+        )
+
+
+@pytest.mark.parametrize("stack_file", STACK_FILES)
 def test_autoscaler_never_scales_itself(stack_file):
     autoscaler_service = load_compose(stack_file)["services"]["autoscaler"]
     labels = (autoscaler_service.get("deploy") or {}).get("labels") or {}
@@ -365,7 +605,7 @@ def test_autoscaler_env_template_is_committed():
     template = REPO_ROOT / ".env.example.autoscaler"
     assert template.is_file(), "env_file has no committed template to copy from"
     body = template.read_text()
-    for key in ["AUTOSCALER_DRY_RUN", "AUTOSCALER_MAX_TOTAL_REPLICAS", "AUTOSCALER_INTERVAL"]:
+    for key in ["AUTOSCALER_DRY_RUN", "AUTOSCALER_MAX_TOTAL_REPLICAS", "AUTOSCALER_INTERVAL", "AUTOSCALER_HEAL"]:
         assert key in body
 
 
