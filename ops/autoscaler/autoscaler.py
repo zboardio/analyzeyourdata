@@ -4,6 +4,10 @@ Watches services labelled ``ayd.autoscale=true``, samples the CPU usage of their
 running containers through the Docker Engine API, and moves the replica count
 between the per-service minimum and maximum.
 
+It also heals: a service left with fewer live tasks than its spec asks for --
+Swarm stops replacing a task once the restart policy is exhausted or does not
+apply -- gets a forced update, which makes the orchestrator fill the gap.
+
 This is *operations* tooling for the Swarm deployment, not part of the
 application. It is deliberately dependency-free -- the Engine API is spoken
 directly over the unix socket -- so the image is a Python base layer plus this
@@ -31,6 +35,13 @@ from concurrent.futures import ThreadPoolExecutor
 
 LABEL_PREFIX = os.environ.get("AUTOSCALER_LABEL_PREFIX", "ayd.autoscale")
 HEARTBEAT_PATH = os.environ.get("AUTOSCALER_HEARTBEAT", "/tmp/autoscaler.heartbeat")
+
+# Desired states meaning Swarm is finished with a task, and observed states a
+# task never leaves. A task in neither set is running or on its way to it.
+_DEAD_DESIRED_STATES = frozenset({"shutdown", "remove"})
+_TERMINAL_STATES = frozenset({"complete", "shutdown", "failed", "rejected", "remove", "orphaned"})
+# A rolling update is moving tasks around; the updater owns the service then.
+_UPDATING_STATES = frozenset({"updating", "rollback_started"})
 
 log = logging.getLogger("autoscaler")
 
@@ -99,18 +110,11 @@ class DockerAPI:
         filters = json.dumps({"label": [f"{LABEL_PREFIX}=true"]})
         return self.request("GET", "/services", params={"filters": filters}) or []
 
-    def running_container_ids(self, service_id: str) -> list[str]:
-        filters = json.dumps({"service": [service_id], "desired-state": ["running"]})
-        tasks = self.request("GET", "/tasks", params={"filters": filters}) or []
-        ids = []
-        for task in tasks:
-            status = task.get("Status") or {}
-            if status.get("State") != "running":
-                continue
-            container_id = (status.get("ContainerStatus") or {}).get("ContainerID")
-            if container_id:
-                ids.append(container_id)
-        return ids
+    def service_tasks(self, service_id: str) -> list[dict]:
+        """Every task Swarm still remembers for the service, finished ones
+        included -- the healer needs to see what is missing, not only what runs."""
+        filters = json.dumps({"service": [service_id]})
+        return self.request("GET", "/tasks", params={"filters": filters}) or []
 
     def container_stats(self, container_id: str) -> dict | None:
         try:
@@ -121,15 +125,29 @@ class DockerAPI:
             log.warning("stats failed for %s: %s", container_id[:12], exc)
             return None
 
-    def set_replicas(self, service: dict, target: int) -> None:
-        spec = service["Spec"]
-        spec["Mode"]["Replicated"]["Replicas"] = target
+    def update_service(self, service: dict, spec: dict) -> None:
         self.request(
             "POST",
             f"/services/{service['ID']}/update",
             params={"version": service["Version"]["Index"]},
             body=spec,
         )
+
+    def set_replicas(self, service: dict, target: int) -> None:
+        spec = service["Spec"]
+        spec["Mode"]["Replicated"]["Replicas"] = target
+        self.update_service(service, spec)
+
+    def force_update(self, service: dict) -> None:
+        """What `docker service update --force` does: bump the task template's
+        ForceUpdate counter so every slot is rolled, the abandoned ones
+        included. Posting the spec back unchanged is not enough -- Swarm treats
+        a slot whose last task should not be restarted as still occupied, and
+        only replaces it once the task template differs."""
+        spec = service["Spec"]
+        template = spec.setdefault("TaskTemplate", {})
+        template["ForceUpdate"] = int(template.get("ForceUpdate") or 0) + 1
+        self.update_service(service, spec)
 
 
 # --------------------------------------------------------------------------
@@ -148,6 +166,8 @@ class Policy:
     up_samples: int = 2
     down_samples: int = 5
     cooldown: float = 180.0
+    heal_samples: int = 3
+    heal_cooldown: float = 300.0
 
 
 @dataclasses.dataclass(frozen=True)
@@ -156,9 +176,11 @@ class State:
 
     high_streak: int = 0
     low_streak: int = 0
+    missing_streak: int = 0
     # -inf, not 0.0: time.monotonic() is small just after a host boot, and a
     # zero default would impose a phantom cooldown on the first ticks.
     last_change: float = float("-inf")
+    last_heal: float = float("-inf")
 
 
 @dataclasses.dataclass(frozen=True)
@@ -198,6 +220,59 @@ def cpu_percent_of_limit(stats: dict, limit_nano_cpus: int = 0) -> float | None:
     if allowance <= 0:
         return None
     return (cores_used / allowance) * 100.0
+
+
+def running_container_ids(tasks: list[dict]) -> list[str]:
+    """Containers of the tasks that are up and meant to stay up."""
+    ids = []
+    for task in tasks:
+        status = task.get("Status") or {}
+        if task.get("DesiredState") != "running" or status.get("State") != "running":
+            continue
+        container_id = (status.get("ContainerStatus") or {}).get("ContainerID")
+        if container_id:
+            ids.append(container_id)
+    return ids
+
+
+def live_tasks(tasks: list[dict]) -> int:
+    """Tasks that are running or still on their way to it.
+
+    A task that is pending, starting or waiting out its restart delay counts,
+    so an ordinary restart or rollout never reads as a gap. Only a task Swarm
+    has finished with -- and not replaced -- is missing.
+    """
+    return sum(
+        1
+        for task in tasks
+        if task.get("DesiredState") not in _DEAD_DESIRED_STATES
+        and (task.get("Status") or {}).get("State") not in _TERMINAL_STATES
+    )
+
+
+def update_in_progress(service: dict) -> bool:
+    return (service.get("UpdateStatus") or {}).get("State") in _UPDATING_STATES
+
+
+def heal_decision(
+    desired: int, alive: int, policy: Policy, state: State, now: float
+) -> tuple[bool, State]:
+    """Whether to ask Swarm to refill a service that is short of tasks. Pure.
+
+    Swarm gives up on a task for good once its restart policy is exhausted, or
+    never applied (a clean exit under `on-failure`); the service then stays
+    short until its next update. Several consecutive short samples are
+    required so the brief gap of a normal restart is not mistaken for that.
+    """
+    if alive >= desired:
+        return False, dataclasses.replace(state, missing_streak=0)
+
+    state = dataclasses.replace(state, missing_streak=state.missing_streak + 1)
+    if state.missing_streak < policy.heal_samples:
+        return False, state
+    if now - state.last_heal < policy.heal_cooldown:
+        return False, state
+    return True, dataclasses.replace(state, missing_streak=0, last_heal=now)
 
 
 def policy_from_labels(labels: dict, defaults: Policy) -> Policy:
@@ -285,6 +360,7 @@ def _env_bool(name: str, default: bool) -> bool:
 class Settings:
     interval: float = 60.0
     dry_run: bool = False
+    heal: bool = True
     max_total_replicas: int = 0  # 0 = no stack-wide cap
     socket_path: str = "/var/run/docker.sock"
     defaults: Policy = dataclasses.field(default_factory=Policy)
@@ -300,10 +376,13 @@ class Settings:
             up_samples=int(env.get("AUTOSCALER_UP_SAMPLES", 2)),
             down_samples=int(env.get("AUTOSCALER_DOWN_SAMPLES", 5)),
             cooldown=float(env.get("AUTOSCALER_COOLDOWN", 180)),
+            heal_samples=int(env.get("AUTOSCALER_HEAL_SAMPLES", 3)),
+            heal_cooldown=float(env.get("AUTOSCALER_HEAL_COOLDOWN", 300)),
         )
         return cls(
             interval=float(env.get("AUTOSCALER_INTERVAL", 60)),
             dry_run=_env_bool("AUTOSCALER_DRY_RUN", False),
+            heal=_env_bool("AUTOSCALER_HEAL", True),
             max_total_replicas=int(env.get("AUTOSCALER_MAX_TOTAL_REPLICAS", 0)),
             socket_path=env.get("DOCKER_SOCKET", "/var/run/docker.sock"),
             defaults=defaults,
@@ -321,11 +400,10 @@ class Autoscaler:
         log.info("shutdown requested")
         self._stop = True
 
-    def service_cpu(self, service_id: str, limit_nano_cpus: int) -> float | None:
+    def service_cpu(self, container_ids: list[str], limit_nano_cpus: int) -> float | None:
         """Mean CPU across the service's running containers, as a percentage of
         each container's allowance. Sampling is concurrent because a single
         stats read blocks for about a second."""
-        container_ids = self.api.running_container_ids(service_id)
         if not container_ids:
             return None
         with ThreadPoolExecutor(max_workers=min(8, len(container_ids))) as pool:
@@ -368,15 +446,40 @@ class Autoscaler:
                 .get("NanoCPUs")
                 or 0
             )
-            cpu = self.service_cpu(service["ID"], limit)
-            can_grow = cap <= 0 or total < cap
+            tasks = self.api.service_tasks(service["ID"])
+            alive = live_tasks(tasks)
             state = self.states.get(name, State())
+
+            if self.settings.heal and not update_in_progress(service):
+                heal, healed = heal_decision(current, alive, policy, state, now)
+                self.states[name] = healed
+                if heal:
+                    log.warning(
+                        "%s: %d/%d tasks alive -- forcing an update so Swarm refills it%s",
+                        name, alive, current,
+                        " [dry run]" if self.settings.dry_run else "",
+                    )
+                    if not self.settings.dry_run:
+                        try:
+                            self.api.force_update(service)
+                        except (DockerError, OSError) as exc:
+                            log.error("%s: heal failed, will retry next tick: %s", name, exc)
+                            self.states[name] = state
+                    # The update just posted moved the service's version on;
+                    # scaling waits for the next tick's fresh read.
+                    continue
+                state = healed
+
+            cpu = self.service_cpu(running_container_ids(tasks), limit)
+            can_grow = cap <= 0 or total < cap
             decision = decide(current, cpu, policy, state, now, can_grow=can_grow)
             self.states[name] = decision.state
 
             shown = f"{cpu:.0f}%" if cpu is not None else "n/a"
             if decision.target == current:
-                log.info("%s: %d replicas, cpu %s -- %s", name, current, shown, decision.reason)
+                log.info(
+                    "%s: %d/%d tasks alive, cpu %s -- %s", name, alive, current, shown, decision.reason
+                )
                 continue
 
             log.info(
@@ -432,7 +535,7 @@ def main() -> int:
         return 1
 
     log.info(
-        "autoscaler started (api %s, interval %.0fs, defaults min=%d max=%d high=%.0f%% low=%.0f%%%s%s)",
+        "autoscaler started (api %s, interval %.0fs, defaults min=%d max=%d high=%.0f%% low=%.0f%%%s%s%s)",
         version,
         settings.interval,
         settings.defaults.min_replicas,
@@ -440,6 +543,7 @@ def main() -> int:
         settings.defaults.cpu_high,
         settings.defaults.cpu_low,
         f", stack cap {settings.max_total_replicas}" if settings.max_total_replicas else "",
+        f", healing after {settings.defaults.heal_samples} short samples" if settings.heal else ", healing off",
         ", DRY RUN" if settings.dry_run else "",
     )
 
