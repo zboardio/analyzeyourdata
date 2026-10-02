@@ -33,9 +33,12 @@ EXPOSE 8050
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8050/api/version')" || exit 1
 
-# --max-requests recycles workers periodically to bound memory growth
+# --max-requests recycles workers periodically to bound memory growth.
+# --no-control-socket: gunicorn >= 25.1 opens a management socket under $HOME
+# by default; appuser has no home directory and nothing here uses gunicornc.
 CMD ["gunicorn", "app:server", \
      "--bind", "0.0.0.0:8050", \
+     "--no-control-socket", \
      "--workers", "2", \
      "--timeout", "120", \
      "--max-requests", "500", \
