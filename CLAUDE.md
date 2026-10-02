@@ -23,7 +23,7 @@ Deployed as one Docker container per language (15 languages), routed via Cloudfl
 - **PyTables**: 3.10.2 (HDF5 file support — Pandas format)
 - **h5py**: 3.12.1+ (HDF5 file support — generic format)
 - **PyMongo**: 4.16.0 (usage analytics logging)
-- **Gunicorn**: 23.0.0+ (production WSGI server)
+- **Gunicorn**: 26.2.0 (production WSGI server)
 
 ## Project Structure
 

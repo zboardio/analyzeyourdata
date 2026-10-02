@@ -13,7 +13,7 @@ Technical documentation for developers who want to understand, modify, or deploy
 - **Pandas**: 3.0.0
 - **Plotly**: 6.0.0+
 - **PyMongo**: 4.16.0 (optional, for usage analytics)
-- **Gunicorn**: 23.0.0+ (production WSGI server)
+- **Gunicorn**: 26.2.0 (production WSGI server)
 
 ---
 

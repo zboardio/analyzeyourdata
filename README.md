@@ -87,7 +87,7 @@ Every deployment includes a git commit hash visible in the footer, linking direc
 | [Pandas](https://pandas.pydata.org) | 3.0.0 | Data processing |
 | [Plotly](https://plotly.com/python/) | 6.0.0+ | Chart rendering |
 | [MongoDB](https://www.mongodb.com) | — | Usage analytics |
-| [Gunicorn](https://gunicorn.org) | 23.0.0+ | Production WSGI server |
+| [Gunicorn](https://gunicorn.org) | 26.2.0 | Production WSGI server |
 
 **Architecture:** One Docker container per language, routed via Cloudflare Tunnel subdomains. All containers share the same codebase — differentiated only by the `APP_LANGUAGE` environment variable.
 
